@@ -8,12 +8,13 @@ local tile_spritesheet_layout = tile_graphics.tile_spritesheet_layout
 local tile_collision_masks = require("__base__/prototypes/tile/tile-collision-masks")
 local tile_pollution = require("__base__/prototypes/tile/tile-pollution-values")
 
-local walking_speed_stone = 1.4
+local walking_speed_dirtpath = 1.3 -- natural paths through trees, etc.
+local walking_speed_stone = 1.5
 local walking_speed_concrete = 1.6
 local walking_speed_tarmac = 1.6
-local walking_speed_refinedconcrete = 1.8
+local walking_speed_refinedconcrete = 1.7
 
-local stone_path_vehicle_speed_modifier = 1.1
+local stone_path_vehicle_speed_modifier = 1.0
 local concrete_vehicle_speed_modifier = 0.9
 local tarmac_vehicle_speed_modifier = 0.6
 
@@ -64,8 +65,8 @@ end
 -- --data.raw["cliff"]["cliff-gleba"].cliff_explosive = "cliff-explosives"
 -- end
 
-local pollution_ocean = { pollution = 0.00008 }
-local pollution_deepwater = { pollution = 0.00004 }
+local pollution_ocean = { pollution = 0.00015 }
+local pollution_deepwater = { pollution = 0.00005 }
  
 data.raw["tile"]["stone-path"].walking_speed_modifier = walking_speed_stone
 data.raw["tile"]["concrete"].walking_speed_modifier = walking_speed_concrete
@@ -74,6 +75,12 @@ data.raw["tile"]["hazard-concrete-right"].walking_speed_modifier = walking_speed
 data.raw["tile"]["refined-concrete"].walking_speed_modifier = walking_speed_refinedconcrete
 data.raw["tile"]["refined-hazard-concrete-left"].walking_speed_modifier = walking_speed_refinedconcrete
 data.raw["tile"]["refined-hazard-concrete-right"].walking_speed_modifier = walking_speed_refinedconcrete
+
+data.raw["tile"]["red-desert-0"].walking_speed_modifier = walking_speed_dirtpath
+data.raw["tile"]["dirt-7"].walking_speed_modifier = walking_speed_dirtpath
+data.raw["tile"]["dirt-6"].walking_speed_modifier = walking_speed_dirtpath
+data.raw["tile"]["dirt-5"].walking_speed_modifier = walking_speed_dirtpath
+-- data.raw["tile"]["grass-2"].walking_speed_modifier = walking_speed_dirtpath
 
 
 function update_tile_map_color(tile) 
@@ -619,7 +626,7 @@ data:extend
           u_transition =
           {
             spritesheet = "__base__/graphics/terrain/concrete/concrete-u-mask.png",
-            count = 8,
+            count = 4,
 			tint = tarmac_tint,
             scale = 0.5
           },

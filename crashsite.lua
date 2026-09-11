@@ -8,15 +8,18 @@ local crash_site_sprite_priority = "very-low"
 
 
 local cs_craft_speed = 0.5
+local cs_research_speed = 0.5
 local cs_wreckage_loot = nil
 local cs_power_amount = "500kW"
 local cs_ship_gear = nil
 
 if settings.startup["settings-crashsite-bonus-buildingstats"].value == "more" then
-	cs_craft_speed = 2.0
+	cs_craft_speed = 0.5
+	cs_research_speed = 1
 	 cs_power_amount = "1500kW"
 elseif settings.startup["settings-crashsite-bonus-buildingstats"].value == "extra" then
-	cs_craft_speed = 4.0
+	cs_craft_speed = 0.5
+	cs_research_speed = 1.5
 	cs_power_amount = "4000kW"
 end
 
@@ -214,7 +217,7 @@ data:extend
       emissions_per_minute = {pollution =4},
     },
     energy_usage = "60kW",
-    researching_speed = cs_craft_speed,
+    researching_speed = cs_research_speed,
     inputs = { "automation-science-pack", "logistic-science-pack" }
   },
 ----------------------------------- ASSEMBLING MACHINE 1 -----------------------------------
@@ -299,7 +302,7 @@ data:extend
         }
       }
     },
-    crafting_categories = {"crafting", "basic-crafting"},
+    crafting_categories = {"crafting" },
     crafting_speed = cs_craft_speed,
     energy_source =
     {
@@ -409,7 +412,7 @@ data:extend
         }
       }
     },
-    crafting_categories = {"crafting", "basic-crafting"},
+    crafting_categories = {"crafting" },
     crafting_speed = cs_craft_speed,
     energy_source =
     {
@@ -460,7 +463,7 @@ data:extend
     selectable_in_game = true,
     order="a",
     supply_area_distance = 4.5,
-    impact_category = "wood",
+    impact_category = "metal",
 	--vehicle_impact_sound = sounds.car_wood_impact(0.5),
 	track_coverage_during_build_by_moving = true,
 	 radius_visualisation_picture =

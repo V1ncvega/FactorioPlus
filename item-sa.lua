@@ -44,7 +44,7 @@ data:extend({
     type = "recipe",
     name = "alumina-bacteria",
     icon = "__factorioplus__/graphics/icons/alumina-bacteria.png",
-    category = "organic-or-hand-crafting",
+    categories = {"hand-crafting", "organic"},
     surface_conditions =
     {
       {
@@ -65,7 +65,7 @@ data:extend({
     },
     results =
     {
-      {type = "item", name = "alumina-bacteria", amount = 1, probability = 0.1 },
+      {type = "item", name = "alumina-bacteria", amount = 1, independent_probability = 0.1 },
       {type = "item", name = "spoilage", amount = 3}
     },
     crafting_machine_tint =
@@ -79,7 +79,7 @@ data:extend({
     type = "recipe",
     name = "alumina-bacteria-cultivation",
     icon = "__factorioplus__/graphics/icons/alumina-bacteria-cultivation.png",
-    category = "organic",
+    categories = {"organic"},
     surface_conditions =
     {
       {
@@ -92,7 +92,6 @@ data:extend({
     order = "e[bacteria]-b[cultivation]-a[alumina]",
     enabled = false,
     allow_productivity = true,
-    result_is_always_fresh = true,
     energy_required = 6,
     ingredients =
     {
@@ -101,7 +100,7 @@ data:extend({
     },
     results =
     {
-      {type = "item", name = "alumina-bacteria", amount = 4}
+      {type = "item", name = "alumina-bacteria", amount = 4, always_fresh = true}
     },
     crafting_machine_tint =
     {

@@ -356,4 +356,25 @@ data:extend(
 		subgroup = "pictographs",
 		order = "z[emotes]"
 	},
+	{
+		type = "virtual-signal",
+		name = "signal-health",
+		icon = "__factorioplus__/graphics/icons/signal/signal_glyph_health.png",
+		subgroup = "pictographs",
+		order = "z[emotes]"
+	},
+	{
+		type = "virtual-signal",
+		name = "signal-cool",
+		icon = "__factorioplus__/graphics/icons/signal/signal_glyph_cool.png",
+		subgroup = "pictographs",
+		order = "z[emotes]"
+	},
+	{
+		type = "virtual-signal",
+		name = "signal-engi",
+		icon = "__factorioplus__/graphics/icons/signal/signal_glyph_engi.png",
+		subgroup = "pictographs",
+		order = "z[emotes]"
+	},
 })

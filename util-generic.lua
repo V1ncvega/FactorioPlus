@@ -1,3 +1,12 @@
+
+-- Merge tables
+function table.merge(t1,t2)
+   for i=1,#t2 do
+      t1[#t1+1] = t2[i]
+   end
+   return t1
+end
+
 -- If a table has this element, return true
 function table.contains(table, element)
   for _, value in pairs(table) do
@@ -114,6 +123,41 @@ function create_entity(entity, rad, probability, amount)
 	}
 end
 
+
+function create_entity2(entity, rad, probability, amount)
+	return	
+	{
+		{
+		  type = "cluster",
+		  cluster_count = amount,
+		  distance = rad/1.5,
+		  distance_deviation = rad/3,
+		  action_delivery =
+		  {
+			type = "instant",
+			target_effects =
+			{
+			  {
+					type = "create-entity",
+					entity_name = entity,
+					
+					probability = probability or 1,
+					--repeat_count = amount or 2,
+					--repeat_count_deviation = math.ceil( amount),
+					
+					check_buildability = true,
+					find_non_colliding_position  = true,
+					non_colliding_search_precision  = 0.25,
+					non_colliding_search_radius = 3,
+					tile_collision_mask  = {not_colliding_with_itself = true, layers = {object = true} }
+				}
+			}
+		  }
+		}
+	}
+end
+
+
 function create_tiles(tilename, rad, probability)
   return {
 		type = "direct",
@@ -139,7 +183,7 @@ function create_clustertiles(tilename, rad, probability, amount)
 	{
 	  type = "cluster",
 	  cluster_count = amount,
-	  distance = rad/2 or 1,
+	  distance = rad or 1,
 	  distance_deviation = rad/3 or 1,
 	  action_delivery =
 	  {
@@ -150,7 +194,7 @@ function create_clustertiles(tilename, rad, probability, amount)
 					type = "set-tile",	
 					tile_name = tilename,
 					probability = probability or 1,
-					radius = rad or 1,
+					radius = math.max(rad/3,1) or 1,
 					apply_projectionoptional = true,
 				},
 			}

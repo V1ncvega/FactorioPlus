@@ -1,0 +1,45 @@
+{
+ "entity":
+  [
+	["abandonment-weapons1-pistol", "abandonment-weapons1-smallarms-varied"],
+	["abandonment-weapons2-pistol", "abandonment-weapons1-smallarms-varied"],
+	["abandonment-weapons3-pistol", "abandonment-weapons2-smallarms-varied"],
+	["abandonment-weapons4-pistol", "abandonment-weapons3-smallarms-varied"],
+	
+	["abandonment-weapons0-magnum", "abandonment-weapons2-smallarms-varied"],
+	["abandonment-weapons1-magnum", "abandonment-weapons2-smallarms-varied"],
+	["abandonment-weapons2-magnum", "abandonment-weapons3-smallarms-varied"],
+	["abandonment-weapons3-magnum", "abandonment-weapons3-smallarms-varied"],
+	["abandonment-weapons4-magnum", "abandonment-weapons4-smallarms-varied"],
+	
+	["abandonment-weapons0-smg", "abandonment-weapons2-smallarms-varied"],
+	["abandonment-weapons1-smg", "abandonment-weapons3-smallarms-varied"],
+	["abandonment-weapons2-smg", "abandonment-weapons3-smallarms-varied"],
+	["abandonment-weapons3-smg", "abandonment-weapons4-smallarms-varied"],
+	["abandonment-weapons4-smg", "abandonment-weapons5-smallarms-varied"],
+	
+	["abandonment-weapons0-uzi", "abandonment-weapons3-smallarms-varied"],
+	["abandonment-weapons1-uzi", "abandonment-weapons4-smallarms-varied"],
+	["abandonment-weapons2-uzi", "abandonment-weapons5-smallarms-varied"],
+	["abandonment-weapons3-uzi", "abandonment-weapons5-smallarms-varied"],
+	["abandonment-weapons4-uzi", "abandonment-weapons6-smallarms-varied"],
+	
+	["abandonment-weapons0-shotgun", "abandonment-weapons3-smallarms-varied"],
+	["abandonment-weapons1-shotgun", "abandonment-weapons4-smallarms-varied"],
+	["abandonment-weapons2-shotgun", "abandonment-weapons4-smallarms-varied"],
+	["abandonment-weapons3-shotgun", "abandonment-weapons5-smallarms-varied"],
+	["abandonment-weapons4-shotgun", "abandonment-weapons6-smallarms-varied"],
+	
+	["abandonment-weapons0-blunderbuss", "abandonment-weapons4-smallarms-varied"],
+	["abandonment-weapons1-blunderbuss", "abandonment-weapons5-smallarms-varied"],
+	["abandonment-weapons2-blunderbuss", "abandonment-weapons6-smallarms-varied"],
+	["abandonment-weapons3-blunderbuss", "abandonment-weapons7-smallarms-varied"],
+	["abandonment-weapons4-blunderbuss", "abandonment-weapons8-smallarms-varied"],
+	
+	["abandonment-weapons0-autoshotgun", "abandonment-weapons5-smallarms-varied"],
+	["abandonment-weapons1-autoshotgun", "abandonment-weapons5-smallarms-varied"],
+	["abandonment-weapons2-autoshotgun", "abandonment-weapons6-smallarms-varied"],
+	["abandonment-weapons3-autoshotgun", "abandonment-weapons7-smallarms-varied"],
+	["abandonment-weapons4-autoshotgun", "abandonment-weapons8-smallarms-varied"]
+  ]
+}

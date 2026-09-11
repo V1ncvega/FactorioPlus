@@ -241,7 +241,7 @@ firestickerutil.makefiresticker("napalm-fire-sticker", mortar_napalm_firesticker
    {
     type = "recipe",
     name = "flamethrower-ammo-napalm",
-	category = "chemistry",
+	categories = {"chemistry"},
     enabled = false,
     energy_required = 20,
     ingredients =
@@ -527,7 +527,11 @@ firestickerutil.makefiresticker("napalm-fire-sticker", mortar_napalm_firesticker
     type = "recipe",
     name = "firearm-magazine",
     energy_required = 1,
-    ingredients = {{type="item", name="iron-plate", amount=10}},
+    ingredients = 
+		{
+			{type="item", name="iron-plate", amount=10},
+			{type="item", name="coal", amount=1}
+		},
     results = {{type="item", name="firearm-magazine", amount=1}},
   },
     ----------------------------- PIERCING BULLETS -----------------------------
@@ -816,7 +820,7 @@ firestickerutil.makefiresticker("napalm-fire-sticker", mortar_napalm_firesticker
     ingredients =
     {
       {type="item", name="firearm-magazine", amount=1},
-      {type="item", name="explosives", amount=2},
+      {type="item", name="basic-explosive", amount=4},
     },
     results = {{type="item", name="explosive-rounds-magazine", amount=1}},
   },
@@ -1201,6 +1205,7 @@ firestickerutil.makefiresticker("napalm-fire-sticker", mortar_napalm_firesticker
     {
       {type="item", name="aluminium-plate", amount=8},
       {type="item", name="copper-plate", amount=6},
+	  {type="item", name="coal", amount=2}
     },
     results = {{type="item", name="sniper-shell", amount=1}},
   },
@@ -1600,7 +1605,8 @@ firestickerutil.makefiresticker("napalm-fire-sticker", mortar_napalm_firesticker
     ingredients =
     {
       {type="item", name="copper-plate", amount=3},
-      {type="item", name="iron-plate", amount=3}
+      {type="item", name="iron-plate", amount=3},
+	  {type="item", name="coal", amount=1}
     },
     results = {{type="item", name="shotgun-shell", amount=1}},
   },
@@ -2141,7 +2147,7 @@ firestickerutil.makefiresticker("napalm-fire-sticker", mortar_napalm_firesticker
     ingredients =
     {
       {type="item", name="shotgun-shell", amount=2},
-      {type="item", name="explosives", amount=4}
+      {type="item", name="basic-explosive", amount=6}
     },
     results = {{type="item", name="explosive-shotgun-shell", amount=1}},
   },
@@ -3219,18 +3225,22 @@ firestickerutil.makefiresticker("napalm-fire-sticker", mortar_napalm_firesticker
     stream_light = {intensity = 0.1, size = 4 * 0.8},
     ground_light = {intensity = 0.6, size = 4 * 0.8},
 
-    particle_buffer_size = 30,
+	--oriented_particle = true,
+	-- target_initial_position_only = true,
+    particle_buffer_size = 2,
     particle_spawn_interval = 1,
-    particle_spawn_timeout = 1,
+    particle_spawn_timeout = 0,
     particle_vertical_acceleration = 0.01 * 0.6,
     particle_horizontal_speed = 0.45 * projectile_mortar_turret_speed_modifier,
     particle_horizontal_speed_deviation = 0.0035,
     particle_start_alpha = 1,
     particle_end_alpha = 1,
-    particle_start_scale = 0.2,
-    particle_loop_frame_count = 3,
-    particle_fade_out_threshold = 0.9,
-    particle_loop_exit_threshold = 0.25,
+    particle_start_scale = 0.3,
+    particle_loop_frame_count = 1,
+    particle_fade_out_threshold = 0.1,
+    particle_loop_exit_threshold = 0.1,
+	
+	--target_position_deviation = 10,
 	
     initial_action =
     {
@@ -3960,7 +3970,7 @@ firestickerutil.makefiresticker("napalm-fire-sticker", mortar_napalm_firesticker
     ingredients =
     {
       --{type="item", name="electronic-circuit", amount=1},
-      {type="item", name="explosives", amount=2},
+      {type="item", name="basic-explosive", amount=6},
       {type="item", name="iron-plate", amount=2}
     },
     results = {{type="item", name="rocket", amount=1}},
@@ -4950,7 +4960,7 @@ firestickerutil.makefiresticker("napalm-fire-sticker", mortar_napalm_firesticker
   {
 	{type="item", name="steel-plate", amount=6},
 	{type="item", name="plastic-bar", amount=4},
-	{type="item", name="explosives", amount=2}
+	{type="item", name="basic-explosive", amount=4}
   },
   results = {{type="item", name="cannon-shell", amount=1}},
   },

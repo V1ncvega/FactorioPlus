@@ -3,11 +3,7 @@ local sounds = require("__base__.prototypes.entity.sounds")
 local abandonments_autoplace = require ("__factorioplus__.abandonments-autoplace-util")
 require ("stats")
 
-
-
-
-
-
+local solarloc = { "entity-description." .. "abandonment-solar-panel" }
 
 if (settings.startup["settings-warehouse-abandonments"].value) then
 
@@ -28,16 +24,13 @@ if (settings.startup["settings-warehouse-abandonments"].value) then
 	local abandonment_loc = {"entity-name.abandonment"}
 
 	local newpath = util.copy(data.raw["tile"]["nuclear-ground"])
-	--newpath.collision_mask = {"water-tile"}
 	newpath.localised_name = {"tile-name.abandonment-ground"}
 	newpath.name = "abandonment".."-"..newpath.name  
 	newpath.hidden = true
-	--newpath.autoplace = abandonments_autoplace.abandonment_ground_autoplace(0.5)
 	newpath.autoplace = abandonments_autoplace.abandonments_ground_autoplace("abandonments_autoplace_base(1, 0.6)")
 	data:extend{newpath}
 
 	local newpath2 = util.copy(data.raw["tile"]["landfill"])
-	--newpath.collision_mask = {"water-tile"}
 	newpath2.localised_name = {"tile-name.abandonment-ground-2"}
 	newpath2.name = "abandonment".."-"..newpath.name.."-2" 
 	newpath2.autoplace = abandonments_autoplace.abandonments_ground_autoplace("abandonments_autoplace_base(0, 0.5)")
@@ -227,6 +220,123 @@ end
 
 data:extend
 {
+	 {
+		type = "corpse",
+		name = "abandonment-solar-panel-remnants-small",
+		icon = "__base__/graphics/icons/solar-panel.png",
+		flags = {"placeable-neutral", "not-on-map"},
+		hidden_in_factoriopedia = true,
+		subgroup = "energy-remnants",
+		order = "a-c-a",
+		selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
+		tile_width = 3,
+		tile_height = 3,
+		selectable_in_game = false,
+		time_before_removed = 60 * 60 * 15, -- 15 minutes
+		expires = false,
+		final_render_layer = "remnants",
+		remove_on_tile_placement = false,
+		animation = make_rotated_animation_variations_from_sheet (3,
+		{
+		  filename = "__factorioplus__/graphics/abandonment-solarpanel-small-rubble.png",
+		  line_length = 1,
+		  width = 512,
+		  height = 874/3,
+		  direction_count = 1,
+		  shift = util.by_pixel(3.5, 8),
+		  scale = 0.55
+		})
+	  },
+	  {
+		type = "corpse",
+		name = "abandonment-solar-panel-remnants-medium",
+		icon = "__base__/graphics/icons/solar-panel.png",
+		flags = {"placeable-neutral", "not-on-map"},
+		hidden_in_factoriopedia = true,
+		subgroup = "energy-remnants",
+		order = "a-c-a",
+		selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
+		tile_width = 3,
+		tile_height = 3,
+		selectable_in_game = false,
+		time_before_removed = 60 * 60 * 15, -- 15 minutes
+		expires = false,
+		final_render_layer = "remnants",
+		remove_on_tile_placement = false,
+		animation = make_rotated_animation_variations_from_sheet (3,
+		{
+		  filename = "__factorioplus__/graphics/abandonment-solarpanel-medium-rubble.png",
+		  line_length = 1,
+		  width = 512,
+		  height = 874/3,
+		  direction_count = 1,
+		  shift = util.by_pixel(3.5, 14),
+		  scale = 0.65
+		})
+	  },
+	  {
+		type = "corpse",
+		name = "abandonment-solar-panel-remnants-large",
+		icon = "__base__/graphics/icons/solar-panel.png",
+		flags = {"placeable-neutral", "not-on-map"},
+		hidden_in_factoriopedia = true,
+		subgroup = "energy-remnants",
+		order = "a-c-a",
+		selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
+		tile_width = 3,
+		tile_height = 3,
+		selectable_in_game = false,
+		time_before_removed = 60 * 60 * 15, -- 15 minutes
+		expires = false,
+		final_render_layer = "remnants",
+		remove_on_tile_placement = false,
+		animation = make_rotated_animation_variations_from_sheet (3,
+		{
+		  filename = "__factorioplus__/graphics/abandonment-solarpanel-large-rubble.png",
+		  line_length = 1,
+		  width = 512,
+		  height = 874/3,
+		  direction_count = 1,
+		  shift = util.by_pixel(3.5, 18),
+		  scale = 0.725
+		})
+	  },
+	  
+	{
+		type = "corpse",
+		name = "abandonment-electric-pole-remnants",
+		icon = "__base__/graphics/icons/medium-electric-pole.png",
+		hidden_in_factoriopedia = true,
+		flags = {"placeable-neutral", "not-on-map"},
+		subgroup = "energy-pipe-distribution-remnants",
+		order = "a-b-a",
+		collision_box = {{-0.4, -0.4}, {0.4, 0.4}},
+		selection_box = {{-0.5, -0.5}, {0.5, 0.5}},
+		tile_width = 1,
+		tile_height = 1,
+		selectable_in_game = false,
+		time_before_removed = 60 * 60 * 15, -- 15 minutes
+		expires = false,
+		final_render_layer = "remnants",
+		animation_overlay_final_render_layer = "object",
+		remove_on_tile_placement = false,
+		animation = make_rotated_animation_variations_from_sheet(4,
+    {
+		layers =
+		{
+		  {
+			filename = "__factorioplus__/graphics/abandonment-electric-pole-rubble.png",
+			line_length = 1,
+			width = 256,
+			height = 1157/4,
+			direction_count = 1,
+			shift = util.by_pixel(2, -5),
+			scale = 0.45
+		  }
+		}
+	}),
+	 },
+  
 	{
 		name = "abandonment-debris-medium-decal-1",
 		type = "optimized-decorative",
@@ -269,6 +379,7 @@ data:extend
 			},
 		}
 	},
+	
 	{
 		name = "abandonment-debris-large-decal-1",
 		type = "optimized-decorative",
@@ -657,18 +768,25 @@ local function generate_storage_hut (newname, boundingspace, distance, loottable
 	s.enemy_map_color = abandonments_bonus_color_map
 	s.hidden = true
 	if string.find(s.name,"weapon") or string.find(s.name,"equipment") or string.find(s.name,"turret")  then
+		table.merge( s.localised_name , {" ", "(", {"entity-name." .. "abandonment-warehouse-type-weapons"} ,")" } )
 		s.picture = building_ammocache_picture
 		s.collision_box = {{-3.75, -2.25}, {3.75, 2.25}}
 		s.selection_box = {{-3.85, -2.5}, {3.85, 2.5}}
+		s.corpse = "warehouse-ammo-remnants"
 	elseif string.find(s.name,"grenade") or string.find(s.name,"explosive") then
+		table.merge( s.localised_name , {" ", "(", {"entity-name." .. "abandonment-warehouse-type-explosives"} ,")" } )
 		s.picture = building_explosivecache_picture
 		s.collision_box = {{-1.75, -2.25}, {1.75, 2.25}}
 		s.selection_box = {{-1.85, -2.5}, {1.85, 2.5}}
+		s.corpse = "warehouse-explosives-remnants"
 	elseif string.find(s.name,"tech") or string.find(s.name,"lab") then
+		table.merge( s.localised_name , {" ", "(", {"entity-name." .. "abandonment-warehouse-type-lab"} ,")" } )
 		s.picture = building_lab_picture
 		s.collision_box = {{-3.75, -2.25}, {3.75, 2.25}}
 		s.selection_box = {{-3.85, -2.5}, {3.85, 2.5}}
+		s.corpse = "big-remnants"
 	elseif string.find(s.name,"barren") then
+		table.merge( s.localised_name , {" ", "(", {"entity-name." .. "abandonment-warehouse-type-barren"} ,")" } )
 		s.picture = building_barren
 		s.localised_description = {"entity-description.abandonment-warehouse-barren"} 
 		s.enemy_map_color = abandonments_barren_color_map
@@ -679,7 +797,7 @@ local function generate_storage_hut (newname, boundingspace, distance, loottable
 		create_tiles("nuclear-ground", 6, 1.0), 
 		create_tiles("stone-path-abandonment", 3, 1.0), 
 		create_tiles("stone-path-abandonment", 4.5, 0.25),
-		create_clustertiles("stone-path-abandonment", 4, 0.25, 10)	
+		create_clustertiles("stone-path-abandonment", 5, 0.4, 12)	
 	}
 	s.map_generator_bounding_box = {{ -boundingspace, -boundingspace}, {boundingspace, boundingspace}}	
 	
@@ -705,6 +823,7 @@ end
 
 local newpole = util.copy(data.raw["electric-pole"]["medium-electric-pole"])
 newpole.localised_name = {"",abandonment_loc, " ", {"entity-name." .. newpole.name} }
+newpole.localised_description = solarloc
 newpole.collision_box = {{-0.25, -0.25}, {0.25, 0.25}}
 newpole.selection_box = {{-0.6, -0.6}, {0.6, 0.6}}
 newpole.pictures = building_pole_abandoned
@@ -715,6 +834,7 @@ newpole.supply_area_distance = 10
 newpole.flags = {"placeable-off-grid"}
 newpole.fast_replaceable_group = nil
 newpole.next_upgrade = nil
+newpole.corpse = "abandonment-electric-pole-remnants"
 -- newpole.light = 
 -- {
 	-- intensity = 0.5, 
@@ -746,8 +866,8 @@ newpole.hidden = true
 newpole.enemy_map_color = abandonments_force_color_map
 newpole.loot =
     {
-      {item = "steel-plate", probability = 1, count_min = 0, count_max = 2},
-	  {item = "copper-cable", probability = 1, count_min = 0, count_max = 4},
+      {type = "item", name = "steel-plate", independent_probability = 1, amount_min = 0, amount_max = 2},
+	  {type = "item", name = "copper-cable", independent_probability = 1, amount_min = 0, amount_max = 4},
     },
 data:extend{newpole}
 
@@ -810,7 +930,7 @@ local function makeNewAbandonmentTurret(data)
 		create_tiles("stone-path-abandonment", 1.5 * _scale, 0.5), 
 		create_entity("small-scorchmark-tintable", 8 * _scale, 1, 4 * _scale),
 		create_decoratives("abandonment-debris-medium-decal-1", 7 * _scale, 1),
-		create_clustertiles("stone-path-abandonment", 2 * _scale, 0.25, 4 * _scale)	
+		create_clustertiles("stone-path-abandonment", 2 * _scale, 0.4, 4 * _scale)	
 	}
 	
 	newturret.attack_parameters.range = math.ceil(newturret.attack_parameters.range * data.range_modifier) or newturret.attack_parameters.range
@@ -864,11 +984,11 @@ data:extend{
 		autoplace_start_distance = autoplace_turret_laser_s,
 		loot =	
 		{
-		  {item = "electronic-circuit", probability = 1, count_min = 0, count_max = 3},
-		  {item = "battery", probability = 1, count_min = 0, count_max = 1},
-		  {item = "iron-gear-wheel", probability = 1, count_min = 0, count_max = 1},
-		  {item = "iron-plate", probability = 1, count_min = 0, count_max = 2},
-		  {item = "electronic-circuit", probability = 1, count_min = 0, count_max = 1},
+		  {type = "item", name = "electronic-circuit", independent_probability = 1, amount_min = 0, amount_max = 3},
+		  {type = "item", name = "battery", independent_probability = 1, amount_min = 0, amount_max = 1},
+		  {type = "item", name = "iron-gear-wheel", independent_probability = 1, amount_min = 0, amount_max = 1},
+		  {type = "item", name = "iron-plate", independent_probability = 1, amount_min = 0, amount_max = 2},
+		  {type = "item", name = "electronic-circuit", independent_probability = 1, amount_min = 0, amount_max = 1},
 		},	
 	})
 }
@@ -884,11 +1004,11 @@ data:extend{
 		autoplace_start_distance = autoplace_turret_laser_m,
 		loot =	
 		{
-		  {item = "electronic-circuit", probability = 1, count_min = 0, count_max = 4},
-		  {item = "battery", probability = 1, count_min = 0, count_max = 2},
-		  {item = "iron-gear-wheel", probability = 0.9, count_min = 0, count_max = 2},
-		  {item = "iron-plate", probability = 1, count_min = 0, count_max = 3},
-		  {item = "electronic-circuit", probability = 1, count_min = 0, count_max = 2},
+		  {type = "item", name = "electronic-circuit", independent_probability = 1, amount_min = 0, amount_max = 4},
+		  {type = "item", name = "battery", independent_probability = 1, amount_min = 0, amount_max = 2},
+		  {type = "item", name = "iron-gear-wheel", independent_probability = 0.9, amount_min = 0, amount_max = 2},
+		  {type = "item", name = "iron-plate", independent_probability = 1, amount_min = 0, amount_max = 3},
+		  {type = "item", name = "electronic-circuit", independent_probability = 1, amount_min = 0, amount_max = 2},
 		},	
 	})
 }
@@ -907,11 +1027,11 @@ data:extend{
 		autoplace_start_distance = autoplace_turret_laser_l,
 		loot =	
 		{
-		  {item = "electronic-circuit", probability = 1, count_min = 0, count_max = 6},
-		  {item = "battery", probability = 1, count_min = 0, count_max = 3},
-		  {item = "iron-gear-wheel", probability =1, count_min = 0, count_max = 4},
-		  {item = "steel-plate", probability = 1, count_min = 0, count_max = 4},
-		  {item = "advanced-circuit", probability = 1, count_min = 0, count_max = 4},
+		  {type = "item", name = "electronic-circuit", independent_probability = 1, amount_min = 0, amount_max = 6},
+		  {type = "item", name = "battery", independent_probability = 1, amount_min = 0, amount_max = 3},
+		  {type = "item", name = "iron-gear-wheel", independent_probability =1, amount_min = 0, amount_max = 4},
+		  {type = "item", name = "steel-plate", independent_probability = 1, amount_min = 0, amount_max = 4},
+		  {type = "item", name = "advanced-circuit", independent_probability = 1, amount_min = 0, amount_max = 4},
 		},	
 	})
 }
@@ -929,11 +1049,11 @@ data:extend{
 		autoplace_start_distance = autoplace_turret_laser_b,
 		loot =	
 		{
-		  {item = "processing-unit", probability = 1, count_min = 0, count_max = 3},
-		  {item = "battery", probability = 1, count_min = 0, count_max = 5},
-		  {item = "iron-gear-wheel", probability = 1, count_min = 0, count_max = 5},
-		  {item = "steel-plate", probability = 1, count_min = 0, count_max = 5},
-		  {item = "advanced-circuit", probability = 1, count_min = 0, count_max = 6},
+		  {type = "item", name = "processing-unit", independent_probability = 1, amount_min = 0, amount_max = 3},
+		  {type = "item", name = "battery", independent_probability = 1, amount_min = 0, amount_max = 5},
+		  {type = "item", name = "iron-gear-wheel", independent_probability = 1, amount_min = 0, amount_max = 5},
+		  {type = "item", name = "steel-plate", independent_probability = 1, amount_min = 0, amount_max = 5},
+		  {type = "item", name = "advanced-circuit", independent_probability = 1, amount_min = 0, amount_max = 6},
 		},	
 	})
 }
@@ -957,13 +1077,13 @@ newturret2.build_base_evolution_requirement = 10
 newturret2.remove_decoratives = "false"
 newturret2.hidden = true
 newturret2.enemy_map_color = abandonments_force_color_map
-newturret2.created_effect = { create_tiles("nuclear-ground", 3.5, 1.0), create_tiles("stone-path-abandonment", 3, 0.5), 	create_clustertiles("stone-path-abandonment", 3, 0.25, 3 * 2)	}
+newturret2.created_effect = { create_tiles("nuclear-ground", 3.5, 1.0), create_tiles("stone-path-abandonment", 3, 0.5), 	create_clustertiles("stone-path-abandonment", 3, 0.4, 3 * 2)	}
 newturret2.loot =
     {
-      {item = "electronic-circuit", probability =1, count_min = 0, count_max = 4},
-	  {item = "iron-gear-wheel", probability = 1, count_min = 0, count_max = 6},
-	  {item = "iron-plate", probability = 1, count_min = 0, count_max = 8},
-	  {item = "electronic-circuit", probability = 1, count_min = 0, count_max = 4},
+      {type = "item", name = "electronic-circuit", independent_probability =1, amount_min = 0, amount_max = 4},
+	  {type = "item", name = "iron-gear-wheel", independent_probability = 1, amount_min = 0, amount_max = 6},
+	  {type = "item", name = "iron-plate", independent_probability = 1, amount_min = 0, amount_max = 8},
+	  {type = "item", name = "electronic-circuit", independent_probability = 1, amount_min = 0, amount_max = 4},
     },
 data:extend{newturret2}
 
@@ -983,13 +1103,13 @@ newturret3.build_base_evolution_requirement = 10
 newturret3.remove_decoratives = "false"
 newturret3.hidden = true
 newturret3.enemy_map_color = abandonments_force_color_map
-newturret3.created_effect = { create_tiles("nuclear-ground", 4, 1.0), create_tiles("stone-path-abandonment", 3.5, 0.5), 	create_clustertiles("stone-path-abandonment", 3, 0.25, 3 * 2)	}
+newturret3.created_effect = { create_tiles("nuclear-ground", 4, 1.0), create_tiles("stone-path-abandonment", 3.5, 0.5), 	create_clustertiles("stone-path-abandonment", 3, 0.4, 3 * 2)	}
 newturret3.loot =
     {
-      {item = "electronic-circuit", probability =1, count_min = 0, count_max = 4},
-	  {item = "iron-gear-wheel", probability = 1, count_min = 0, count_max = 6},
-	  {item = "iron-plate", probability = 1, count_min = 0, count_max = 8},
-	  {item = "electronic-circuit", probability = 1, count_min = 0, count_max = 4},
+      {type = "item", name = "electronic-circuit", independent_probability =1, amount_min = 0, amount_max = 4},
+	  {type = "item", name = "iron-gear-wheel", independent_probability = 1, amount_min = 0, amount_max = 6},
+	  {type = "item", name = "iron-plate", independent_probability = 1, amount_min = 0, amount_max = 8},
+	  {type = "item", name = "electronic-circuit", independent_probability = 1, amount_min = 0, amount_max = 4},
     },
 data:extend{newturret3}
 
@@ -997,15 +1117,18 @@ data:extend{newturret3}
 -- ABANDONED SOLAR PANELS
 ---------------------------
 
+
 local solarpanel = data.raw["solar-panel"]["solar-panel"]
 local newsolarpanel = util.copy(solarpanel)
 newsolarpanel.icon = "__factorioplus__/graphics/icons/abandonment-solar-1.png"
 newsolarpanel.localised_name = {"",abandonment_loc, " ", {"entity-name." .. newsolarpanel.name}}
+newsolarpanel.localised_description = solarloc
 newsolarpanel.name = "abandonment".."-"..newsolarpanel.name.."2"  
 newsolarpanel.max_health = 300 * enemy_health_scale
 newsolarpanel.build_base_evolution_requirement = 10
 newsolarpanel.production = "397kW"
 newsolarpanel.hidden = true
+newsolarpanel.corpse = "abandonment-solar-panel-remnants-large"
 newsolarpanel.energy_source =
 	{  
 		type = "electric",
@@ -1023,13 +1146,13 @@ newsolarpanel.autoplace = abandonments_autoplace.abandonments_buildings_autoplac
 newsolarpanel.map_generator_bounding_box = solarpanel1_autoplace
 newsolarpanel.enemy_map_color = abandonments_force_color_map
 newsolarpanel.remove_decoratives = "false"
-newsolarpanel.created_effect = { create_tiles("nuclear-ground", 4.5, 1.0), create_tiles("stone-path-abandonment", 3.5, 0.5), 	create_clustertiles("stone-path-abandonment", 4.5, 0.25, 3 * 2)	}
+newsolarpanel.created_effect = { create_tiles("nuclear-ground", 4.5, 1.0), create_tiles("stone-path-abandonment", 3.5, 0.5), 	create_clustertiles("stone-path-abandonment", 4.5, 0.4, 3 * 2)	}
 newsolarpanel.loot =
     {
-      {item = "steel-plate", probability = 1, count_min = 0, count_max = 8},
-	  {item = "electronic-circuit", probability = 1, count_min = 0, count_max = 8},
-	  {item = "advanced-circuit", probability = 1, count_min = 0, count_max = 4},
-	  {item = "glass-plate", probability = 1, count_min = 0, count_max =14},
+      {type = "item", name = "steel-plate", independent_probability = 1, amount_min = 0, amount_max = 8},
+	  {type = "item", name = "electronic-circuit", independent_probability = 1, amount_min = 0, amount_max = 8},
+	  {type = "item", name = "advanced-circuit", independent_probability = 1, amount_min = 0, amount_max = 4},
+	  {type = "item", name = "glass-plate", independent_probability = 1, amount_min = 0, amount_max =14},
     },
 data:extend{newsolarpanel}
 
@@ -1037,11 +1160,13 @@ data:extend{newsolarpanel}
 local newsolarpanel2 = util.copy(data.raw["solar-panel"]["solar-panel"])
 newsolarpanel2.icon = "__factorioplus__/graphics/icons/abandonment-solar-2.png"
 newsolarpanel2.localised_name = {"",abandonment_loc, " ", {"entity-name." .. newsolarpanel2.name}}
+newsolarpanel2.localised_description = solarloc
 newsolarpanel2.name = "abandonment".."-"..newsolarpanel2.name.."3"
 newsolarpanel2.max_health = 200 * enemy_health_scale
 newsolarpanel2.build_base_evolution_requirement = 10
 newsolarpanel2.production = "219kW"
 newsolarpanel2.hidden = true
+newsolarpanel2.corpse = "abandonment-solar-panel-remnants-medium"
 newsolarpanel2.energy_source = 
 	{  
 		type = "electric",
@@ -1059,12 +1184,12 @@ newsolarpanel2.autoplace = abandonments_autoplace.abandonments_buildings2_autopl
 newsolarpanel2.map_generator_bounding_box = solarpanel2_autoplace
 newsolarpanel2.enemy_map_color = abandonments_force_color_map
 newsolarpanel2.remove_decoratives = "false"
-newsolarpanel2.created_effect = { create_tiles("nuclear-ground", 4, 1.0), create_tiles("stone-path-abandonment", 3, 0.5), create_clustertiles("stone-path-abandonment", 4, 0.25, 3 * 2)	}
+newsolarpanel2.created_effect = { create_tiles("nuclear-ground", 4, 1.0), create_tiles("stone-path-abandonment", 3, 0.5), create_clustertiles("stone-path-abandonment", 4, 0.4, 3 * 2)	}
 newsolarpanel2.loot =
     {
-      {item = "steel-plate", probability = 1, count_min = 0, count_max = 6},
-	  {item = "electronic-circuit", probability = 1, count_min = 0, count_max = 6},
-	  {item = "glass-plate", probability = 1, count_min = 0, count_max = 6},
+      {type = "item", name = "steel-plate", independent_probability = 1, amount_min = 0, amount_max = 6},
+	  {type = "item", name = "electronic-circuit", independent_probability = 1, amount_min = 0, amount_max = 6},
+	  {type = "item", name = "glass-plate", independent_probability = 1, amount_min = 0, amount_max = 6},
     },
 data:extend{newsolarpanel2}
 
@@ -1072,11 +1197,13 @@ local solarpanel3 = data.raw["solar-panel"]["solar-panel"]
 local newsolarpanel3 = util.copy(solarpanel3)
 newsolarpanel3.icon = "__factorioplus__/graphics/icons/abandonment-solar-3.png"
 newsolarpanel3.localised_name = {"",abandonment_loc, " ", {"entity-name." .. newsolarpanel3.name}}
+newsolarpanel3.localised_description = solarloc
 newsolarpanel3.name = "abandonment".."-"..newsolarpanel3.name 
 newsolarpanel3.max_health = 125 * enemy_health_scale
 newsolarpanel3.build_base_evolution_requirement = 10
 newsolarpanel3.production = "91kW"
 newsolarpanel3.hidden = true
+newsolarpanel3.corpse = "abandonment-solar-panel-remnants-small"
 newsolarpanel3.energy_source = 
 	{  
 		type = "electric",
@@ -1094,12 +1221,12 @@ newsolarpanel3.autoplace = abandonments_autoplace.abandonments_buildings2_autopl
 newsolarpanel3.map_generator_bounding_box = solarpanel3_autoplace
 newsolarpanel3.enemy_map_color = abandonments_force_color_map
 newsolarpanel3.remove_decoratives = "false"
-newsolarpanel3.created_effect ={ create_tiles("nuclear-ground", 3, 1.0), create_tiles("stone-path-abandonment", 2.5, 0.5),	create_clustertiles("stone-path-abandonment", 3, 0.25, 3 * 2)	} 
+newsolarpanel3.created_effect ={ create_tiles("nuclear-ground", 3, 1.0), create_tiles("stone-path-abandonment", 2.5, 0.5),	create_clustertiles("stone-path-abandonment", 3, 0.4, 3 * 2)	} 
 newsolarpanel3.loot =
     {
-      {item = "steel-plate", probability = 1, count_min = 0, count_max = 2},
-	  {item = "electronic-circuit", probability = 1, count_min = 0, count_max = 4},
-	  {item = "glass-plate", probability = 1, count_min = 0, count_max = 4},
+      {type = "item", name = "steel-plate", independent_probability = 1, amount_min = 0, amount_max = 2},
+	  {type = "item", name = "electronic-circuit", independent_probability = 1, amount_min = 0, amount_max = 4},
+	  {type = "item", name = "glass-plate", independent_probability = 1, amount_min = 0, amount_max = 4},
     },
 data:extend{newsolarpanel3}
 
@@ -1110,6 +1237,7 @@ data:extend{newsolarpanel3}
 local newsaccumulator = util.copy(data.raw["accumulator"]["accumulator"])
 newsaccumulator.icon = "__factorioplus__/graphics/icons/abandonment-accumulator.png"
 newsaccumulator.localised_name = {"",abandonment_loc, " ", {"entity-name." .. newsaccumulator.name}}
+newsaccumulator.localised_description = solarloc
 newsaccumulator.name = "abandonment".."-"..newsaccumulator.name  
 newsaccumulator.flags = {"placeable-off-grid",  "player-creation"}
 newsaccumulator.fast_replaceable_group = nil
@@ -1129,9 +1257,9 @@ newsaccumulator.map_generator_bounding_box = {{ -2.65, -1.55},{ 2.65, 1.55}}
 newsaccumulator.enemy_map_color = abandonments_force_color_map
 newsaccumulator.loot =
     {
-      {item = "iron-plate", probability = 1, count_min = 0, count_max = 4},
-	  {item = "copper-plate", probability = 1, count_min = 2, count_max = 6},
-	  {item = "battery", probability = 0.25, count_min = 0, count_max = 4},
+      {type = "item", name = "iron-plate", independent_probability = 1, amount_min = 0, amount_max = 4},
+	  {type = "item", name = "copper-plate", independent_probability = 1, amount_min = 2, amount_max = 6},
+	  {type = "item", name = "battery", independent_probability = 0.25, amount_min = 0, amount_max = 4},
     },
 data:extend{newsaccumulator}
 
@@ -1150,157 +1278,376 @@ end
 -- Loot Warehouses
 
 data:extend{
+	generate_storage_hut ("buildings-power-varied-0", loothutboundingbox, 1.15,
+	{
+		{type = "item", name = "solar-panel", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 4, amount_max = 20},
+		
+		{type = "item", name = "steam-engine", shared_probability = { min = 0.0, max = 0.9 }, amount_min = 6, amount_max = 12},
+		{type = "item", name = "boiler",  shared_probability = { min = 0.0, max = 0.9 }, amount_min = 4, amount_max = 10},
+		
+		{type = "item", name = "medium-wooden-electric-pole", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "medium-electric-pole", shared_probability = { min = 0.6, max = 1.0 }, amount_min = 16, amount_max = 32},
+	}),
+
+	generate_storage_hut ("buildings-power-varied-1", loothutboundingbox, 3.15,
+	{
+		{type = "item", name = "solar-array", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 4, amount_max = 10},
+		
+		{type = "item", name = "solar-panel", shared_probability = { min = 0.0, max = 0.7 }, amount_min = 30, amount_max = 60},
+		{type = "item", name = "accumulator", shared_probability = { min = 0.0, max = 0.7 }, amount_min = 20, amount_max = 40},
+			
+		{type = "item", name = "big-electric-pole", shared_probability = { min = 0.6, max = 1.0 }, amount_min = 6, amount_max = 12},
+		{type = "item", name = "medium-electric-pole", shared_probability = { min = 0.4, max = 0.8 }, amount_min = 26, amount_max = 42},
+		{type = "item", name = "medium-wooden-electric-pole", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 50, amount_max = 100},
+	}),
+
+	generate_storage_hut ("buildings-power-varied-2", loothutboundingbox, 5.15,
+	{
+		{type = "item", name = "solar-array", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "accumulator-battery", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 10, amount_max = 20},
+		
+		{type = "item", name = "solar-panel", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 40, amount_max = 100},
+		{type = "item", name = "accumulator", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 40, amount_max = 80},
+		
+		{type = "item", name = "substation", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 6, amount_max = 16},
+		
+		{type = "item", name = "big-electric-pole", shared_probability = { min = 0.0, max = 0.7 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "medium-electric-pole", shared_probability = { min = 0.0, max = 0.7 }, amount_min = 30, amount_max = 60},
+	}),
+
+	generate_storage_hut ("buildings-power-varied-3", loothutboundingbox, 7.15,
+	{
+		{type = "item", name = "nuclear-reactor", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 1, amount_max = 2},
+		{type = "item", name = "heat-pipe", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 40, amount_max = 80},
+		{type = "item", name = "heat-exchanger", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 2, amount_max = 4},
+		{type = "item", name = "steam-turbine", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 2, amount_max = 6},
+		
+		{type = "item", name = "solar-array", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 40, amount_max = 80},
+		{type = "item", name = "accumulator-battery", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 20, amount_max = 40},
+		
+		{type = "item", name = "huge-electric-pole", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 12, amount_max = 22},
+		
+		{type = "item", name = "big-electric-pole", shared_probability = { min = 0.0, max = 0.8 }, amount_min = 26, amount_max = 52},
+		{type = "item", name = "substation", shared_probability = { min = 0.2, max = 0.9 }, amount_min = 26, amount_max = 42},
+	}),
+
+	generate_storage_hut ("buildings-power-varied-4", loothutboundingbox, 9.15,
+	{
+		{type = "item", name = "solar-array-2", shared_probability = { min = 0.0, max = 0.7 }, amount_min = 10, amount_max = 20},
+		{type = "item", name = "adv-accumulator-battery", shared_probability = { min = 0.0, max = 0.7 }, amount_min = 10, amount_max = 20},
+		
+		{type = "item", name = "nuclear-reactor", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 2, amount_max = 4},
+		{type = "item", name = "heat-pipe", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 50, amount_max = 150},
+		{type = "item", name = "heat-exchanger", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 4, amount_max = 12},
+		{type = "item", name = "steam-turbine", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 6, amount_max = 22},
+		
+		{type = "item", name = "huge-electric-pole", shared_probability = { min = 0.0, max = 1.0 }, amount_min = 20, amount_max = 60},
+		
+		{type = "item", name = "electrical-distributor", shared_probability = { min = 0.4, max = 1 }, amount_min = 16, amount_max = 32},
+		{type = "item", name = "substation", shared_probability = { min = 0.0, max = 0.7 }, amount_min = 16, amount_max = 32},
+	}),
+}
+
+--[[
+
 generate_storage_hut ("buildings-poles-0", loothutboundingbox, 1.15,
 {
-	{item = "medium-wooden-electric-pole", probability = 1, count_min = 20, count_max = 40},
-	{item = "medium-wooden-electric-pole", probability = 0.5, count_min = 10, count_max = 20},
-	{item = "medium-electric-pole", probability = 0.25, count_min = 10, count_max = 20},
+	{type = "item", name = "medium-wooden-electric-pole", independent_probability = 1, amount_min = 20, amount_max = 40},
+	{type = "item", name = "medium-wooden-electric-pole", independent_probability = 0.5, amount_min = 10, amount_max = 20},
+	{type = "item", name = "medium-electric-pole", independent_probability = 0.25, amount_min = 10, amount_max = 20},
 }),
 generate_storage_hut ("buildings-poles-1", loothutboundingbox, 1.25,
 {
-	{item = "medium-electric-pole", probability = 1, count_min = 20, count_max = 50},
-	{item = "medium-electric-pole", probability = 0.5, count_min = 20, count_max = 40},
-	{item = "medium-electric-pole", probability = 0.25, count_min = 20, count_max = 40},
+	{type = "item", name = "medium-electric-pole", independent_probability = 1, amount_min = 20, amount_max = 50},
+	{type = "item", name = "medium-electric-pole", independent_probability = 0.5, amount_min = 20, amount_max = 40},
+	{type = "item", name = "medium-electric-pole", independent_probability = 0.25, amount_min = 20, amount_max = 40},
 }),
 generate_storage_hut ("buildings-poles-2", loothutboundingbox, 3.35,
 {
-	{item = "medium-electric-pole", probability = 1, count_min = 20, count_max = 70},
-	{item = "big-electric-pole", probability = 0.5, count_min = 10, count_max = 30},
-	{item = "big-electric-pole", probability = 0.25, count_min = 10, count_max = 20},
+	{type = "item", name = "medium-electric-pole", independent_probability = 1, amount_min = 20, amount_max = 70},
+	{type = "item", name = "big-electric-pole", independent_probability = 0.5, amount_min = 10, amount_max = 30},
+	{type = "item", name = "big-electric-pole", independent_probability = 0.25, amount_min = 10, amount_max = 20},
 }),
 generate_storage_hut ("buildings-poles-3", loothutboundingbox, 5.35,
 {
-	{item = "big-electric-pole", probability = 1, count_min = 20, count_max = 40},
-	{item = "big-electric-pole", probability = 0.5, count_min = 20, count_max = 40},
-	{item = "substation", probability = 0.25, count_min = 10, count_max = 20},
+	{type = "item", name = "big-electric-pole", independent_probability = 1, amount_min = 20, amount_max = 40},
+	{type = "item", name = "big-electric-pole", independent_probability = 0.5, amount_min = 20, amount_max = 40},
+	{type = "item", name = "substation", independent_probability = 0.25, amount_min = 10, amount_max = 20},
 }),
 generate_storage_hut ("buildings-poles-4", loothutboundingbox, 8.35,
 {
-	{item = "huge-electric-pole", probability = 1, count_min = 10, count_max = 30},
-	{item = "substation", probability = 1, count_min = 10, count_max = 30},
-	{item = "substation", probability = 0.5, count_min = 10, count_max = 20},
-	{item = "substation", probability = 0.25, count_min = 10, count_max = 20},
+	{type = "item", name = "huge-electric-pole", independent_probability = 1, amount_min = 10, amount_max = 30},
+	{type = "item", name = "substation", independent_probability = 1, amount_min = 10, amount_max = 30},
+	{type = "item", name = "substation", independent_probability = 0.5, amount_min = 10, amount_max = 20},
+	{type = "item", name = "substation", independent_probability = 0.25, amount_min = 10, amount_max = 20},
 }),
 generate_storage_hut ("buildings-poles-4", loothutboundingbox, 10.35,
 {
-	{item = "electrical-distributor", probability = 1, count_min = 10, count_max = 30},
-	{item = "substation", probability = 0.5, count_min = 10, count_max = 20},
-	{item = "substation", probability = 0.25, count_min = 10, count_max = 20},
+	{type = "item", name = "electrical-distributor", independent_probability = 1, amount_min = 10, amount_max = 30},
+	{type = "item", name = "substation", independent_probability = 0.5, amount_min = 10, amount_max = 20},
+	{type = "item", name = "substation", independent_probability = 0.25, amount_min = 10, amount_max = 20},
 }),
 }
 
 data:extend{
 generate_storage_hut ("energy-production-0", loothutboundingbox, 1.31,
 {
-	{item = "steam-engine", probability = 1, count_min = 5, count_max = 30},
-	{item = "boiler", probability = 1, count_min = 5, count_max = 15},
+	{type = "item", name = "steam-engine", independent_probability = 1, amount_min = 5, amount_max = 30},
+	{type = "item", name = "boiler", independent_probability = 1, amount_min = 5, amount_max = 15},
 }),
 generate_storage_hut ("energy-production-1", loothutboundingbox, 2.31,
 {
-	{item = "solar-panel", probability = 1, count_min = 10, count_max = 60},
+	{type = "item", name = "solar-panel", independent_probability = 1, amount_min = 10, amount_max = 60},
 }),
 generate_storage_hut ("energy-production-2", loothutboundingbox, 3.51,
 {
-	{item = "accumulator", probability = 1, count_min = 10, count_max = 50},
+	{type = "item", name = "accumulator", independent_probability = 1, amount_min = 10, amount_max = 50},
 }),
 generate_storage_hut ("energy-production-3", loothutboundingbox, 5.51,
 {
-	{item = "solar-array", probability = 1, count_min = 10, count_max = 50},
+	{type = "item", name = "solar-array", independent_probability = 1, amount_min = 10, amount_max = 50},
 }),
 generate_storage_hut ("energy-production-4", loothutboundingbox, 7.51,
 {
-	{item = "accumulator-battery", probability = 1, count_min = 10, count_max = 50},
+	{type = "item", name = "accumulator-battery", independent_probability = 1, amount_min = 10, amount_max = 50},
 }),
 generate_storage_hut ("energy-production-5", loothutboundingbox, 10.51,
 {
-	{item = "solar-array-2", probability = 1, count_min = 10, count_max = 50},
+	{type = "item", name = "solar-array-2", independent_probability = 1, amount_min = 10, amount_max = 50},
 }),
 generate_storage_hut ("energy-production-6", loothutboundingbox, 13.11,
 {
-	{item = "adv-accumulator-battery", probability = 1, count_min = 10, count_max = 50},
+	{type = "item", name = "adv-accumulator-battery", independent_probability = 1, amount_min = 10, amount_max = 50},
 }),
 generate_storage_hut ("energy-production-7", loothutboundingbox, 6.11,
 {
-	{item = "steam-turbine", probability = 1, count_min = 5, count_max = 20},
+	{type = "item", name = "steam-turbine", independent_probability = 1, amount_min = 5, amount_max = 20},
 }),
 }
 
-data:extend{
-generate_storage_hut ("resource-extraction-1", loothutboundingbox, 2.21,
-{
-	{item = "gas-extractor", probability = 1, count_min = 2, count_max = 20},
-}),
-generate_storage_hut ("resource-extraction-2", loothutboundingbox, 1.31,
-{
-	{item = "electric-mining-drill", probability = 1, count_min = 6, count_max = 25},
-}),
-generate_storage_hut ("resource-extraction-3", loothutboundingbox, 3.31,
-{
-	{item = "pumpjack", probability = 1, count_min = 2, count_max = 20},
-}),
-generate_storage_hut ("resource-extraction-4", loothutboundingbox, 5.21,
-{
-	{item = "electric-grinder", probability = 1, count_min = 5, count_max = 25},
-}),
-generate_storage_hut ("resource-extraction-5", loothutboundingbox, 2.11,
-{
-	{item = "large-burner-mining-drill", probability = 1, count_min = 5, count_max = 25},
-}),
-generate_storage_hut ("resource-extraction-6", loothutboundingbox, 7.21,
-{
-	{item = "steam-turbine-miner", probability = 1, count_min = 5, count_max = 25},
-}),
-}
+--]]
 
 
 data:extend{
-	generate_storage_hut ("repair-packs-1", loothutboundingbox, 3.081,
+	generate_storage_hut ("buildings-machines-varied-0", loothutboundingbox, 1.21,
 	{
-		{item = "repair-pack", probability = 1, count_min = 40, count_max = 150},
+		{type = "item", name = "large-burner-mining-drill", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 6, amount_max = 12},
+		
+		{type = "item", name = "electric-mining-drill", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 4, amount_max = 20},
+		
+		
+		{type = "item", name = "steel-furnace", shared_probability = { min = 0.5, max = 0.7 }, amount_min = 10, amount_max = 20},
+		
+		{type = "item", name = "stone-furnace", shared_probability = { min = 0.2, max = 0.5 }, amount_min = 20, amount_max = 60},
+		
+		
+		{type = "item", name = "assembling-machine-1", shared_probability = { min = 0.0, max = 0.2 }, amount_min = 6, amount_max = 18},
+
 	}),
-
-	generate_storage_hut ("repair-packs-2", loothutboundingbox, 7.081,
+	
+	generate_storage_hut ("buildings-machines-varied-1", loothutboundingbox, 2.21,
 	{
-		{item = "repair-pack-advanced", probability = 1, count_min = 30, count_max = 120},
+		{type = "item", name = "large-burner-mining-drill", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 30, amount_max = 60},
+		
+		{type = "item", name = "electric-mining-drill", shared_probability = { min = 0.6, max = 0.8 }, amount_min = 20, amount_max = 50},
+		
+		
+		{type = "item", name = "steel-furnace", shared_probability = { min = 0.4, max = 0.6 }, amount_min = 20, amount_max = 50},
+		
+		{type = "item", name = "big-furnace", shared_probability = { min = 0.3, max = 0.4 }, amount_min = 10, amount_max = 20},
+		
+		{type = "item", name = "basic-electric-furnace", shared_probability = { min = 0.2, max = 0.3 }, amount_min = 10, amount_max = 20},
+		
+		
+		{type = "item", name = "assembling-machine-1", shared_probability = { min = 0.1, max = 0.2 }, amount_min = 16, amount_max = 32},
+		
+		{type = "item", name = "assembling-machine-2", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 10, amount_max = 16},
+	}),
+	
+	generate_storage_hut ("buildings-machines-varied-2", loothutboundingbox, 3.21,
+	{
+		{type = "item", name = "large-burner-mining-drill", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 40, amount_max = 60},
+		
+		{type = "item", name = "electric-mining-drill", shared_probability = { min = 0.8, max = 0.9 }, amount_min = 50, amount_max = 100},
+		
+		
+		{type = "item", name = "basic-electric-furnace", shared_probability = { min = 0.6, max = 0.8 }, amount_min = 20, amount_max = 40},
+				
+		{type = "item", name = "big-furnace", shared_probability = { min = 0.5, max = 0.6 }, amount_min = 20, amount_max = 40},
+		
+		{type = "item", name = "electric-furnace", shared_probability = { min = 0.4, max = 0.5 }, amount_min = 8, amount_max = 24},		
+	
+		{type = "item", name = "mini-electric-furnace", shared_probability = { min = 0.3, max = 0.4 }, amount_min = 8, amount_max = 16},		
+		
+		
+		{type = "item", name = "assembling-machine-2", shared_probability = { min = 0.0, max = 0.3 }, amount_min = 20, amount_max = 40},
+
+	}),
+	
+	generate_storage_hut ("buildings-machines-varied-3", loothutboundingbox, 4.21,
+	{
+		{type = "item", name = "large-burner-mining-drill", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 50, amount_max = 100},
+		
+		{type = "item", name = "electric-mining-drill", shared_probability = { min = 0.8, max = 0.9 }, amount_min = 50, amount_max = 100},
+		
+		{type = "item", name = "electric-grinder", shared_probability = { min = 0.6, max = 0.8 }, amount_min = 8, amount_max = 22},		
+		
+		
+		{type = "item", name = "electric-furnace", shared_probability = { min = 0.4, max = 0.6 }, amount_min = 16, amount_max = 40},
+		
+		{type = "item", name = "mini-electric-furnace", shared_probability = { min = 0.3, max = 0.4 }, amount_min = 6, amount_max = 12},
+		
+		
+		{type = "item", name = "assembling-machine-3", shared_probability = { min = 0.2, max = 0.3 }, amount_min = 6, amount_max = 12},
+			
+		{type = "item", name = "assembling-machine-2", shared_probability = { min = 0.0, max = 0.2 }, amount_min = 20, amount_max = 40},
+
+	}),
+	
+	generate_storage_hut ("buildings-machines-varied-4", loothutboundingbox, 6.21,
+	{
+		{type = "item", name = "steel-forge", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 6, amount_max = 12},
+		
+		{type = "item", name = "electric-furnace", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 20, amount_max = 60},
+		
+		
+		{type = "item", name = "gas-extractor", shared_probability = { min = 0.5, max = 0.7 }, amount_min = 6, amount_max = 20},		
+		{type = "item", name = "pumpjack", shared_probability = {  min = 0.5, max = 0.7 }, amount_min = 6, amount_max = 12},
+		
+		
+		{type = "item", name = "assembling-machine-2", shared_probability = { min = 0.3, max = 0.5 }, amount_min = 30, amount_max = 60},
+			
+		{type = "item", name = "assembling-machine-3", shared_probability = { min = 0.2, max = 0.3 }, amount_min = 10, amount_max = 20},
+		
+			
+		{type = "item", name = "electric-grinder", shared_probability = { min = 0.0, max = 0.2 }, amount_min = 20, amount_max = 50},		
+
+	}),
+	
+	generate_storage_hut ("buildings-machines-varied-5", loothutboundingbox, 8.21,
+	{
+		{type = "item", name = "steel-forge", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 16, amount_max = 32},
+		
+		{type = "item", name = "electric-furnace", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 40, amount_max = 60},
+		
+		
+		{type = "item", name = "assembling-machine-3", shared_probability = { min = 0.5, max = 0.7 }, amount_min = 20, amount_max = 40},
+		
+		{type = "item", name = "metal-press-machine", shared_probability = { min = 0.4, max = 0.5 }, amount_min = 4, amount_max = 12},
+		
+		
+		{type = "item", name = "gas-extractor", shared_probability = { min = 0.2, max = 0.4 }, amount_min = 4, amount_max = 20},
+		{type = "item", name = "pumpjack", shared_probability = { min = 0.2, max = 0.4 }, amount_min = 6, amount_max = 12},
+		
+		
+		{type = "item", name = "electric-grinder", shared_probability = { min = 0.0, max = 0.2 }, amount_min = 40, amount_max = 80},
+
+	}),
+	
+	generate_storage_hut ("buildings-machines-varied-6", loothutboundingbox, 10.21,
+	{
+		{type = "item", name = "electric-foundry", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 6, amount_max = 16},
+		
+		{type = "item", name = "steel-forge", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 24, amount_max = 80},
+		
+		{type = "item", name = "heatpipe-furnace", shared_probability = { min = 0.6, max = 0.7 }, amount_min = 6, amount_max = 16},
+		
+		
+		{type = "item", name = "steam-turbine-miner", shared_probability = { min = 0.6, max = 0.7 }, amount_min = 6, amount_max = 18},
+		
+		{type = "item", name = "electric-grinder", shared_probability = { min = 0.4, max = 0.6 }, amount_min = 50, amount_max = 100},		
+		
+		
+		{type = "item", name = "metal-press-machine", shared_probability = { min = 0.2, max = 0.4 }, amount_min = 6, amount_max = 24},
+		
+		{type = "item", name = "factory-large", shared_probability = { min = 0.1, max = 0.2 }, amount_min = 6, amount_max = 12},
+		
+		{type = "item", name = "assembling-machine-3", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 40, amount_max = 80},
+
+	}),
+	
+	generate_storage_hut ("buildings-machines-varied-7", loothutboundingbox, 12.21,
+	{
+		{type = "item", name = "heatpipe-furnace", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 8, amount_max = 18},
+		
+		{type = "item", name = "electric-foundry", shared_probability = { min = 0.6, max = 0.8 }, amount_min = 14, amount_max = 40},
+		
+		
+		{type = "item", name = "steam-turbine-miner", shared_probability = { min = 0.4, max = 0.6 }, amount_min = 16, amount_max = 42},
+		
+		
+		{type = "item", name = "metal-press-machine", shared_probability = { min = 0.2, max = 0.4 }, amount_min = 16, amount_max = 42},
+		
+		{type = "item", name = "factory-large", shared_probability = { min = 0.0, max = 0.2 }, amount_min = 16, amount_max = 32},
+
+	}),
+}
+
+--[[
+
+data:extend{
+	generate_storage_hut ("resource-extraction-1", loothutboundingbox, 2.21,
+	{
+		{type = "item", name = "gas-extractor", independent_probability = 1, amount_min = 2, amount_max = 20},
+	}),
+	generate_storage_hut ("resource-extraction-2", loothutboundingbox, 1.31,
+	{
+		{type = "item", name = "electric-mining-drill", independent_probability = 1, amount_min = 6, amount_max = 25},
+	}),
+	generate_storage_hut ("resource-extraction-3", loothutboundingbox, 3.31,
+	{
+		{type = "item", name = "pumpjack", independent_probability = 1, amount_min = 2, amount_max = 20},
+	}),
+	generate_storage_hut ("resource-extraction-4", loothutboundingbox, 5.21,
+	{
+		{type = "item", name = "electric-grinder", independent_probability = 1, amount_min = 5, amount_max = 25},
+	}),
+	generate_storage_hut ("resource-extraction-5", loothutboundingbox, 2.11,
+	{
+		{type = "item", name = "large-burner-mining-drill", independent_probability = 1, amount_min = 5, amount_max = 25},
+	}),
+	generate_storage_hut ("resource-extraction-6", loothutboundingbox, 7.21,
+	{
+		{type = "item", name = "steam-turbine-miner", independent_probability = 1, amount_min = 5, amount_max = 25},
 	}),
 }
 
 data:extend{
 	generate_storage_hut ("buildings-smelters-1", loothutboundingbox, 1.48,
 	{
-		{item = "stone-furnace", probability = 1, count_min = 10, count_max = 32},
+		{type = "item", name = "stone-furnace", independent_probability = 1, amount_min = 10, amount_max = 32},
 	}),
 	generate_storage_hut ("buildings-smelters-2", loothutboundingbox, 2.48,
 	{
-		{item = "steel-furnace", probability = 1, count_min = 10, count_max = 32},
+		{type = "item", name = "steel-furnace", independent_probability = 1, amount_min = 10, amount_max = 32},
 	}),
 	generate_storage_hut ("buildings-smelters-3", loothutboundingbox, 3.18,
 	{
-		{item = "big-furnace", probability = 1, count_min = 10, count_max = 32},
+		{type = "item", name = "big-furnace", independent_probability = 1, amount_min = 10, amount_max = 32},
 	}),
 	generate_storage_hut ("buildings-smelters-4", loothutboundingbox, 3.58,
 	{
-		{item = "basic-electric-furnace", probability = 1, count_min = 10, count_max = 32},
+		{type = "item", name = "basic-electric-furnace", independent_probability = 1, amount_min = 10, amount_max = 32},
 	}),
 	generate_storage_hut ("buildings-smelters-5", loothutboundingbox, 4.48,
 	{
-		{item = "mini-electric-furnace", probability = 1, count_min = 10, count_max = 32},
+		{type = "item", name = "mini-electric-furnace", independent_probability = 1, amount_min = 10, amount_max = 32},
 	}),
 	generate_storage_hut ("buildings-smelters-6", loothutboundingbox, 6.18,
 	{
-		{item = "electric-furnace", probability = 1, count_min = 10, count_max = 32},
+		{type = "item", name = "electric-furnace", independent_probability = 1, amount_min = 10, amount_max = 32},
 	}),
 	generate_storage_hut ("buildings-smelters-7", loothutboundingbox, 8.48,
 	{
-		{item = "steel-forge", probability = 1, count_min = 10, count_max = 32},
+		{type = "item", name = "steel-forge", independent_probability = 1, amount_min = 10, amount_max = 32},
 	}),
 	generate_storage_hut ("buildings-smelters-8", loothutboundingbox, 11.48,
 	{
-		{item = "electric-foundry", probability = 1, count_min = 10, count_max = 32},
+		{type = "item", name = "electric-foundry", independent_probability = 1, amount_min = 10, amount_max = 32},
 	}),
 	generate_storage_hut ("buildings-smelters-9", loothutboundingbox, 13.48,
 	{
-		{item = "heatpipe-furnace", probability = 1, count_min = 10, count_max = 32},
+		{type = "item", name = "heatpipe-furnace", independent_probability = 1, amount_min = 10, amount_max = 32},
 	}),
 }
 
@@ -1308,447 +1655,750 @@ data:extend{
 data:extend{
 	generate_storage_hut ("buildings-machines-1", loothutboundingbox, 1.89,
 	{
-		{item = "assembling-machine-1", probability = 1, count_min = 10, count_max = 30},
+		{type = "item", name = "assembling-machine-1", independent_probability = 1, amount_min = 10, amount_max = 30},
 	}),
 	generate_storage_hut ("buildings-machines-3", loothutboundingbox, 3.89,
 	{
-		{item = "mini-assembling-machine-1", probability = 1, count_min = 10, count_max = 40},
+		{type = "item", name = "mini-assembling-machine-1", independent_probability = 1, amount_min = 10, amount_max = 40},
 	}),
 	generate_storage_hut ("buildings-machines-4", loothutboundingbox, 3.89,
 	{
-		{item = "assembling-machine-2", probability = 1, count_min = 10, count_max = 30},
+		{type = "item", name = "assembling-machine-2", independent_probability = 1, amount_min = 10, amount_max = 30},
 	}),
 	generate_storage_hut ("buildings-machines-5", loothutboundingbox, 7.89,
 	{
-		{item = "assembling-machine-3", probability = 1, count_min = 10, count_max = 30},
+		{type = "item", name = "assembling-machine-3", independent_probability = 1, amount_min = 10, amount_max = 30},
 	}),
 	generate_storage_hut ("buildings-machines-6", loothutboundingbox, 13.89,
 	{
-		{item = "factory-large", probability = 1, count_min = 5, count_max = 15},
+		{type = "item", name = "factory-large", independent_probability = 1, amount_min = 5, amount_max = 15},
 	}),
 	generate_storage_hut ("buildings-machines-7", loothutboundingbox, 10.89,
 	{
-		{item = "metal-press-machine", probability = 1, count_min = 4, count_max = 10},
+		{type = "item", name = "metal-press-machine", independent_probability = 1, amount_min = 4, amount_max = 10},
 	}),
 	generate_storage_hut ("buildings-machines-8", loothutboundingbox, 8.89,
 	{
-		{item = "centrifuge", probability = 1, count_min = 4, count_max = 10},
+		{type = "item", name = "centrifuge", independent_probability = 1, amount_min = 4, amount_max = 10},
+	}),
+}
+--]]
+
+data:extend{
+	generate_storage_hut ("random-bits-varied-1", loothutboundingbox, 1.81,
+	{
+		{type = "item", name = "repair-pack", shared_probability = { min = 0.4, max = 1.0 }, amount_min = 20, amount_max = 40},
+		
+		{type = "item", name = "small-lamp", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 20, amount_max = 40},
+	}),
+	
+		generate_storage_hut ("random-bits-varied-2", loothutboundingbox, 3.81,
+	{
+		{type = "item", name = "repair-pack", shared_probability = { min = 0.4, max = 1.0 }, amount_min = 40, amount_max = 80},
+		
+		{type = "item", name = "led-lamp", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 20, amount_max = 40},
+	}),
+	
+	generate_storage_hut ("random-bits-varied-3", loothutboundingbox, 5.81,
+	{
+		{type = "item", name = "repair-pack-advanced", shared_probability = { min = 0.4, max = 1.0 }, amount_min = 20, amount_max = 40},
+		
+		{type = "item", name = "floodlight-lamp", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 20, amount_max = 40},
+	}),
+	
+		generate_storage_hut ("random-bits-varied-3", loothutboundingbox, 7.81,
+	{
+		{type = "item", name = "repair-pack-advanced", shared_probability = { min = 0.4, max = 1.0 }, amount_min = 40, amount_max = 80},
+		
+		{type = "item", name = "floor-lamp", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 20, amount_max = 40},
 	}),
 }
 
-data:extend{
+--[[
+data:extend{	
+	generate_storage_hut ("repair-packs-1", loothutboundingbox, 3.081,
+	{
+		{type = "item", name = "repair-pack", independent_probability = 1, amount_min = 40, amount_max = 150},
+	}),
+
+	generate_storage_hut ("repair-packs-2", loothutboundingbox, 7.081,
+	{
+		{type = "item", name = "repair-pack-advanced", independent_probability = 1, amount_min = 30, amount_max = 120},
+	}),
+}
+]]--
+
+data:extend({
 	generate_storage_hut ("buildings-machines-lab-1", loothutboundingbox, 2.89,
 	{
-		{item = "basic-lab", probability = 1, count_min = 8, count_max = 30},
+		{type = "item", name = "basic-lab", independent_probability = 1, amount_min = 8, amount_max = 30},
 	}),
 	generate_storage_hut ("buildings-machines-lab-2", loothutboundingbox, 4.89,
 	{
-		{item = "lab", probability = 1, count_min = 6, count_max = 20},
+		{type = "item", name = "lab", independent_probability = 1, amount_min = 6, amount_max = 20},
 	}),
 	generate_storage_hut ("buildings-machines-lab-3", loothutboundingbox, 9.89,
 	{
-		{item = "lab-large", probability = 1, count_min = 4, count_max = 15},
+		{type = "item", name = "lab-large", independent_probability = 1, amount_min = 4, amount_max = 15},
 	}),
-}
+})
 
-data:extend{
+data:extend({
+
+	generate_storage_hut ("modules-varied-0", loothutboundingbox, 4.31,
+	{
+		{type = "item", name = "speed-module", shared_probability = { min = 0.6, max = 1.0 }, amount_min = 9, amount_max = 16},
+		
+		{type = "item", name = "efficiency-module", shared_probability = { min = 0.3, max = 0.7 }, amount_min = 9, amount_max = 16},		
+		
+		{type = "item", name = "productivity-module", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 9, amount_max = 16},
+	}),
+	generate_storage_hut ("modules-varied-1", loothutboundingbox, 5.31,
+	{
+		{type = "item", name = "speed-module", shared_probability = { min = 0.6, max = 1.0 }, amount_min = 12, amount_max = 32},
+		{type = "item", name = "beacon", shared_probability = { min = 0.66, max = 0.76 }, amount_min = 1, amount_max = 3},
+		
+		{type = "item", name = "efficiency-module", shared_probability = { min = 0.3, max = 0.7 }, amount_min = 12, amount_max = 32},	
+		{type = "item", name = "beacon", shared_probability = { min = 0.33, max = 0.43 }, amount_min = 1, amount_max = 3},			
+		
+		{type = "item", name = "productivity-module", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 12, amount_max = 32},
+		{type = "item", name = "beacon", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 1, amount_max = 3},
+	}),
+		generate_storage_hut ("modules-varied-2", loothutboundingbox, 8.31,
+	{
+		{type = "item", name = "speed-module-2", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 12, amount_max = 32},
+		{type = "item", name = "beacon", shared_probability = { min = 0.66, max = 0.76 }, amount_min = 2, amount_max = 6},
+		
+		{type = "item", name = "efficiency-module-2", shared_probability = { min = 0.3, max = 0.7 }, amount_min = 12, amount_max = 32},
+		{type = "item", name = "beacon", shared_probability = { min = 0.33, max = 0.43 }, amount_min = 2, amount_max = 6},				
+		
+		{type = "item", name = "productivity-module-2", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 12, amount_max = 32},
+		{type = "item", name = "beacon", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 2, amount_max = 6},
+	}),
+		generate_storage_hut ("modules-varied-3", loothutboundingbox, 10.31,
+	{
+		{type = "item", name = "speed-module-3", shared_probability = { min = 0.6, max = 1.0 }, amount_min = 12, amount_max = 32},
+		{type = "item", name = "beacon", shared_probability = { min = 0.66, max = 0.76 }, amount_min = 4, amount_max = 12},
+		
+		{type = "item", name = "efficiency-module-3", shared_probability = { min = 0.3, max = 0.7 }, amount_min = 12, amount_max = 32},		
+		{type = "item", name = "beacon", shared_probability = { min = 0.33, max = 0.43 }, amount_min = 4, amount_max = 12},		
+		
+		{type = "item", name = "productivity-module-3", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 12, amount_max = 32},
+		{type = "item", name = "beacon", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 4, amount_max = 12},
+	}),
+		generate_storage_hut ("modules-varied-4", loothutboundingbox, 14.31,
+	{
+		{type = "item", name = "speed-module", shared_probability = { min = 0.60, max = 1.0 }, amount_min = 12, amount_max = 32},
+		{type = "item", name = "beacon", shared_probability = { min = 0.66, max = 0.76 }, amount_min = 6, amount_max = 16},
+		
+		{type = "item", name = "efficiency-module", shared_probability = { min = 0.3, max = 0.7 }, amount_min = 12, amount_max = 32},	
+		{type = "item", name = "beacon", shared_probability = { min = 0.33, max = 0.43 }, amount_min = 6, amount_max = 16},		
+		
+		{type = "item", name = "productivity-module", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 12, amount_max = 32},
+		{type = "item", name = "beacon", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 6, amount_max = 16},
+
+	}),
+})	
+	--[[
 	generate_storage_hut ("buildings-speed-modules-1", loothutboundingbox, 5.31,
 	{
-		{item = "speed-module", probability = 1, count_min = 5, count_max = 40},
+		{type = "item", name = "speed-module", independent_probability = 1, amount_min = 5, amount_max = 40},
 	}),
 	generate_storage_hut ("buildings-speed-modules-2", loothutboundingbox, 8.31,
 	{
-		{item = "speed-module-2", probability = 1, count_min = 5, count_max = 30},
+		{type = "item", name = "speed-module-2", independent_probability = 1, amount_min = 5, amount_max = 30},
 	}),
 	generate_storage_hut ("buildings-speed-modules-3", loothutboundingbox, 10.31,
 	{
-		{item = "speed-module-3", probability = 1, count_min = 10, count_max = 20},
+		{type = "item", name = "speed-module-3", independent_probability = 1, amount_min = 10, amount_max = 20},
 	}),
 	generate_storage_hut ("buildings-speed-modules-4", loothutboundingbox, 14.31,
 	{
-		{item = "speed-module-4", probability = 1, count_min = 5, count_max = 10},
+		{type = "item", name = "speed-module-4", independent_probability = 1, amount_min = 5, amount_max = 10},
 	}),
 	generate_storage_hut ("buildings-eff-modules-1", loothutboundingbox, 5.32,
 	{
-		{item = "efficiency-module", probability = 1, count_min = 5, count_max = 40},
+		{type = "item", name = "efficiency-module", independent_probability = 1, amount_min = 5, amount_max = 40},
 	}),
 	generate_storage_hut ("buildings-eff-modules-2", loothutboundingbox, 8.32,
 	{
-		{item = "efficiency-module-2", probability = 1, count_min = 5, count_max = 30},
+		{type = "item", name = "efficiency-module-2", independent_probability = 1, amount_min = 5, amount_max = 30},
 	}),
 	generate_storage_hut ("buildings-eff-modules-3", loothutboundingbox, 10.32,
 	{
-		{item = "efficiency-module-3", probability = 1, count_min = 5, count_max = 20},
+		{type = "item", name = "efficiency-module-3", independent_probability = 1, amount_min = 5, amount_max = 20},
 	}),
 	generate_storage_hut ("buildings-eff-modules-4", loothutboundingbox, 14.32,
 	{
-		{item = "efficiency-module-4", probability = 1, count_min = 5, count_max = 10},
+		{type = "item", name = "efficiency-module-4", independent_probability = 1, amount_min = 5, amount_max = 10},
 	}),
 	generate_storage_hut ("buildings-productivity-modules-1", loothutboundingbox, 5.33,
 	{
-		{item = "productivity-module", probability = 1, count_min = 5, count_max = 40},
+		{type = "item", name = "productivity-module", independent_probability = 1, amount_min = 5, amount_max = 40},
 	}),
 	generate_storage_hut ("buildings-productivity-modules-2", loothutboundingbox, 8.33,
 	{
-		{item = "productivity-module-2", probability = 1, count_min = 5, count_max = 30},
+		{type = "item", name = "productivity-module-2", independent_probability = 1, amount_min = 5, amount_max = 30},
 	}),
 	generate_storage_hut ("buildings-productivity-modules-3", loothutboundingbox, 10.33,
 	{
-		{item = "productivity-module-3", probability = 1, count_min = 5, count_max = 20},
+		{type = "item", name = "productivity-module-3", independent_probability = 1, amount_min = 5, amount_max = 20},
 	}),
 	generate_storage_hut ("buildings-productivity-modules-4", loothutboundingbox, 14.33,
 	{
-		{item = "productivity-module-4", probability = 1, count_min = 5, count_max = 10},
+		{type = "item", name = "productivity-module-4", independent_probability = 1, amount_min = 5, amount_max = 10},
 	}),
 	generate_storage_hut ("buildings-beacon-1", loothutboundingbox, 6.34,
 	{
-		{item = "beacon", probability = 1, count_min = 3, count_max = 9},
+		{type = "item", name = "beacon", independent_probability = 1, amount_min = 3, amount_max = 9},
 	}),
 	generate_storage_hut ("buildings-beacon-2", loothutboundingbox, 10.34,
 	{
-		{item = "beacon", probability = 1, count_min = 6, count_max = 22},
+		{type = "item", name = "beacon", independent_probability = 1, amount_min = 6, amount_max = 22},
 	}),
-}
+	--]]
 
 
 
-data:extend{
-generate_storage_hut ("buildings-robologistics-0", loothutboundingbox, 3.43,
-{
-	{item = "mini-roboport", probability = 1, count_min = 4, count_max = 15},
-	{item = "construction-robot", probability =  1, count_min = 6, count_max = 25},
-	{item = "construction-robot", probability =  0.5, count_min = 6, count_max = 25},
-	{item = "logistic-robot", probability =  0.25, count_min = 6, count_max = 15},
-	{item = "logistic-robot", probability =  0.1, count_min = 6, count_max = 15},
-	{item = "storage-chest", probability =  0.5, count_min = 1, count_max = 4},
-	{item = "active-provider-chest", probability =  0.1, count_min = 1, count_max = 10},
-	{item = "requester-chest", probability =  0.1, count_min = 1, count_max = 10},
-}),
-generate_storage_hut ("buildings-robologistics-1", loothutboundingbox, 5.43,
-{
-	{item = "mini-roboport", probability = 1, count_min = 6, count_max = 25},
-	{item = "construction-robot", probability =  1, count_min = 6, count_max = 40},
-	{item = "construction-robot", probability =  0.5, count_min = 6, count_max = 40},
-	{item = "logistic-robot", probability =  0.25, count_min = 6, count_max = 20},
-	{item = "logistic-robot", probability =  0.1, count_min = 6, count_max = 20},
-	{item = "storage-chest", probability =  0.5, count_min = 2, count_max = 10},
-	{item = "active-provider-chest", probability =  0.1, count_min = 1, count_max = 10},
-	{item = "requester-chest", probability =  0.1, count_min = 1, count_max = 10},
-}),
-generate_storage_hut ("buildings-robologistics-2", loothutboundingbox, 7.43,
-{
-	{item = "roboport", probability = 1, count_min = 5, count_max = 15},
-	{item = "construction-robot", probability =  1, count_min = 5, count_max = 60},
-	{item = "construction-robot", probability =  0.5, count_min = 5, count_max = 60},
-	{item = "logistic-robot", probability =  0.55, count_min = 4, count_max = 40},
-	{item = "logistic-robot", probability =  0.1, count_min = 4, count_max = 40},
-	{item = "logistic-storage-hut", probability =  0.5, count_min = 2, count_max = 10},
-	{item = "logistic-active-provider-hut", probability =  0.5, count_min = 2, count_max = 10},
-	{item = "logistic-requester-hut", probability =  0.5, count_min = 2, count_max = 10},
-}),
-generate_storage_hut ("buildings-robologistics-3", loothutboundingbox, 9.43,
-{
-	{item = "roboport", probability = 1, count_min = 10, count_max = 30},
-	{item = "construction-robot", probability =  1, count_min = 10, count_max = 80},
-	{item = "construction-robot", probability =  0.5, count_min = 10, count_max = 80},
-	{item = "logistic-robot", probability =  0.55, count_min = 4, count_max = 40},
-	{item = "logistic-robot", probability =  0.1, count_min = 4, count_max = 40},
-	{item = "logistic-storage-hut", probability =  0.5, count_min = 2, count_max = 10},
-	{item = "logistic-active-provider-hut", probability =  0.5, count_min = 2, count_max = 10},
-	{item = "logistic-requester-hut", probability =  0.5, count_min = 2, count_max = 10},
-}),
-generate_storage_hut ("buildings-robologistics-4", loothutboundingbox, 11.43,
-{
-	{item = "roboport-major", probability = 1, count_min = 2, count_max = 10},
-	{item = "construction-robot", probability =  1, count_min = 4, count_max = 100},
-	{item = "construction-robot", probability =  0.5, count_min = 4, count_max = 100},
-	{item = "logistic-robot", probability =  0.55, count_min = 4, count_max = 80},
-	{item = "logistic-robot", probability =  0.1, count_min = 4, count_max = 80},
-	{item = "logistic-warehouse", probability =  0.5, count_min = 2, count_max = 10},
-	{item = "logistic-warehouse-active-provider", probability =  0.5, count_min = 2, count_max = 10},
-	{item = "logistic-warehouse-requester", probability =  0.5, count_min = 2, count_max = 10},
-}),
-generate_storage_hut ("buildings-robologistics-5", loothutboundingbox, 13.43,
-{
-	{item = "roboport-major", probability = 1, count_min = 5, count_max = 20},
-	{item = "construction-robot", probability =  1, count_min = 10, count_max = 100},
-	{item = "construction-robot", probability =  0.6, count_min = 10, count_max = 100},
-	{item = "logistic-robot", probability =  1, count_min = 10, count_max = 80},
-	{item = "logistic-robot", probability =  0.6, count_min = 10, count_max = 80},
-	{item = "logistic-warehouse", probability =  0.5, count_min = 2, count_max = 10},
-	{item = "logistic-warehouse-active-provider", probability =  0.5, count_min = 2, count_max = 10},
-	{item = "logistic-warehouse-requester", probability =  0.5, count_min = 2, count_max = 10},
-}),
-}
 
-data:extend{
-generate_storage_hut ("logistics-inserters-0", loothutboundingbox, 1.26,
+data:extend({
+	generate_storage_hut ("buildings-robologistics-0", loothutboundingbox, 3.43,
+	{
+		{type = "item", name = "mini-roboport", independent_probability = 1, amount_min = 4, amount_max = 15},
+		{type = "item", name = "construction-robot", independent_probability =  1, amount_min = 6, amount_max = 25},
+		{type = "item", name = "construction-robot", independent_probability =  0.5, amount_min = 6, amount_max = 25},
+		{type = "item", name = "logistic-robot", independent_probability =  0.25, amount_min = 6, amount_max = 15},
+		{type = "item", name = "logistic-robot", independent_probability =  0.1, amount_min = 6, amount_max = 15},
+		{type = "item", name = "storage-chest", independent_probability =  0.5, amount_min = 1, amount_max = 4},
+		{type = "item", name = "active-provider-chest", independent_probability =  0.1, amount_min = 1, amount_max = 10},
+		{type = "item", name = "requester-chest", independent_probability =  0.1, amount_min = 1, amount_max = 10},
+	}),
+	generate_storage_hut ("buildings-robologistics-1", loothutboundingbox, 5.43,
+	{
+		{type = "item", name = "mini-roboport", independent_probability = 1, amount_min = 6, amount_max = 25},
+		{type = "item", name = "construction-robot", independent_probability =  1, amount_min = 6, amount_max = 40},
+		{type = "item", name = "construction-robot", independent_probability =  0.5, amount_min = 6, amount_max = 40},
+		{type = "item", name = "logistic-robot", independent_probability =  0.25, amount_min = 6, amount_max = 20},
+		{type = "item", name = "logistic-robot", independent_probability =  0.1, amount_min = 6, amount_max = 20},
+		{type = "item", name = "storage-chest", independent_probability =  0.5, amount_min = 2, amount_max = 10},
+		{type = "item", name = "active-provider-chest", independent_probability =  0.1, amount_min = 1, amount_max = 10},
+		{type = "item", name = "requester-chest", independent_probability =  0.1, amount_min = 1, amount_max = 10},
+	}),
+	generate_storage_hut ("buildings-robologistics-2", loothutboundingbox, 7.43,
+	{
+		{type = "item", name = "roboport", independent_probability = 1, amount_min = 5, amount_max = 15},
+		{type = "item", name = "construction-robot", independent_probability =  1, amount_min = 5, amount_max = 60},
+		{type = "item", name = "construction-robot", independent_probability =  0.5, amount_min = 5, amount_max = 60},
+		{type = "item", name = "logistic-robot", independent_probability =  0.55, amount_min = 4, amount_max = 40},
+		{type = "item", name = "logistic-robot", independent_probability =  0.1, amount_min = 4, amount_max = 40},
+		{type = "item", name = "logistic-storage-hut", independent_probability =  0.5, amount_min = 2, amount_max = 10},
+		{type = "item", name = "logistic-active-provider-hut", independent_probability =  0.5, amount_min = 2, amount_max = 10},
+		{type = "item", name = "logistic-requester-hut", independent_probability =  0.5, amount_min = 2, amount_max = 10},
+	}),
+	generate_storage_hut ("buildings-robologistics-3", loothutboundingbox, 9.43,
+	{
+		{type = "item", name = "roboport", independent_probability = 1, amount_min = 10, amount_max = 30},
+		{type = "item", name = "construction-robot", independent_probability =  1, amount_min = 10, amount_max = 80},
+		{type = "item", name = "construction-robot", independent_probability =  0.5, amount_min = 10, amount_max = 80},
+		{type = "item", name = "logistic-robot", independent_probability =  0.55, amount_min = 4, amount_max = 40},
+		{type = "item", name = "logistic-robot", independent_probability =  0.1, amount_min = 4, amount_max = 40},
+		{type = "item", name = "logistic-storage-hut", independent_probability =  0.5, amount_min = 2, amount_max = 10},
+		{type = "item", name = "logistic-active-provider-hut", independent_probability =  0.5, amount_min = 2, amount_max = 10},
+		{type = "item", name = "logistic-requester-hut", independent_probability =  0.5, amount_min = 2, amount_max = 10},
+	}),
+	generate_storage_hut ("buildings-robologistics-4", loothutboundingbox, 11.43,
+	{
+		{type = "item", name = "roboport-major", independent_probability = 1, amount_min = 2, amount_max = 10},
+		{type = "item", name = "construction-robot", independent_probability =  1, amount_min = 4, amount_max = 100},
+		{type = "item", name = "construction-robot", independent_probability =  0.5, amount_min = 4, amount_max = 100},
+		{type = "item", name = "logistic-robot", independent_probability =  0.55, amount_min = 4, amount_max = 80},
+		{type = "item", name = "logistic-robot", independent_probability =  0.1, amount_min = 4, amount_max = 80},
+		{type = "item", name = "logistic-warehouse", independent_probability =  0.5, amount_min = 2, amount_max = 10},
+		{type = "item", name = "logistic-warehouse-active-provider", independent_probability =  0.5, amount_min = 2, amount_max = 10},
+		{type = "item", name = "logistic-warehouse-requester", independent_probability =  0.5, amount_min = 2, amount_max = 10},
+	}),
+	generate_storage_hut ("buildings-robologistics-5", loothutboundingbox, 13.43,
+	{
+		{type = "item", name = "roboport-major", independent_probability = 1, amount_min = 5, amount_max = 20},
+		{type = "item", name = "construction-robot", independent_probability =  1, amount_min = 10, amount_max = 100},
+		{type = "item", name = "construction-robot", independent_probability =  0.6, amount_min = 10, amount_max = 100},
+		{type = "item", name = "logistic-robot", independent_probability =  1, amount_min = 10, amount_max = 80},
+		{type = "item", name = "logistic-robot", independent_probability =  0.6, amount_min = 10, amount_max = 80},
+		{type = "item", name = "logistic-warehouse", independent_probability =  0.5, amount_min = 2, amount_max = 10},
+		{type = "item", name = "logistic-warehouse-active-provider", independent_probability =  0.5, amount_min = 2, amount_max = 10},
+		{type = "item", name = "logistic-warehouse-requester", independent_probability =  0.5, amount_min = 2, amount_max = 10},
+	}),
+})
+
+if settings.startup["settings-loaders-active"].value then
+data:extend({
+	generate_storage_hut ("logistics-varied-0", loothutboundingbox, 1.16,
+	{
+		{type = "item", name = "iron-chest", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 25, amount_max = 50},
+	
+		{type = "item", name = "burner-inserter", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "long-handed-burner-inserter", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "inserter", shared_probability = { min = 0.6, max = 0.8 }, amount_min = 32, amount_max = 64},
+		
+		{type = "item", name = "basic-transport-belt", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "basic-underground-belt", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "basic-splitter", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "basic-loader", shared_probability = { min = 0.0, max = 0.3 }, amount_min = 10, amount_max = 20},
+	}),
+	generate_storage_hut ("logistics-varied-1", loothutboundingbox, 2.16,
+	{
+		{type = "item", name = "steel-chest", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 25, amount_max = 50},
+		
+		{type = "item", name = "inserter", shared_probability =  { min = 0.8, max = 1.0 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "long-handed-inserter", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "fast-inserter", shared_probability = { min = 0.6, max = 0.8 }, amount_min = 32, amount_max = 64},
+		
+		{type = "item", name = "transport-belt", shared_probability =  { min = 0.0, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "underground-belt", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "splitter", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "loader", shared_probability = { min = 0.0, max = 0.3 }, amount_min = 10, amount_max = 20},
+	}),
+	generate_storage_hut ("logistics-varied-2", loothutboundingbox, 3.16,
+	{
+		{type = "item", name = "storage-hut", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 25, amount_max = 50},
+	
+		{type = "item", name = "inserter", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "long-handed-inserter", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "fast-inserter", shared_probability = { min = 0.6, max = 0.8 }, amount_min = 32, amount_max = 64},
+		
+		{type = "item", name = "fast-transport-belt", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "fast-underground-belt", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "fast-splitter", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "fast-loader", shared_probability = { min = 0.0, max = 0.3 }, amount_min = 10, amount_max = 20},
+	}),
+	generate_storage_hut ("logistics-varied-3", loothutboundingbox, 5.16,
+	{
+		{type = "item", name = "storage-hut", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "warehouse", shared_probability = { min = 0.5, max = 0.7 }, amount_min = 25, amount_max = 50},
+	
+		{type = "item", name = "fast-inserter", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "very-long-handed-inserter", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 32, amount_max = 64},
+		
+		{type = "item", name = "express-transport-belt", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "express-underground-belt", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "express-splitter", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "express-loader", shared_probability = { min = 0.0, max = 0.3 }, amount_min = 10, amount_max = 20},
+	}),
+	generate_storage_hut ("logistics-varied-4", loothutboundingbox, 8.16,
+	{
+		{type = "item", name = "warehouse", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 25, amount_max = 50},
+	
+		{type = "item", name = "fast-inserter", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "bulk-inserter", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "very-long-handed-inserter", shared_probability = { min = 0.6, max = 0.8 }, amount_min = 32, amount_max = 64},
+		
+		{type = "item", name = "express-transport-belt", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "express-underground-belt", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "express-splitter", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "express-loader", shared_probability = { min = 0.0, max = 0.3 }, amount_min = 10, amount_max = 20},
+	}),
+	generate_storage_hut ("logistics-varied-4", loothutboundingbox, 12.16,
+	{
+		{type = "item", name = "warehouse", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 25, amount_max = 50},
+	
+		{type = "item", name = "bulk-inserter", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "very-long-handed-inserter", shared_probability =  { min = 0.7, max = 0.9 }, amount_min = 32, amount_max = 64},
+		
+		{type = "item", name = "turbo-transport-belt", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "turbo-underground-belt", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "turbo-splitter", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "turbo-loader", shared_probability = { min = 0.0, max = 0.3 }, amount_min = 10, amount_max = 20},
+	}),
+	generate_storage_hut ("logistics-varied-4", loothutboundingbox, 14.16,
+	{
+		{type = "item", name = "warehouse", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 32, amount_max = 64},
+	
+		{type = "item", name = "bulk-inserter", shared_probability = { min = 0.6, max = 1.0 }, amount_min = 32, amount_max = 64},
+		
+		{type = "item", name = "supersonic-transport-belt", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "supersonic-underground-belt", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "supersonic-splitter", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "supersonic-loader", shared_probability = { min = 0.0, max = 0.3 }, amount_min = 10, amount_max = 20},
+	}),
+})
+else
+data:extend({
+	generate_storage_hut ("logistics-varied-0", loothutboundingbox, 1.16,
+	{
+		{type = "item", name = "iron-chest", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 25, amount_max = 50},
+	
+		{type = "item", name = "burner-inserter", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "long-handed-burner-inserter", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "inserter", shared_probability = { min = 0.6, max = 0.8 }, amount_min = 32, amount_max = 64},
+		
+		{type = "item", name = "basic-transport-belt", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "basic-underground-belt", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "basic-splitter", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 25, amount_max = 50},
+	}),
+	generate_storage_hut ("logistics-varied-1", loothutboundingbox, 2.16,
+	{
+		{type = "item", name = "steel-chest", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 25, amount_max = 50},
+		
+		{type = "item", name = "inserter", shared_probability =  { min = 0.8, max = 1.0 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "long-handed-inserter", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "fast-inserter", shared_probability = { min = 0.6, max = 0.8 }, amount_min = 32, amount_max = 64},
+		
+		{type = "item", name = "transport-belt", shared_probability =  { min = 0.0, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "underground-belt", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "splitter", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 25, amount_max = 50},
+	}),
+	generate_storage_hut ("logistics-varied-2", loothutboundingbox, 3.16,
+	{
+		{type = "item", name = "storage-hut", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 25, amount_max = 50},
+	
+		{type = "item", name = "inserter", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "long-handed-inserter", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "fast-inserter", shared_probability = { min = 0.6, max = 0.8 }, amount_min = 32, amount_max = 64},
+		
+		{type = "item", name = "fast-transport-belt", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "fast-underground-belt", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "fast-splitter", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 25, amount_max = 50},
+	}),
+	generate_storage_hut ("logistics-varied-3", loothutboundingbox, 5.16,
+	{
+		{type = "item", name = "storage-hut", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "warehouse", shared_probability = { min = 0.5, max = 0.7 }, amount_min = 25, amount_max = 50},
+	
+		{type = "item", name = "fast-inserter", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "very-long-handed-inserter", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 32, amount_max = 64},
+		
+		{type = "item", name = "express-transport-belt", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "express-underground-belt", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "express-splitter", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 25, amount_max = 50},
+	}),
+	generate_storage_hut ("logistics-varied-4", loothutboundingbox, 8.16,
+	{
+		{type = "item", name = "warehouse", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 25, amount_max = 50},
+	
+		{type = "item", name = "fast-inserter", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "bulk-inserter", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "very-long-handed-inserter", shared_probability = { min = 0.6, max = 0.8 }, amount_min = 32, amount_max = 64},
+		
+		{type = "item", name = "express-transport-belt", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "express-underground-belt", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "express-splitter", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 25, amount_max = 50},
+	}),
+	generate_storage_hut ("logistics-varied-4", loothutboundingbox, 12.16,
+	{
+		{type = "item", name = "warehouse", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 25, amount_max = 50},
+	
+		{type = "item", name = "bulk-inserter", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 32, amount_max = 64},
+		{type = "item", name = "very-long-handed-inserter", shared_probability =  { min = 0.7, max = 0.9 }, amount_min = 32, amount_max = 64},
+		
+		{type = "item", name = "turbo-transport-belt", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "turbo-underground-belt", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "turbo-splitter", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 25, amount_max = 50},
+	}),
+	generate_storage_hut ("logistics-varied-4", loothutboundingbox, 14.16,
+	{
+		{type = "item", name = "warehouse", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 32, amount_max = 64},
+	
+		{type = "item", name = "bulk-inserter", shared_probability = { min = 0.6, max = 1.0 }, amount_min = 32, amount_max = 64},
+		
+		{type = "item", name = "supersonic-transport-belt", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "supersonic-underground-belt", shared_probability = { min = 0.0, max = 0.5 }, amount_min = 25, amount_max = 50},
+		{type = "item", name = "supersonic-splitter", shared_probability = { min = 0.0, max = 0.4 }, amount_min = 25, amount_max = 50},
+	}),
+})
+end
+
+--[[
+generate_storage_hut ("logistics-inserters-0", loothutboundingbox, 1.16,
 {
-	{item = "burner-inserter", probability = 1, count_min = 20, count_max = 50},
-	{item = "long-handed-burner-inserter", probability = 1, count_min = 20, count_max = 50},
+	{type = "item", name = "burner-inserter", independent_probability = 1, amount_min = 20, amount_max = 50},
+	{type = "item", name = "long-handed-burner-inserter", independent_probability = 1, amount_min = 20, amount_max = 50},
 }),
-generate_storage_hut ("logistics-inserters-1", loothutboundingbox, 1.56,
+generate_storage_hut ("logistics-inserters-1", loothutboundingbox, 1.16,
 {
-	{item = "inserter", probability = 1, count_min = 20, count_max = 100},
+	{type = "item", name = "inserter", independent_probability = 1, amount_min = 20, amount_max = 100},
 }),
 generate_storage_hut ("logistics-inserters-2", loothutboundingbox, 2.16,
 {
-	{item = "long-handed-inserter", probability = 1, count_min = 20, count_max = 100},
+	{type = "item", name = "long-handed-inserter", independent_probability = 1, amount_min = 20, amount_max = 100},
 }),
 generate_storage_hut ("logistics-inserters-2b", loothutboundingbox, 4.16,
 {
-	{item = "very-long-handed-inserter", probability = 1, count_min = 20, count_max = 50},
+	{type = "item", name = "very-long-handed-inserter", independent_probability = 1, amount_min = 20, amount_max = 50},
 }),
 generate_storage_hut ("logistics-inserters-3", loothutboundingbox, 3.16,
 {
-	{item = "fast-inserter", probability = 1, count_min = 20, count_max = 100},
+	{type = "item", name = "fast-inserter", independent_probability = 1, amount_min = 20, amount_max = 100},
 }),
 generate_storage_hut ("logistics-inserters-4", loothutboundingbox, 6.16,
 {
-	{item = "bulk-inserter", probability = 1, count_min = 20, count_max = 100},
+	{type = "item", name = "bulk-inserter", independent_probability = 1, amount_min = 20, amount_max = 100},
 }),
 }
+
 
 
 if settings.startup["settings-loaders-active"].value then
 data:extend({
-generate_storage_hut ("buildings-logistics-0", loothutboundingbox, 1,
-{
-	{item = "basic-transport-belt", probability = 1, count_min = 100, count_max = 200},
-	{item = "basic-underground-belt", probability =  0.5, count_min = 20, count_max = 40},
-	{item = "basic-splitter", probability = 0.5, count_min = 20, count_max = 40},
-	{item = "basic-loader", probability = 0.25, count_min = 10, count_max = 40},
-}),
-generate_storage_hut ("buildings-logistics-1", loothutboundingbox, 2,
-{
-	{item = "transport-belt", probability = 1, count_min = 50, count_max = 200},
-	{item = "underground-belt", probability =  0.5, count_min = 10, count_max = 20},
-	{item = "splitter", probability = 0.5, count_min = 10, count_max = 20},
-	{item = "loader", probability = 0.25, count_min = 5, count_max = 20},
-}),
-generate_storage_hut ("buildings-logistics-2", loothutboundingbox, 5,
-{
-	{item = "fast-transport-belt", probability = 1, count_min = 50, count_max = 200},
-	{item = "fast-underground-belt", probability =  0.5, count_min = 10, count_max = 20},
-	{item = "fast-splitter", probability = 0.5, count_min = 10, count_max = 20},
-	{item = "fast-loader", probability = 0.25, count_min = 5, count_max = 20},
-}),
-generate_storage_hut ("buildings-logistics-3", loothutboundingbox, 7,
-{
-	{item = "express-transport-belt", probability = 1, count_min = 50, count_max = 200},
-	{item = "express-underground-belt", probability =  0.5, count_min = 10, count_max = 20},
-	{item = "express-splitter", probability = 0.5, count_min = 10, count_max = 20},
-	{item = "express-loader", probability = 0.25, count_min = 5, count_max = 20},
-}),
-generate_storage_hut ("buildings-logistics-4", loothutboundingbox, 10,
-{
-	{item = "turbo-transport-belt", probability = 1, count_min = 50, count_max = 200},
-	{item = "turbo-underground-belt", probability =  0.5, count_min = 10, count_max = 20},
-	{item = "turbo-splitter", probability = 0.5, count_min = 10, count_max = 20},
-	{item = "turbo-loader", probability = 0.25, count_min = 5, count_max = 20},
-}),
-generate_storage_hut ("buildings-logistics-5", loothutboundingbox, 14,
-{
-	{item = "supersonic-transport-belt", probability = 1, count_min = 50, count_max = 200},
-	{item = "supersonic-underground-belt", probability =  0.5, count_min = 10, count_max = 20},
-	{item = "supersonic-splitter", probability = 0.5, count_min = 10, count_max = 20},
-	{item = "supersonic-loader", probability = 0.25, count_min = 5, count_max = 20},
-}),
+	generate_storage_hut ("buildings-logistics-0", loothutboundingbox, 1,
+	{
+		{type = "item", name = "basic-transport-belt", independent_probability = 1, amount_min = 100, amount_max = 200},
+		{type = "item", name = "basic-underground-belt", independent_probability =  0.5, amount_min = 20, amount_max = 40},
+		{type = "item", name = "basic-splitter", independent_probability = 0.5, amount_min = 20, amount_max = 40},
+		{type = "item", name = "basic-loader", independent_probability = 0.25, amount_min = 10, amount_max = 40},
+	}),
+	generate_storage_hut ("buildings-logistics-1", loothutboundingbox, 2,
+	{
+		{type = "item", name = "transport-belt", independent_probability = 1, amount_min = 50, amount_max = 200},
+		{type = "item", name = "underground-belt", independent_probability =  0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "splitter", independent_probability = 0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "loader", independent_probability = 0.25, amount_min = 5, amount_max = 20},
+	}),
+	generate_storage_hut ("buildings-logistics-2", loothutboundingbox, 5,
+	{
+		{type = "item", name = "fast-transport-belt", independent_probability = 1, amount_min = 50, amount_max = 200},
+		{type = "item", name = "fast-underground-belt", independent_probability =  0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "fast-splitter", independent_probability = 0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "fast-loader", independent_probability = 0.25, amount_min = 5, amount_max = 20},
+	}),
+	generate_storage_hut ("buildings-logistics-3", loothutboundingbox, 7,
+	{
+		{type = "item", name = "express-transport-belt", independent_probability = 1, amount_min = 50, amount_max = 200},
+		{type = "item", name = "express-underground-belt", independent_probability =  0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "express-splitter", independent_probability = 0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "express-loader", independent_probability = 0.25, amount_min = 5, amount_max = 20},
+	}),
+	generate_storage_hut ("buildings-logistics-4", loothutboundingbox, 10,
+	{
+		{type = "item", name = "turbo-transport-belt", independent_probability = 1, amount_min = 50, amount_max = 200},
+		{type = "item", name = "turbo-underground-belt", independent_probability =  0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "turbo-splitter", independent_probability = 0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "turbo-loader", independent_probability = 0.25, amount_min = 5, amount_max = 20},
+	}),
+	generate_storage_hut ("buildings-logistics-5", loothutboundingbox, 14,
+	{
+		{type = "item", name = "supersonic-transport-belt", independent_probability = 1, amount_min = 50, amount_max = 200},
+		{type = "item", name = "supersonic-underground-belt", independent_probability =  0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "supersonic-splitter", independent_probability = 0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "supersonic-loader", independent_probability = 0.25, amount_min = 5, amount_max = 20},
+	}),
 })
 else
 data:extend({
-generate_storage_hut ("buildings-logistics-0", loothutboundingbox, 1,
-{
-	{item = "basic-transport-belt", probability = 1, count_min = 50, count_max = 200},
-	{item = "basic-underground-belt", probability =  0.5, count_min = 10, count_max = 20},
-	{item = "basic-splitter", probability = 0.5, count_min = 10, count_max = 20},
-}),
-generate_storage_hut ("buildings-logistics-1", loothutboundingbox, 2,
-{
-	{item = "transport-belt", probability = 1, count_min = 50, count_max = 200},
-	{item = "underground-belt", probability =  0.5, count_min = 10, count_max = 20},
-	{item = "splitter", probability = 0.5, count_min = 10, count_max = 20},
-}),
-generate_storage_hut ("buildings-logistics-2", loothutboundingbox, 5,
-{
-	{item = "fast-transport-belt", probability = 1, count_min = 50, count_max = 200},
-	{item = "fast-underground-belt", probability =  0.5, count_min = 10, count_max = 20},
-	{item = "fast-splitter", probability = 0.5, count_min = 10, count_max = 20},
-}),
-generate_storage_hut ("buildings-logistics-3", loothutboundingbox, 7,
-{
-	{item = "express-transport-belt", probability = 1, count_min = 50, count_max = 200},
-	{item = "express-underground-belt", probability =  0.5, count_min = 10, count_max = 20},
-	{item = "express-splitter", probability = 0.5, count_min = 10, count_max = 20},
-}),
-generate_storage_hut ("buildings-logistics-4", loothutboundingbox, 10,
-{
-	{item = "turbo-transport-belt", probability = 1, count_min = 50, count_max = 200},
-	{item = "turbo-underground-belt", probability =  0.5, count_min = 10, count_max = 20},
-	{item = "turbo-splitter", probability = 0.5, count_min = 10, count_max = 20},
-}),
-generate_storage_hut ("buildings-logistics-5", loothutboundingbox, 14,
-{
-	{item = "supersonic-transport-belt", probability = 1, count_min = 50, count_max = 200},
-	{item = "supersonic-underground-belt", probability =  0.5, count_min = 10, count_max = 20},
-	{item = "supersonic-splitter", probability = 0.5, count_min = 10, count_max = 20},
-}),
+	generate_storage_hut ("buildings-logistics-0", loothutboundingbox, 1,
+	{
+		{type = "item", name = "basic-transport-belt", independent_probability = 1, amount_min = 50, amount_max = 200},
+		{type = "item", name = "basic-underground-belt", independent_probability =  0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "basic-splitter", independent_probability = 0.5, amount_min = 10, amount_max = 20},
+	}),
+	generate_storage_hut ("buildings-logistics-1", loothutboundingbox, 2,
+	{
+		{type = "item", name = "transport-belt", independent_probability = 1, amount_min = 50, amount_max = 200},
+		{type = "item", name = "underground-belt", independent_probability =  0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "splitter", independent_probability = 0.5, amount_min = 10, amount_max = 20},
+	}),
+	generate_storage_hut ("buildings-logistics-2", loothutboundingbox, 5,
+	{
+		{type = "item", name = "fast-transport-belt", independent_probability = 1, amount_min = 50, amount_max = 200},
+		{type = "item", name = "fast-underground-belt", independent_probability =  0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "fast-splitter", independent_probability = 0.5, amount_min = 10, amount_max = 20},
+	}),
+	generate_storage_hut ("buildings-logistics-3", loothutboundingbox, 7,
+	{
+		{type = "item", name = "express-transport-belt", independent_probability = 1, amount_min = 50, amount_max = 200},
+		{type = "item", name = "express-underground-belt", independent_probability =  0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "express-splitter", independent_probability = 0.5, amount_min = 10, amount_max = 20},
+	}),
+	generate_storage_hut ("buildings-logistics-4", loothutboundingbox, 10,
+	{
+		{type = "item", name = "turbo-transport-belt", independent_probability = 1, amount_min = 50, amount_max = 200},
+		{type = "item", name = "turbo-underground-belt", independent_probability =  0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "turbo-splitter", independent_probability = 0.5, amount_min = 10, amount_max = 20},
+	}),
+	generate_storage_hut ("buildings-logistics-5", loothutboundingbox, 14,
+	{
+		{type = "item", name = "supersonic-transport-belt", independent_probability = 1, amount_min = 50, amount_max = 200},
+		{type = "item", name = "supersonic-underground-belt", independent_probability =  0.5, amount_min = 10, amount_max = 20},
+		{type = "item", name = "supersonic-splitter", independent_probability = 0.5, amount_min = 10, amount_max = 20},
+	}),
 })
 end
+--]]
 
 data:extend{
-generate_storage_hut ("player-equipment", loothutboundingbox, 4.44,
-{
-	{item = "modular-armor", probability = 1, count_min = 1, count_max = 1},
-	{item = "solar-panel-equipment", probability =1, count_min = 1, count_max = 4},
-	{item = "battery-equipment", probability = 1, count_min = 1, count_max = 4},
-	{item = "solar-panel-equipment", probability = 0.2, count_min = 0, count_max = 4},
-	{item = "battery-equipment", probability = 0.2, count_min = 0, count_max = 4},
-	{item = "energy-shield-equipment", probability = 1, count_min = 0, count_max = 2},
-	{item = "energy-shield-equipment", probability = 0.2, count_min = 0, count_max = 2},
-}),
-generate_storage_hut ("player-equipment-1", loothutboundingbox, 5.44,
-{
-	{item = "modular-armor", probability = 1, count_min = 1, count_max = 1},
-	{item = "personal-roboport-equipment", probability = 1, count_min = 1, count_max = 2},
-	{item = "personal-roboport-equipment", probability = 0.2, count_min = 0, count_max = 2},
-	{item = "battery-equipment", probability = 1, count_min = 1, count_max = 4},
-	{item = "battery-equipment", probability = 0.2, count_min = 0, count_max = 4},
-	{item = "fuel-generator-equipment", probability = 1, count_min = 1, count_max = 2},
-	{item = "fuel-generator-equipment", probability = 0.2, count_min = 0, count_max = 2},
-}),
-generate_storage_hut ("player-equipment-2", loothutboundingbox, 7.44,
-{
-	{item = "power-armor", probability = 1, count_min = 1, count_max = 1},
-	{item = "solar-panel-equipment", probability = 1, count_min = 1, count_max = 5},
-	{item = "solar-panel-equipment-mk2", probability = 0.2, count_min = 0, count_max = 10},
-	{item = "personal-long-range-roboport-equipment", probability = 0.2, count_min = 0, count_max = 2},
-	{item = "exoskeleton-equipment", probability = 0.2, count_min = 0, count_max = 2},
-	{item = "battery-mk2-equipment", probability = 0.2, count_min = 0, count_max = 6},
-	{item = "personal-long-range-roboport-equipment", probability = 0.2, count_min = 0, count_max = 2},
-	{item = "battery-equipment", probability = 1, count_min = 1, count_max = 5},
-	{item = "battery-mk2-equipment", probability = 0.2, count_min = 0, count_max = 2},
-}),
-generate_storage_hut ("player-equipment-3", loothutboundingbox, 10.44,
-{
-	{item = "power-armor", probability = 1, count_min = 1, count_max = 1},
-	{item = "solar-panel-equipment", probability = 1, count_min = 1, count_max = 5},
-	{item = "solar-panel-equipment-mk2", probability = 0.2, count_min = 0, count_max = 10},
-	{item = "personal-laser-defense-equipment", probability = 1, count_min = 1, count_max = 5},
-	{item = "personal-laser-defense-equipment", probability = 0.2, count_min = 0, count_max = 5},
-	{item = "battery-equipment", probability = 1, count_min = 1, count_max = 6},
-	{item = "battery-mk2-equipment", probability = 0.2, count_min = 0, count_max = 6},
-	{item = "exoskeleton-equipment", probability = 0.2, count_min = 0, count_max = 2},
-	{item = "energy-shield-equipment", probability = 1, count_min = 0, count_max = 2},
-	{item = "energy-shield-equipment", probability = 0.2, count_min = 0, count_max = 2},
-}),
-generate_storage_hut ("player-equipment-4", loothutboundingbox, 9.44,
-{
-	{item = "power-armor-mk2", probability = 1, count_min = 1, count_max = 1},
-	{item = "solar-panel-equipment", probability = 1, count_min = 2, count_max = 10},
-	{item = "fission-reactor-equipment", probability = 0.2, count_min = 1, count_max = 1},
-	{item = "battery-mk2-equipment", probability = 1, count_min = 1, count_max = 4},
-	{item = "battery-mk2-equipment", probability = 0.2, count_min = 0, count_max = 4},
-	{item = "energy-shield-equipment", probability = 1, count_min = 0, count_max = 2},
-	{item = "energy-shield-mk2-equipment", probability = 0.2, count_min = 0, count_max = 2},
-	{item = "exoskeleton-equipment", probability = 0.2, count_min = 0, count_max = 2},
-}),
-generate_storage_hut ("player-equipment-5", loothutboundingbox, 12.44,
-{
-	{item = "power-armor-mk2", probability = 1, count_min = 1, count_max = 1},
-	{item = "solar-panel-equipment-mk2", probability = 1, count_min = 2, count_max = 5},
-	{item = "fission-reactor-equipment", probability = 0.25, count_min = 1, count_max = 2},
-	{item = "battery-mk2-equipment", probability = 1, count_min = 1, count_max = 5},
-	{item = "battery-mk2-equipment", probability = 0.25, count_min = 0, count_max = 4},
-	{item = "personal-laser-defense-equipment", probability = 1, count_min = 0, count_max = 8},
-	{item = "energy-shield-mk2-equipment", probability = 0.6, count_min = 0, count_max = 2},
-	{item = "exoskeleton-equipment", probability = 0.6, count_min = 0, count_max = 2},
-}),
+	generate_storage_hut ("player-equipment", loothutboundingbox, 4.44,
+	{
+		{type = "item", name = "modular-armor", independent_probability = 1, amount_min = 1, amount_max = 1},
+		{type = "item", name = "solar-panel-equipment", independent_probability =1, amount_min = 1, amount_max = 4},
+		{type = "item", name = "battery-equipment", independent_probability = 1, amount_min = 1, amount_max = 4},
+		{type = "item", name = "solar-panel-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 4},
+		{type = "item", name = "battery-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 4},
+		{type = "item", name = "energy-shield-equipment", independent_probability = 1, amount_min = 0, amount_max = 2},
+		{type = "item", name = "energy-shield-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 2},
+	}),
+	generate_storage_hut ("player-equipment-1", loothutboundingbox, 5.44,
+	{
+		{type = "item", name = "modular-armor", independent_probability = 1, amount_min = 1, amount_max = 1},
+		{type = "item", name = "personal-roboport-equipment", independent_probability = 1, amount_min = 1, amount_max = 2},
+		{type = "item", name = "personal-roboport-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 2},
+		{type = "item", name = "battery-equipment", independent_probability = 1, amount_min = 1, amount_max = 4},
+		{type = "item", name = "battery-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 4},
+		{type = "item", name = "fuel-generator-equipment", independent_probability = 1, amount_min = 1, amount_max = 2},
+		{type = "item", name = "fuel-generator-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 2},
+	}),
+	generate_storage_hut ("player-equipment-2", loothutboundingbox, 7.44,
+	{
+		{type = "item", name = "power-armor", independent_probability = 1, amount_min = 1, amount_max = 1},
+		{type = "item", name = "solar-panel-equipment", independent_probability = 1, amount_min = 1, amount_max = 5},
+		{type = "item", name = "solar-panel-equipment-mk2", independent_probability = 0.2, amount_min = 0, amount_max = 10},
+		{type = "item", name = "personal-long-range-roboport-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 2},
+		{type = "item", name = "exoskeleton-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 2},
+		{type = "item", name = "battery-mk2-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 6},
+		{type = "item", name = "personal-long-range-roboport-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 2},
+		{type = "item", name = "battery-equipment", independent_probability = 1, amount_min = 1, amount_max = 5},
+		{type = "item", name = "battery-mk2-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 2},
+	}),
+	generate_storage_hut ("player-equipment-3", loothutboundingbox, 10.44,
+	{
+		{type = "item", name = "power-armor", independent_probability = 1, amount_min = 1, amount_max = 1},
+		{type = "item", name = "solar-panel-equipment", independent_probability = 1, amount_min = 1, amount_max = 5},
+		{type = "item", name = "solar-panel-equipment-mk2", independent_probability = 0.2, amount_min = 0, amount_max = 10},
+		{type = "item", name = "personal-laser-defense-equipment", independent_probability = 1, amount_min = 1, amount_max = 5},
+		{type = "item", name = "personal-laser-defense-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 5},
+		{type = "item", name = "battery-equipment", independent_probability = 1, amount_min = 1, amount_max = 6},
+		{type = "item", name = "battery-mk2-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 6},
+		{type = "item", name = "exoskeleton-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 2},
+		{type = "item", name = "energy-shield-equipment", independent_probability = 1, amount_min = 0, amount_max = 2},
+		{type = "item", name = "energy-shield-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 2},
+	}),
+	generate_storage_hut ("player-equipment-4", loothutboundingbox, 9.44,
+	{
+		{type = "item", name = "power-armor-mk2", independent_probability = 1, amount_min = 1, amount_max = 1},
+		{type = "item", name = "solar-panel-equipment", independent_probability = 1, amount_min = 2, amount_max = 10},
+		{type = "item", name = "fission-reactor-equipment", independent_probability = 0.2, amount_min = 1, amount_max = 1},
+		{type = "item", name = "battery-mk2-equipment", independent_probability = 1, amount_min = 1, amount_max = 4},
+		{type = "item", name = "battery-mk2-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 4},
+		{type = "item", name = "energy-shield-equipment", independent_probability = 1, amount_min = 0, amount_max = 2},
+		{type = "item", name = "energy-shield-mk2-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 2},
+		{type = "item", name = "exoskeleton-equipment", independent_probability = 0.2, amount_min = 0, amount_max = 2},
+	}),
+	generate_storage_hut ("player-equipment-5", loothutboundingbox, 12.44,
+	{
+		{type = "item", name = "power-armor-mk2", independent_probability = 1, amount_min = 1, amount_max = 1},
+		{type = "item", name = "solar-panel-equipment-mk2", independent_probability = 1, amount_min = 2, amount_max = 5},
+		{type = "item", name = "fission-reactor-equipment", independent_probability = 0.25, amount_min = 1, amount_max = 2},
+		{type = "item", name = "battery-mk2-equipment", independent_probability = 1, amount_min = 1, amount_max = 5},
+		{type = "item", name = "battery-mk2-equipment", independent_probability = 0.25, amount_min = 0, amount_max = 4},
+		{type = "item", name = "personal-laser-defense-equipment", independent_probability = 1, amount_min = 0, amount_max = 8},
+		{type = "item", name = "energy-shield-mk2-equipment", independent_probability = 0.6, amount_min = 0, amount_max = 2},
+		{type = "item", name = "exoskeleton-equipment", independent_probability = 0.6, amount_min = 0, amount_max = 2},
+	}),
 }
 
 data:extend{
-generate_storage_hut ("buildings-turrets-0a", loothutboundingbox, 1.08,
-{
-	{item = "pistol-turret", probability = 1, count_min = 10, count_max = 25},
-	{item = "firearm-magazine", probability = 1, count_min = 50, count_max = 100},
-}),
-generate_storage_hut ("buildings-turrets-1a", loothutboundingbox, 3.08,
-{
-	{item = "gun-turret", probability = 1, count_min = 10, count_max = 25},
-	{item = "piercing-rounds-magazine", probability = 1, count_min = 50, count_max = 100},
-}),
-generate_storage_hut ("buildings-turrets-1b", loothutboundingbox, 3.08,
-{
-	{item = "shotgun-turret", probability = 1, count_min = 6, count_max = 15},
-	{item = "shotgun-shell", probability = 1, count_min = 50, count_max = 100},
-}),
-generate_storage_hut ("buildings-turrets-2a", loothutboundingbox, 4.08,
-{
-	{item = "rocket-turret", probability = 1, count_min = 3, count_max = 10},
-	{item = "rocket", probability = 1, count_min = 50, count_max = 100},
-}),
-generate_storage_hut ("buildings-turrets-3a", loothutboundingbox, 5,
-{
-	{item = "laser-turret", probability = 1, count_min = 10, count_max = 25},
-}),
-generate_storage_hut ("buildings-turrets-3b", loothutboundingbox, 4.08,
-{
-	{item = "flamethrower-turret", probability = 1, count_min = 8, count_max = 20},
-}),
-generate_storage_hut ("buildings-turrets-4a", loothutboundingbox, 6.08,
-{
-	{item = "heavygun-turret", probability = 1, count_min = 6, count_max = 20},
-	{item = "piercing-rounds-magazine", probability = 1, count_min = 50, count_max = 100},
-}),
-generate_storage_hut ("buildings-turrets-4b", loothutboundingbox, 6.08,
-{
-	{item = "mortar-turret", probability = 1, count_min = 4, count_max = 8},
-	{item = "grenade-rounds", probability = 1, count_min = 25, count_max = 50},
-}),
-generate_storage_hut ("buildings-turrets-5a", loothutboundingbox, 7.08,
-{
-	{item = "sniper-turret", probability = 1, count_min = 3, count_max = 8},
-	{item = "sniper-shell", probability = 1, count_min = 25, count_max = 50},
-}),
-generate_storage_hut ("buildings-turrets-6a", loothutboundingbox, 10.08,
-{
-	{item = "cannon-turret", probability = 1, count_min = 4, count_max = 8},
-	{item = "cannon-shell", probability = 1, count_min = 50, count_max = 100},
-}),
+	generate_storage_hut ("buildings-turrets-0a", loothutboundingbox, 1.08,
+	{
+		{type = "item", name = "pistol-turret", independent_probability = 1, amount_min = 10, amount_max = 25},
+		{type = "item", name = "firearm-magazine", independent_probability = 1, amount_min = 50, amount_max = 100},
+	}),
+	generate_storage_hut ("buildings-turrets-1a", loothutboundingbox, 2.58,
+	{
+		{type = "item", name = "gun-turret", independent_probability = 1, amount_min = 10, amount_max = 25},
+		{type = "item", name = "piercing-rounds-magazine", independent_probability = 1, amount_min = 50, amount_max = 100},
+	}),
+	generate_storage_hut ("buildings-turrets-1b", loothutboundingbox, 3.08,
+	{
+		{type = "item", name = "shotgun-turret", independent_probability = 1, amount_min = 6, amount_max = 15},
+		{type = "item", name = "shotgun-shell", independent_probability = 1, amount_min = 50, amount_max = 100},
+	}),
+	generate_storage_hut ("buildings-turrets-2a", loothutboundingbox, 4.08,
+	{
+		{type = "item", name = "rocket-turret", independent_probability = 1, amount_min = 3, amount_max = 10},
+		{type = "item", name = "rocket", independent_probability = 1, amount_min = 50, amount_max = 100},
+	}),
+	generate_storage_hut ("buildings-turrets-3a", loothutboundingbox, 5,
+	{
+		{type = "item", name = "laser-turret", independent_probability = 1, amount_min = 10, amount_max = 25},
+	}),
+	generate_storage_hut ("buildings-turrets-3b", loothutboundingbox, 5.18,
+	{
+		{type = "item", name = "flamethrower-turret", independent_probability = 1, amount_min = 8, amount_max = 20},
+	}),
+	generate_storage_hut ("buildings-turrets-4a", loothutboundingbox, 6.08,
+	{
+		{type = "item", name = "heavygun-turret", independent_probability = 1, amount_min = 6, amount_max = 20},
+		{type = "item", name = "piercing-rounds-magazine", independent_probability = 1, amount_min = 50, amount_max = 100},
+	}),
+	generate_storage_hut ("buildings-turrets-4b", loothutboundingbox, 6.48,
+	{
+		{type = "item", name = "mortar-turret", independent_probability = 1, amount_min = 4, amount_max = 8},
+		{type = "item", name = "grenade-rounds", independent_probability = 1, amount_min = 25, amount_max = 50},
+	}),
+	generate_storage_hut ("buildings-turrets-5a", loothutboundingbox, 7.08,
+	{
+		{type = "item", name = "sniper-turret", independent_probability = 1, amount_min = 3, amount_max = 8},
+		{type = "item", name = "sniper-shell", independent_probability = 1, amount_min = 25, amount_max = 50},
+	}),
+	generate_storage_hut ("buildings-turrets-6a", loothutboundingbox, 10.08,
+	{
+		{type = "item", name = "cannon-turret", independent_probability = 1, amount_min = 4, amount_max = 8},
+		{type = "item", name = "cannon-shell", independent_probability = 1, amount_min = 50, amount_max = 100},
+	}),
 }
 
 -- RAIL STUFF
 
 data:extend{
-generate_storage_hut ("trains-0", loothutboundingbox, 2.39,
-{
-	{item = "locomotive", probability = 1, count_min = 0, count_max = 1},
-	{item = "rail", probability = 1, count_min = 100, count_max = 300},
-	{item = "rail", probability = 0.3, count_min = 50, count_max = 200},
-	{item ="train-stop", probability = 1, count_min = 0, count_max = 5},
-}),
-generate_storage_hut ("trains-1", loothutboundingbox, 4.39,
-{
-	{item = "locomotive", probability = 1, count_min = 0, count_max = 2},
-	{item = "cargo-wagon", probability = 1, count_min = 0, count_max = 4},
-	{item = "fluid-wagon", probability = 1, count_min = 0, count_max = 4},
-	{item = "rail", probability = 1, count_min = 150, count_max = 300},
-	{item = "rail", probability = 0.4, count_min = 50, count_max = 200},
-	{item ="train-stop", probability = 1, count_min = 2, count_max = 8},
-	{item ="rail-signal", probability = 0.5, count_min = 10, count_max = 40},
-}),
-generate_storage_hut ("trains-2", loothutboundingbox, 6.39,
-{
-	{item = "solar-train", probability = 1, count_min = 0, count_max = 3},
-	{item = "cargo-wagon", probability = 1, count_min = 0, count_max = 4},
-	{item = "fluid-wagon", probability = 1, count_min = 0, count_max = 4},
-	{item = "cargo-wagon", probability = 1, count_min = 2, count_max = 8},
-	{item = "rail", probability = 1, count_min = 200, count_max = 300},
-	{item = "rail", probability = 0.6, count_min = 100, count_max = 200},
-	{item ="train-stop", probability = 1, count_min = 2, count_max = 8},
-	{item ="rail-signal", probability = 1, count_min = 20, count_max = 60},
-	{item ="rail-chain-signal", probability = 0.5, count_min = 20, count_max = 60},
-}),
+	generate_storage_hut ("trains-0", loothutboundingbox, 2.39,
+	{
+		{type = "item", name = "solar-train",	shared_probability = { min = 0.8, max = 1.0 }, amount_min = 1, amount_max = 2},
+		
+		{type = "item", name = "locomotive",	shared_probability = { min = 0.0, max = 0.8 }, amount_min = 1, amount_max = 2},
+		{type = "item", name = "cargo-wagon",	shared_probability = { min = 0.0, max = 1.0 }, amount_min = 2, amount_max = 4},
+		{type = "item", name = "rail",			independent_probability = 0.4, amount_min = 100, amount_max = 200},
+		{type = "item", name = "rail",			shared_probability = { min = 0.0, max = 1.0 }, amount_min = 100, amount_max = 200},
+		{type = "item", name = "train-stop",	shared_probability = { min = 0.0, max = 1.0 }, amount_min = 2, amount_max = 6},
+
+	}),
+	generate_storage_hut ("trains-1", loothutboundingbox, 4.39,
+	{
+		{type = "item", name = "solar-train",	shared_probability = { min = 0.5, max = 1.0 }, amount_min = 2, amount_max = 4},
+		
+		{type = "item", name = "locomotive",	shared_probability = { min = 0.0, max = 0.5 }, amount_min = 2, amount_max = 4},
+		
+		{type = "item", name = "cargo-wagon",	shared_probability = { min = 0.0, max = 0.25 }, amount_min = 6, amount_max = 12},
+		{type = "item", name = "cargo-wagon",	shared_probability = { min = 0.5, max = 0.75 }, amount_min = 6, amount_max = 12},
+		{type = "item", name = "fluid-wagon",	shared_probability = { min = 0.25, max = 0.5 }, amount_min = 6, amount_max = 12},
+		{type = "item", name = "fluid-wagon",	shared_probability = { min = 0.75, max = 1.0 }, amount_min = 6, amount_max = 12},
+		
+		{type = "item", name = "rail",			independent_probability = 0.4, amount_min = 100, amount_max = 200},
+		{type = "item", name = "rail",			shared_probability = { min = 0.0, max = 1.0 }, amount_min = 200, amount_max = 300},
+		{type = "item", name = "train-stop",	shared_probability = { min = 0.0, max = 1.0 }, amount_min = 4, amount_max = 8},
+		
+		{type = "item", name = "rail-signal", independent_probability = 1, amount_min = 10, amount_max = 40},
+		{type = "item", name = "rail-signal", independent_probability = 0.5, amount_min = 10, amount_max = 40},
+	}),
+	
+	generate_storage_hut ("trains-2", loothutboundingbox, 6.39,
+	{
+		{type = "item", name = "solar-train",	shared_probability = { min = 0.3, max = 1.0 }, amount_min = 4, amount_max = 8},
+		
+		{type = "item", name = "locomotive",	shared_probability = { min = 0.0, max = 0.3 }, amount_min = 4, amount_max = 8},
+		
+		{type = "item", name = "cargo-wagon",	shared_probability = { min = 0.0, max = 0.25 }, amount_min = 6, amount_max = 22},
+		{type = "item", name = "cargo-wagon",	shared_probability = { min = 0.5, max = 0.75 }, amount_min = 6, amount_max = 22},
+		{type = "item", name = "fluid-wagon",	shared_probability = { min = 0.25, max = 0.5 }, amount_min = 6, amount_max = 22},
+		{type = "item", name = "fluid-wagon",	shared_probability = { min = 0.75, max = 1.0 }, amount_min = 6, amount_max = 22},
+		
+		{type = "item", name = "rail",			independent_probability = 0.4, amount_min = 100, amount_max = 200},
+		{type = "item", name = "rail",			independent_probability = 0.4, amount_min = 100, amount_max = 200},
+		{type = "item", name = "rail",			shared_probability = { min = 0.0, max = 1.0 }, amount_min = 200, amount_max = 300},
+		{type = "item", name = "train-stop",	shared_probability = { min = 0.0, max = 1.0 }, amount_min = 4, amount_max = 8},
+		
+		{type = "item", name = "rail-signal", independent_probability = 1, amount_min = 10, amount_max = 40},
+		{type = "item", name = "rail-signal", independent_probability = 0.5, amount_min = 10, amount_max = 40},
+		{type = "item", name = "rail-chain-signal", independent_probability = 1, amount_min = 20, amount_max = 60},
+		{type = "item", name = "rail-chain-signal", independent_probability = 0.5, amount_min = 20, amount_max = 60},
+	}),
 }
 
 -- VEHICLE STUFF
@@ -1756,593 +2406,945 @@ generate_storage_hut ("trains-2", loothutboundingbox, 6.39,
 data:extend{
 generate_storage_hut ("transport-0", loothutboundingbox, 1.42,
 {
-	{item = "atv", probability = 1, count_min = 1, count_max = 1},
-
+	{type = "item", name = "atv",			shared_probability = { min = 0.2, max = 1.0 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "car-base",		shared_probability = { min = 0.0, max = 0.2 }, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("transport-1", loothutboundingbox, 2.82,
 {
-	{item = "car-base", probability = 1, count_min = 1, count_max = 1},
-
+	{type = "item", name = "car-base",		shared_probability = { min = 0.0, max = 0.5 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "car",			shared_probability = { min = 0.5, max = 0.7 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "car-shotgun",	shared_probability = { min = 0.7, max = 0.9 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "transporter",	shared_probability = { min = 0.9, max = 1.0 }, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("transport-1b", loothutboundingbox, 3.22,
 {
-	{item = "car", probability = 1, count_min = 1, count_max = 1},
-
+	{type = "item", name = "car",			shared_probability = { min = 0.0, max = 0.3 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "car-shotgun",	shared_probability = { min = 0.3, max = 0.6 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "apc-base", 		shared_probability = { min = 0.6, max = 0.7 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "transporter",	shared_probability = { min = 0.7, max = 1.0 }, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("transport-1c", loothutboundingbox, 3.24,
 {
-	{item = "car-shotgun", probability = 1, count_min = 1, count_max = 1},
-
+	{type = "item", name = "car",			shared_probability = { min = 0.0, max = 0.2 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "car-shotgun",	shared_probability = { min = 0.2, max = 0.4 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "dozer",			shared_probability = { min = 0.4, max = 0.7 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "transporter",	shared_probability = { min = 0.7, max = 1.0 }, amount_min = 1, amount_max = 1},
 }),
+-- hovercraft
+-- transporter
+-- flame-tank
 generate_storage_hut ("transport-2", loothutboundingbox, 3.42,
 {
-	{item = "dozer", probability = 1, count_min = 1, count_max = 1},
-
+	{type = "item", name = "transporter",	shared_probability = { min = 0.4, max = 0.8 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "dozer",			shared_probability = { min = 0.4, max = 0.8 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "apc-base", 		shared_probability = { min = 0.8, max = 1.0 }, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("transport-2a", loothutboundingbox, 4.62,
 {
-	{item = "apc-base", probability = 1, count_min = 1, count_max = 1},
-
+	{type = "item", name = "apc-base", 			shared_probability = { min = 0.0, max = 0.2 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "apc-twinsmg", 		shared_probability = { min = 0.2, max = 0.6 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "apc-autoshotgun", 	shared_probability = { min = 0.6, max = 0.8 }, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("transport-2b", loothutboundingbox, 5.62,
 {
-	{item = "apc-twinsmg", probability = 1, count_min = 1, count_max = 1},
-
+	{type = "item", name = "scout", 			shared_probability = { min = 0.0, max = 0.2 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "apc-twinsmg", 		shared_probability = { min = 0.2, max = 0.6 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "apc-autoshotgun", 	shared_probability = { min = 0.6, max = 0.8 }, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("transport-2c", loothutboundingbox, 5.72,
 {
-	{item = "apc-autoshotgun", probability = 1, count_min = 1, count_max = 1},
-
+	{type = "item", name = "scout", 			shared_probability = { min = 0.0, max = 0.2 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "flame-tank", 	shared_probability = 	{ min = 0.2, max =  0.4 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "apc-twinsmg", 		shared_probability = { min = 0.4, max = 0.7 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "apc-autoshotgun", 	shared_probability = { min = 0.7, max = 1.0 }, amount_min = 1, amount_max = 1},
 }),
+
 generate_storage_hut ("transport-3", loothutboundingbox, 6.22,
 {
-	{item = "scout", probability = 1, count_min = 1, count_max = 1},
-
+	{type = "item", name = "scout", 		shared_probability = { min = 0.0, max = 0.6 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "tank", 			shared_probability = { min = 0.6, max = 0.7 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "flame-tank", 	shared_probability = { min = 0.7, max = 1.0 }, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("transport-5", loothutboundingbox, 9.22,
 {
-	{item = "tank", probability = 1, count_min = 1, count_max = 1},
-
+	{type = "item", name = "hovercraft", 	shared_probability = { min = 0.0, max = 0.2 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "tank", 	shared_probability = { min = 0.2, max = 0.7 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "flame-tank", 	shared_probability = { min = 0.7, max = 1.0 }, amount_min = 1, amount_max = 1},
+}),
+generate_storage_hut ("transport-6", loothutboundingbox, 11.22,
+{
+	{type = "item", name = "hovercraft", 	shared_probability = { min = 0.0, max = 0.5 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "tank", 	shared_probability = { min = 0.5, max = 1.0 }, amount_min = 1, amount_max = 1},
 }),
 }
 
 -- FUEL STUFF
 
 data:extend{
-generate_storage_hut ("fuel-0", loothutboundingbox, 2.09,
-{
-	{item = "solid-fuel", probability = 1, count_min = 50, count_max = 100},
-	{item = "solid-fuel", probability = 0.5, count_min = 25, count_max = 80},
-	{item = "solid-fuel", probability = 0.25, count_min = 25, count_max = 80},
-}),
-generate_storage_hut ("fuel-1", loothutboundingbox, 3.09,
-{
-	{item = "nat-gas-fuel", probability = 1, count_min = 50, count_max = 100},
-	{item = "nat-gas-fuel", probability = 0.5, count_min = 25, count_max = 50},
-	{item = "nat-gas-fuel", probability = 0.25, count_min = 25, count_max = 50},
-}),
-generate_storage_hut ("fuel-2", loothutboundingbox, 5.09,
-{
-	{item = "petroleum-fuel", probability = 1, count_min = 25, count_max = 100},
-	{item = "petroleum-fuel", probability = 0.5, count_min = 25, count_max = 50},
-	{item = "petroleum-fuel", probability = 0.25, count_min = 25, count_max = 50},
-}),
-generate_storage_hut ("fuel-3", loothutboundingbox, 8.09,
-{
-	{item = "rocket-fuel", probability = 1, count_min = 25, count_max = 100},
-	{item = "rocket-fuel", probability = 0.5, count_min = 25, count_max = 50},
-	{item = "rocket-fuel", probability = 0.25, count_min = 25, count_max = 50},
-}),
-generate_storage_hut ("fuel-4", loothutboundingbox, 10.09,
-{
-	{item = "true-rocket-fuel", probability = 1, count_min = 25, count_max = 80},
-	{item = "true-rocket-fuel", probability = 0.5, count_min = 25, count_max = 50},
-	{item = "true-rocket-fuel", probability = 0.25, count_min = 25, count_max = 50},
-}),
-generate_storage_hut ("fuel-5", loothutboundingbox, 14.09,
-{
-	{item = "nuclear-fuel", probability = 1, count_min = 25, count_max = 50},
-	{item = "nuclear-fuel", probability = 0.5, count_min = 25, count_max = 50},
-	{item = "nuclear-fuel", probability = 0.25, count_min = 25, count_max = 50},
-}),
-
-
-
+	generate_storage_hut ("fuel-0", loothutboundingbox, 2.09,
+	{
+		{type = "item", name = "solid-fuel", independent_probability = 1, amount_min = 50, amount_max = 100},
+		{type = "item", name = "solid-fuel", independent_probability = 0.5, amount_min = 25, amount_max = 80},
+		{type = "item", name = "solid-fuel", independent_probability = 0.25, amount_min = 25, amount_max = 80},
+	}),
+	generate_storage_hut ("fuel-1", loothutboundingbox, 3.09,
+	{
+		{type = "item", name = "nat-gas-fuel", independent_probability = 1, amount_min = 50, amount_max = 100},
+		{type = "item", name = "nat-gas-fuel", independent_probability = 0.5, amount_min = 25, amount_max = 50},
+		{type = "item", name = "nat-gas-fuel", independent_probability = 0.25, amount_min = 25, amount_max = 50},
+	}),
+	generate_storage_hut ("fuel-2", loothutboundingbox, 4.09,
+	{
+		{type = "item", name = "petroleum-fuel", independent_probability = 1, amount_min = 25, amount_max = 100},
+		{type = "item", name = "petroleum-fuel", independent_probability = 0.5, amount_min = 25, amount_max = 50},
+		{type = "item", name = "petroleum-fuel", independent_probability = 0.25, amount_min = 25, amount_max = 50},
+	}),
+	generate_storage_hut ("fuel-3", loothutboundingbox, 6.09,
+	{
+		{type = "item", name = "rocket-fuel", independent_probability = 1, amount_min = 25, amount_max = 100},
+		{type = "item", name = "rocket-fuel", independent_probability = 0.5, amount_min = 25, amount_max = 50},
+		{type = "item", name = "rocket-fuel", independent_probability = 0.25, amount_min = 25, amount_max = 50},
+	}),
+	generate_storage_hut ("fuel-4", loothutboundingbox, 10.09,
+	{
+		{type = "item", name = "true-rocket-fuel", independent_probability = 1, amount_min = 25, amount_max = 80},
+		{type = "item", name = "true-rocket-fuel", independent_probability = 0.5, amount_min = 25, amount_max = 50},
+		{type = "item", name = "true-rocket-fuel", independent_probability = 0.25, amount_min = 25, amount_max = 50},
+	}),
+	generate_storage_hut ("fuel-5", loothutboundingbox, 14.09,
+	{
+		{type = "item", name = "nuclear-fuel", independent_probability = 1, amount_min = 25, amount_max = 50},
+		{type = "item", name = "nuclear-fuel", independent_probability = 0.5, amount_min = 25, amount_max = 50},
+		{type = "item", name = "nuclear-fuel", independent_probability = 0.25, amount_min = 25, amount_max = 50},
+	}),
 }
 
 
 data:extend{
 generate_storage_hut ("weapons-robots-1", loothutboundingbox, 3,
 {
-	{item = "defender-capsule", probability = 1, count_min = 2, count_max = 10},
-	{item = "defender-capsule", probability = 0.5, count_min = 2, count_max = 10},
+	{type = "item", name = "defender-capsule", independent_probability = 1, amount_min = 2, amount_max = 10},
+	{type = "item", name = "defender-capsule", independent_probability = 0.5, amount_min = 2, amount_max = 10},
 }),
 generate_storage_hut ("weapons-robots-2", loothutboundingbox, 5,
 {
-	{item = "destroyer-capsule", probability = 1, count_min = 2, count_max = 10},
-	{item = "destroyer-capsule", probability = 0.5, count_min = 2, count_max = 10},
+	{type = "item", name = "destroyer-capsule", independent_probability = 1, amount_min = 2, amount_max = 10},
+	{type = "item", name = "destroyer-capsule", independent_probability = 0.5, amount_min = 2, amount_max = 10},
 }),
 generate_storage_hut ("weapons-robots-2b", loothutboundingbox, 5,
 {
-	{item = "disruptor-capsule", probability = 1, count_min = 2, count_max = 10},
-	{item = "disruptor-capsule", probability = 0.5, count_min = 2, count_max = 10},
+	{type = "item", name = "disruptor-capsule", independent_probability = 1, amount_min = 2, amount_max = 10},
+	{type = "item", name = "disruptor-capsule", independent_probability = 0.5, amount_min = 2, amount_max = 10},
 }),
 generate_storage_hut ("weapons-robots-3", loothutboundingbox, 10,
 {
-	{item = "destroyer-capsule", probability = 1, count_min = 2, count_max = 10},
-	{item = "destroyer-capsule", probability = 0.5, count_min = 2, count_max = 10},
+	{type = "item", name = "destroyer-capsule", independent_probability = 1, amount_min = 2, amount_max = 10},
+	{type = "item", name = "destroyer-capsule", independent_probability = 0.5, amount_min = 2, amount_max = 10},
 }),
 }
 
-local weaponforge_chance = 5 / 100
+local weaponforge_chance = 1 / 20
+
+-- Pare down a bunch of weapon loothuts down to 2 sets. rather than 4-5.
 
 data:extend{
+	generate_storage_hut ("weapons1-smallarms-varied", loothutboundingbox, 0.91,
+	{
+		{type = "item", name = "pistol-uncommon", shared_probability = { min = 0.4, max = 0.9 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "pistol-rare", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "submachine-gun", shared_probability = { min = 0.2, max = 0.4 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "shotgun", shared_probability = { min = 0.0, max = 0.2 }, amount_min = 1, amount_max = 1},
+			
+		{type = "item", name = "firearm-magazine", shared_probability = { min = 0.2, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "shotgun-shell",shared_probability = { min = 0.0, max = 0.2 }, amount_min = 15, amount_max = 30},
+		
+		{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
+	}),
+
+	generate_storage_hut ("weapons2-smallarms-varied", loothutboundingbox, 1.91,
+	{
+		{type = "item", name = "pistol-rare", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 1, amount_max = 1},	
+		{type = "item", name = "pistol-uncommon", shared_probability = { min = 0.8, max = 0.9 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "submachine-gun-uncommon", shared_probability = { min = 0.7, max = 0.8 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "magnum-uncommon", shared_probability = { min = 0.6, max = 0.7 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "magnum", shared_probability = { min = 0.4, max = 0.6 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "shotgun-uncommon", shared_probability = { min = 0.1, max = 0.4 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "shotgun", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 1, amount_max = 1},
+			
+		{type = "item", name = "firearm-magazine", shared_probability = { min = 0.4, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "shotgun-shell",shared_probability = { min = 0.0, max = 0.4 }, amount_min = 15, amount_max = 30},
+		
+		{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
+	}),
+
+	generate_storage_hut ("weapons3-smallarms-varied", loothutboundingbox, 2.91,
+	{
+		{type = "item", name = "pistol-epic", shared_probability = { min = 0.9, max = 1 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "magnum-uncommon", shared_probability = { min = 0.8, max = 0.9 }, amount_min = 1, amount_max = 1},	
+		{type = "item", name = "uzi-gun-uncommon", shared_probability = { min = 0.7, max = 0.8 }, amount_min = 1, amount_max = 1},	
+		{type = "item", name = "uzi-gun", shared_probability = { min = 0.6, max = 0.7 }, amount_min = 1, amount_max = 1},	
+		{type = "item", name = "submachine-gun-uncommon", shared_probability = { min = 0.5, max = 0.6 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "blunderbuss-uncommon", shared_probability = { min = 0.4, max = 0.5 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "blunderbuss", shared_probability = { min = 0.1, max = 0.4 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "shotgun-rare", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 1, amount_max = 1},
+
+		{type = "item", name = "piercing-rounds-magazine", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "piercing-shotgun-shell",shared_probability = { min = 0.0, max = 0.5 }, amount_min = 15, amount_max = 30},
+		
+		{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
+	}),
+
+	generate_storage_hut ("weapons4-smallarms-varied", loothutboundingbox, 3.91,
+	{
+		{type = "item", name = "pistol-legendary", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "magnum-rare", shared_probability = { min = 0.8, max = 0.9 }, amount_min = 1, amount_max = 1},	
+		{type = "item", name = "uzi-gun-rare", shared_probability = { min = 0.6, max = 0.8 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "submachine-gun-epic", shared_probability = { min = 0.5, max = 0.6 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "submachine-gun-rare", shared_probability = { min = 0.4, max = 0.5 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "blunderbuss-rare", shared_probability = { min = 0.2, max = 0.4 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "blunderbuss-uncommon", shared_probability = { min = 0.0, max = 0.2 }, amount_min = 1, amount_max = 1},
+
+		{type = "item", name = "piercing-rounds-magazine", shared_probability = { min = 0.4, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "piercing-shotgun-shell",shared_probability = { min = 0.0, max = 0.4 }, amount_min = 15, amount_max = 30},
+		
+		{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
+	}),
+
+	generate_storage_hut ("weapons5-smallarms-varied", loothutboundingbox, 4.91,
+	{
+		{type = "item", name = "magnum-legendary", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "magnum-epic", shared_probability = { min = 0.7, max = 0.9 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "submachine-gun-legendary", shared_probability = { min = 0.6, max = 0.7 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "submachine-gun-epic", shared_probability = { min = 0.5, max = 0.6 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "shotgun-legendary", shared_probability = { min = 0.4, max = 0.5 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "shotgun-epic", shared_probability = { min = 0.3, max = 0.4 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "combat-shotgun", shared_probability = { min = 0.0, max = 0.3 }, amount_min = 1, amount_max = 1},
+
+		{type = "item", name = "piercing-rounds-magazine", shared_probability = { min = 0.5, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "piercing-shotgun-shell",shared_probability = { min = 0.0, max = 0.5 }, amount_min = 15, amount_max = 30},
+		
+		{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
+	}),
+
+	generate_storage_hut ("weapons6-smallarms-varied", loothutboundingbox, 5.91,
+	{
+		{type = "item", name = "uzi-gun-legendary", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "magnum-epic", shared_probability = { min = 0.8, max = 0.9 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "submachine-gun-legendary", shared_probability = { min = 0.7, max = 0.8 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "blunderbuss-epic", shared_probability = { min = 0.6, max = 0.7 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "shotgun-legendary", shared_probability = { min = 0.5, max = 0.6 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "combat-shotgun-uncommon", shared_probability = { min = 0.3, max = 0.5 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "combat-shotgun", shared_probability = { min = 0.0, max = 0.3 }, amount_min = 1, amount_max = 1},	
+
+		{type = "item", name = "piercing-rounds-magazine", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "piercing-shotgun-shell",shared_probability = { min = 0.0, max = 0.7 }, amount_min = 15, amount_max = 30},
+		
+		{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
+	}),
+
+	generate_storage_hut ("weapons7-smallarms-varied", loothutboundingbox, 6.91,
+	{
+		{type = "item", name = "uzi-gun-epic", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "submachine-gun-epic", shared_probability = { min = 0.8, max = 0.9 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "blunderbuss-legendary", shared_probability = { min = 0.7, max = 0.8 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "blunderbuss-epic", shared_probability = { min = 0.6, max = 0.7 }, amount_min = 1, amount_max = 1},	
+		{type = "item", name = "combat-shotgun-epic", shared_probability = { min = 0.5, max = 0.6 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "combat-shotgun-uncommon", shared_probability = { min = 0.2, max = 0.5 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "combat-shotgun-rare", shared_probability = { min = 0.0, max = 0.2 }, amount_min = 1, amount_max = 1},
+
+		{type = "item", name = "piercing-rounds-magazine", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "piercing-shotgun-shell",shared_probability = { min = 0.0, max = 0.8 }, amount_min = 15, amount_max = 30},
+		
+		{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
+	}),
+
+	generate_storage_hut ("weapons8-smallarms-varied", loothutboundingbox, 8.91,
+	{
+		{type = "item", name = "combat-shotgun-legendary", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "combat-shotgun-epic", shared_probability = { min = 0.8, max = 0.9 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "blunderbuss-legendary", shared_probability = { min = 0.7, max  = 0.8 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "blunderbuss-epic", shared_probability = { min = 0.6, max = 0.7 }, amount_min = 1, amount_max = 1},	
+		
+		{type = "item", name = "submachine-gun-legendary", shared_probability = { min = 0.5, max = 0.6 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "submachine-gun-epic", shared_probability = { min = 0.4, max = 0.5 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "uzi-gun-legendary", shared_probability = { min = 0.3, max = 0.4 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "uzi-gun-epic", shared_probability = { min = 0.2, max = 0.3 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "magnum-legendary", shared_probability = { min = 0.1, max = 0.2 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "magnum-epic", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 1, amount_max = 1},
+
+		{type = "item", name = "piercing-rounds-magazine", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "piercing-shotgun-shell",shared_probability = { min = 0.6, max = 1.0 }, amount_min = 15, amount_max = 30},
+		
+		{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
+	}),
+}
+
+
+--[[
 generate_storage_hut ("weapons1-pistol", loothutboundingbox, 0.91,
 {
-	{item = "pistol-uncommon", probability = 0.8, count_min = 1, count_max = 1},
-	{item = "firearm-magazine", probability = 1, count_min = 20, count_max = 40},
-	{item = "firearm-magazine", probability = 0.5, count_min = 10, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "pistol-uncommon", shared_probability = { min = 0.0, max = 0.9 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "pistol-rare", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "firearm-magazine", independent_probability = 1, amount_min = 20, amount_max = 40},
+	{type = "item", name = "firearm-magazine", independent_probability = 0.5, amount_min = 10, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
+
+
 generate_storage_hut ("weapons2-pistol", loothutboundingbox, 1.21,
 {
-	{item = "pistol-rare", probability = 0.4, count_min = 1, count_max = 1},
-	{item = "piercing-rounds-magazine", probability = 1, count_min = 20, count_max = 40},
-	{item = "piercing-rounds-magazine", probability = 0.5, count_min = 10, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "pistol-uncommon", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "pistol-rare", shared_probability = { min = 0.6, max = 1.0 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "piercing-rounds-magazine", independent_probability = 1, amount_min = 20, amount_max = 40},
+	{type = "item", name = "piercing-rounds-magazine", independent_probability = 0.5, amount_min = 10, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
+
+
 generate_storage_hut ("weapons3-pistol", loothutboundingbox, 1.51,
 {
-	{item = "pistol-epic", probability = 0.2, count_min = 1, count_max = 1},
-	{item = "explosive-rounds-magazine", probability = 1, count_min = 20, count_max = 40},
-	{item = "explosive-rounds-magazine", probability = 0.5, count_min = 10, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "pistol-uncommon", shared_probability = { min = 0.0, max = 0.2 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "pistol-rare", shared_probability = { min = 0.2, max = 0.8 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "pistol-epic",  shared_probability = { min = 0.8, max = 1.0 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "explosive-rounds-magazine", independent_probability = 1, amount_min = 20, amount_max = 40},
+	{type = "item", name = "explosive-rounds-magazine", independent_probability = 0.5, amount_min = 10, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
+
 generate_storage_hut ("weapons4-pistol", loothutboundingbox, 2.31,
 {
-	{item = "pistol-legendary", probability = 0.1, count_min = 1, count_max = 1},
-	{item = "uranium-rounds-magazine", probability = 1, count_min = 20, count_max = 40},
-	{item = "uranium-rounds-magazine", probability = 0.5, count_min = 10, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "pistol-rare", shared_probability = { min = 0.0, max = 0.6 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "pistol-epic",  shared_probability = { min = 0.6, max = 0.9 },  amount_min = 1, amount_max = 1},
+	{type = "item", name = "pistol-legendary", shared_probability = { min = 0.9, max = 1.0 } , amount_min = 1, amount_max = 1},
+	{type = "item", name = "uranium-rounds-magazine", independent_probability = 1, amount_min = 20, amount_max = 40},
+	{type = "item", name = "uranium-rounds-magazine", independent_probability = 0.5, amount_min = 10, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons0-magnum", loothutboundingbox, 1.12,
 {
-	{item = "magnum", probability = 1, count_min = 1, count_max = 1},
-	{item = "firearm-magazine", probability = 1, count_min = 25, count_max = 40},
-	{item = "firearm-magazine", probability = 0.5, count_min = 25, count_max = 45},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "magnum", { min = 0.0, max = 0.9 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "magnum-uncommon", { min = 0.9, max = 1 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "firearm-magazine", independent_probability = 1, amount_min = 25, amount_max = 40},
+	{type = "item", name = "firearm-magazine", independent_probability = 0.5, amount_min = 25, amount_max = 45},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons1-magnum", loothutboundingbox, 1.62,
 {
-	{item = "magnum-uncommon", probability =  0.8, count_min = 1, count_max = 1},
-	{item = "firearm-magazine", probability = 1, count_min = 25, count_max = 40},
-	{item = "firearm-magazine", probability = 0.5, count_min = 25, count_max = 45},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "magnum-uncommon", { min = 0.0, max = 0.9 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "magnum-rare", { min = 0.9, max = 1 }, amount_min = 1, amount_max = 1},
+	{type = "item", name = "firearm-magazine", independent_probability = 1, amount_min = 25, amount_max = 40},
+	{type = "item", name = "firearm-magazine", independent_probability = 0.5, amount_min = 25, amount_max = 45},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons2-magnum", loothutboundingbox, 2.62,
 {
-	{item = "magnum-rare", probability = 0.4, count_min = 1, count_max = 1},
-	{item = "piercing-rounds-magazine", probability = 1, count_min = 25, count_max = 40},
-	{item = "piercing-rounds-magazine", probability = 0.5, count_min = 25, count_max = 45},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "magnum-rare", independent_probability = 0.4, amount_min = 1, amount_max = 1},
+	{type = "item", name = "piercing-rounds-magazine", independent_probability = 1, amount_min = 25, amount_max = 40},
+	{type = "item", name = "piercing-rounds-magazine", independent_probability = 0.5, amount_min = 25, amount_max = 45},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons3-magnum", loothutboundingbox, 3.42,
 {
-	{item = "magnum-epic", probability = 0.2, count_min = 1, count_max = 1},
-	{item = "piercing-rounds-magazine", probability = 1, count_min = 25, count_max = 40},
-	{item = "piercing-rounds-magazine", probability = 0.5, count_min = 25, count_max = 45},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "magnum-epic", independent_probability = 0.2, amount_min = 1, amount_max = 1},
+	{type = "item", name = "piercing-rounds-magazine", independent_probability = 1, amount_min = 25, amount_max = 40},
+	{type = "item", name = "piercing-rounds-magazine", independent_probability = 0.5, amount_min = 25, amount_max = 45},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons4-magnum", loothutboundingbox, 5.22,
 {
-	{item = "magnum-legendary", probability = 0.1, count_min = 1, count_max = 1},
-	{item = "piercing-rounds-magazine", probability = 1, count_min = 25, count_max = 40},
-	{item = "uranium-rounds-magazine", probability = 0.5, count_min = 25, count_max = 45},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "magnum-legendary", independent_probability = 0.1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "piercing-rounds-magazine", independent_probability = 1, amount_min = 25, amount_max = 40},
+	{type = "item", name = "uranium-rounds-magazine", independent_probability = 0.5, amount_min = 25, amount_max = 45},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons0-smg", loothutboundingbox, 1.73,
 {
-	{item = "submachine-gun", probability = 1, count_min = 1, count_max = 1},
-	{item = "firearm-magazine", probability = 1, count_min = 20, count_max = 40},
-	{item = "firearm-magazine", probability = 0.5, count_min = 10, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "submachine-gun", independent_probability = 1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "firearm-magazine", independent_probability = 1, amount_min = 20, amount_max = 40},
+	{type = "item", name = "firearm-magazine", independent_probability = 0.5, amount_min = 10, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons1-smg", loothutboundingbox, 2.73,
 {
-	{item = "submachine-gun-uncommon", probability = 0.8, count_min = 1, count_max = 1},
-	{item = "firearm-magazine", probability = 1, count_min = 20, count_max = 40},
-	{item = "firearm-magazine", probability = 0.5, count_min = 10, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "submachine-gun-uncommon", independent_probability = 0.8, amount_min = 1, amount_max = 1},
+	{type = "item", name = "firearm-magazine", independent_probability = 1, amount_min = 20, amount_max = 40},
+	{type = "item", name = "firearm-magazine", independent_probability = 0.5, amount_min = 10, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons2-smg", loothutboundingbox, 3.83,
 {
-	{item = "submachine-gun-rare", probability = 0.4, count_min = 1, count_max = 1},
-	{item = "piercing-rounds-magazine", probability = 1, count_min = 20, count_max = 40},
-	{item = "piercing-rounds-magazine", probability = 0.5, count_min = 10, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "submachine-gun-rare", independent_probability = 0.4, amount_min = 1, amount_max = 1},
+	{type = "item", name = "piercing-rounds-magazine", independent_probability = 1, amount_min = 20, amount_max = 40},
+	{type = "item", name = "piercing-rounds-magazine", independent_probability = 0.5, amount_min = 10, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons3-smg", loothutboundingbox, 4.93,
 {
-	{item = "submachine-gun-epic", probability = 0.2, count_min = 1, count_max = 1},
-	{item = "explosive-rounds-magazine", probability = 1, count_min = 20, count_max = 40},
-	{item = "uranium-rounds-magazine", probability = 0.5, count_min = 10, count_max = 15},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "submachine-gun-epic", independent_probability = 0.2, amount_min = 1, amount_max = 1},
+	{type = "item", name = "explosive-rounds-magazine", independent_probability = 1, amount_min = 20, amount_max = 40},
+	{type = "item", name = "uranium-rounds-magazine", independent_probability = 0.5, amount_min = 10, amount_max = 15},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons4-smg", loothutboundingbox, 6.03,
 {
-	{item = "submachine-gun-legendary", probability = 0.1, count_min = 1, count_max = 1},
-	{item = "uranium-rounds-magazine", probability = 1, count_min = 10, count_max = 30},
-	{item = "uranium-rounds-magazine", probability = 0.5, count_min = 10, count_max = 15},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "submachine-gun-legendary", independent_probability = 0.1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "uranium-rounds-magazine", independent_probability = 1, amount_min = 10, amount_max = 30},
+	{type = "item", name = "uranium-rounds-magazine", independent_probability = 0.5, amount_min = 10, amount_max = 15},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons0-uzi", loothutboundingbox, 1.63,
 {
-	{item = "uzi-gun", probability = 1, count_min = 1, count_max = 1},
-	{item = "firearm-magazine", probability = 1, count_min = 20, count_max = 40},
-	{item = "firearm-magazine", probability = 0.5, count_min = 10, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "uzi-gun", independent_probability = 1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "firearm-magazine", independent_probability = 1, amount_min = 20, amount_max = 40},
+	{type = "item", name = "firearm-magazine", independent_probability = 0.5, amount_min = 10, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons1-uzi", loothutboundingbox, 2.23,
 {
-	{item = "uzi-gun-uncommon", probability = 0.8, count_min = 1, count_max = 1},
-	{item = "firearm-magazine", probability = 1, count_min = 20, count_max = 40},
-	{item = "firearm-magazine", probability = 0.5, count_min = 10, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "uzi-gun-uncommon", independent_probability = 0.8, amount_min = 1, amount_max = 1},
+	{type = "item", name = "firearm-magazine", independent_probability = 1, amount_min = 20, amount_max = 40},
+	{type = "item", name = "firearm-magazine", independent_probability = 0.5, amount_min = 10, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons2-uzi", loothutboundingbox, 3.23,
 {
-	{item = "uzi-gun-rare", probability = 0.4, count_min = 1, count_max = 1},
-	{item = "piercing-rounds-magazine", probability = 1, count_min = 20, count_max = 40},
-	{item = "piercing-rounds-magazine", probability = 0.5, count_min = 10, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "uzi-gun-rare", independent_probability = 0.4, amount_min = 1, amount_max = 1},
+	{type = "item", name = "piercing-rounds-magazine", independent_probability = 1, amount_min = 20, amount_max = 40},
+	{type = "item", name = "piercing-rounds-magazine", independent_probability = 0.5, amount_min = 10, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons3-uzi", loothutboundingbox, 4.03,
 {
-	{item = "uzi-gun-epic", probability = 0.2, count_min = 1, count_max = 1},
-	{item = "explosive-rounds-magazine", probability = 1, count_min = 20, count_max = 40},
-	{item = "uranium-rounds-magazine", probability = 0.5, count_min = 10, count_max = 15},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "uzi-gun-epic", independent_probability = 0.2, amount_min = 1, amount_max = 1},
+	{type = "item", name = "explosive-rounds-magazine", independent_probability = 1, amount_min = 20, amount_max = 40},
+	{type = "item", name = "uranium-rounds-magazine", independent_probability = 0.5, amount_min = 10, amount_max = 15},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons4-uzi", loothutboundingbox, 5.53,
 {
-	{item = "uzi-gun-legendary", probability = 0.1, count_min = 1, count_max = 1},
-	{item = "uranium-rounds-magazine", probability = 1, count_min = 10, count_max = 30},
-	{item = "uranium-rounds-magazine", probability = 0.5, count_min = 10, count_max = 15},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "uzi-gun-legendary", independent_probability = 0.1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "uranium-rounds-magazine", independent_probability = 1, amount_min = 10, amount_max = 30},
+	{type = "item", name = "uranium-rounds-magazine", independent_probability = 0.5, amount_min = 10, amount_max = 15},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons0-shotgun", loothutboundingbox, 1.54,
 {
-	{item = "shotgun", probability = 1, count_min = 1, count_max = 1},
-	{item = "shotgun-shell", probability = 1, count_min = 15, count_max = 30},
-	{item = "shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "shotgun", independent_probability = 1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "shotgun-shell", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons1-shotgun", loothutboundingbox, 2.64,
 {
-	{item = "shotgun-uncommon", probability = 0.8, count_min = 1, count_max = 1},
-	{item = "shotgun-shell", probability = 1, count_min = 15, count_max = 30},
-	{item = "shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "shotgun-uncommon", independent_probability = 0.8, amount_min = 1, amount_max = 1},
+	{type = "item", name = "shotgun-shell", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons2-shotgun", loothutboundingbox, 3.04,
 {
-	{item = "shotgun-rare", probability = 0.4, count_min = 1, count_max = 1},
-	{item = "piercing-shotgun-shell", probability = 1,  count_min = 15, count_max = 30},
-	{item = "piercing-shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "shotgun-rare", independent_probability = 0.4, amount_min = 1, amount_max = 1},
+	{type = "item", name = "piercing-shotgun-shell", independent_probability = 1,  amount_min = 15, amount_max = 30},
+	{type = "item", name = "piercing-shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons3-shotgun", loothutboundingbox, 4.64,
 {
-	{item = "shotgun-epic", probability = 0.2, count_min = 1, count_max = 1},
-	{item = "explosive-shotgun-shell", probability = 1,  count_min = 15, count_max = 30},
-	{item = "explosive-shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "shotgun-epic", independent_probability = 0.2, amount_min = 1, amount_max = 1},
+	{type = "item", name = "explosive-shotgun-shell", independent_probability = 1,  amount_min = 15, amount_max = 30},
+	{type = "item", name = "explosive-shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons4-shotgun", loothutboundingbox, 6.04,
 {
-	{item = "shotgun-legendary", probability = 0.1, count_min = 1, count_max = 1},
-	{item = "explosive-shotgun-shell", probability = 1,  count_min = 15, count_max = 30},
-	{item = "explosive-shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "shotgun-legendary", independent_probability = 0.1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "explosive-shotgun-shell", independent_probability = 1,  amount_min = 15, amount_max = 30},
+	{type = "item", name = "explosive-shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 
 generate_storage_hut ("weapons0-blunderbuss", loothutboundingbox, 2.75,
 {
-	{item = "blunderbuss", probability = 0.8, count_min = 1, count_max = 1},
-	{item = "shotgun-shell", probability = 1, count_min = 15, count_max = 30},
-	{item = "shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "blunderbuss", independent_probability = 0.8, amount_min = 1, amount_max = 1},
+	{type = "item", name = "shotgun-shell", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons1-blunderbuss", loothutboundingbox, 3.55,
 {
-	{item = "blunderbuss-uncommon", probability = 0.8, count_min = 1, count_max = 1},
-	{item = "shotgun-shell", probability = 1, count_min = 15, count_max = 30},
-	{item = "shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "blunderbuss-uncommon", independent_probability = 0.8, amount_min = 1, amount_max = 1},
+	{type = "item", name = "shotgun-shell", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons2-blunderbuss", loothutboundingbox, 5.65,
 {
-	{item = "blunderbuss-rare", probability = 0.4, count_min = 1, count_max = 1},
-	{item = "piercing-shotgun-shell", probability = 1,  count_min = 15, count_max = 30},
-	{item = "piercing-shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "blunderbuss-rare", independent_probability = 0.4, amount_min = 1, amount_max = 1},
+	{type = "item", name = "piercing-shotgun-shell", independent_probability = 1,  amount_min = 15, amount_max = 30},
+	{type = "item", name = "piercing-shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons3-blunderbuss", loothutboundingbox, 6.75,
 {
-	{item = "blunderbuss-epic", probability = 0.2, count_min = 1, count_max = 1},
-	{item = "explosive-shotgun-shell", probability = 1,  count_min = 15, count_max = 30},
-	{item = "depleted-shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "blunderbuss-epic", independent_probability = 0.2, amount_min = 1, amount_max = 1},
+	{type = "item", name = "explosive-shotgun-shell", independent_probability = 1,  amount_min = 15, amount_max = 30},
+	{type = "item", name = "depleted-shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons4-blunderbuss", loothutboundingbox, 8.55,
 {
-	{item = "blunderbuss-legendary", probability = 0.1, count_min = 1, count_max = 1},
-	{item = "depleted-shotgun-shell", probability = 1,  count_min = 15, count_max = 30},
-	{item = "depleted-shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "blunderbuss-legendary", independent_probability = 0.1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "depleted-shotgun-shell", independent_probability = 1,  amount_min = 15, amount_max = 30},
+	{type = "item", name = "depleted-shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 
 
 generate_storage_hut ("weapons0-autoshotgun", loothutboundingbox, 5.06,
 {
-	{item = "combat-shotgun", probability = 1, count_min = 1, count_max = 1},
-	{item = "piercing-shotgun-shell", probability = 1,  count_min = 15, count_max = 30},
-	{item = "piercing-shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "combat-shotgun", independent_probability = 1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "piercing-shotgun-shell", independent_probability = 1,  amount_min = 15, amount_max = 30},
+	{type = "item", name = "piercing-shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons1-autoshotgun", loothutboundingbox, 6.06,
 {
-	{item = "combat-shotgun-uncommon", probability = 0.8, count_min = 1, count_max = 1},
-	{item = "piercing-shotgun-shell", probability = 1,  count_min = 15, count_max = 30},
-	{item = "piercing-shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "combat-shotgun-uncommon", independent_probability = 0.8, amount_min = 1, amount_max = 1},
+	{type = "item", name = "piercing-shotgun-shell", independent_probability = 1,  amount_min = 15, amount_max = 30},
+	{type = "item", name = "piercing-shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons2-autoshotgun", loothutboundingbox, 7.06,
 {
-	{item = "combat-shotgun-rare", probability = 0.4, count_min = 1, count_max = 1},
-	{item = "piercing-shotgun-shell", probability = 1,  count_min = 15, count_max = 30},
-	{item = "piercing-shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "combat-shotgun-rare", independent_probability = 0.4, amount_min = 1, amount_max = 1},
+	{type = "item", name = "piercing-shotgun-shell", independent_probability = 1,  amount_min = 15, amount_max = 30},
+	{type = "item", name = "piercing-shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons3-autoshotgun", loothutboundingbox, 8.06,
 {
-	{item = "combat-shotgun-epic", probability = 0.2, count_min = 1, count_max = 1},
-	{item = "explosive-shotgun-shell", probability = 1,  count_min = 15, count_max = 30},
-	{item = "depleted-shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "combat-shotgun-epic", independent_probability = 0.2, amount_min = 1, amount_max = 1},
+	{type = "item", name = "explosive-shotgun-shell", independent_probability = 1,  amount_min = 15, amount_max = 30},
+	{type = "item", name = "depleted-shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons4-autoshotgun", loothutboundingbox, 9.06,
 {
-	{item = "combat-shotgun-legendary", probability = 0.1, count_min = 1, count_max = 1},
-	{item = "depleted-shotgun-shell", probability = 1,  count_min = 15, count_max = 30},
-	{item = "depleted-shotgun-shell", probability = 0.5, count_min = 5, count_max = 25},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "combat-shotgun-legendary", independent_probability = 0.1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "depleted-shotgun-shell", independent_probability = 1,  amount_min = 15, amount_max = 30},
+	{type = "item", name = "depleted-shotgun-shell", independent_probability = 0.5, amount_min = 5, amount_max = 25},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
+--]]
 
+data:extend({
+	generate_storage_hut ("weapons1-heavy-varied", loothutboundingbox, 4.07,
+	{
+		{type = "item", name = "flamethrower", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "flamethrower-uncommon", shared_probability = { min = 0.7, max = 0.8 }, amount_min = 1, amount_max = 1},
 
+		{type = "item", name = "rocket-launcher", shared_probability = { min = 0.5, max = 0.7 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "rocket-launcher-uncommon", shared_probability = { min = 0.4, max = 0.5 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "grenade-launcher", shared_probability = { min = 0.1, max = 0.4 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "grenade-launcher-uncommon", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 1, amount_max = 1},
+			
+		{type = "item", name = "flamethrower-ammo", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "rocket",shared_probability = { min = 0.4, max = 0.7 }, amount_min = 40, amount_max = 80},
+		{type = "item", name = "grenade-rounds",shared_probability = { min = 0.0, max = 0.4 }, amount_min = 20, amount_max = 40},
+		
+		{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
+	}),
+	
+	generate_storage_hut ("weapons2-heavy-varied", loothutboundingbox, 6.07,
+	{
+		{type = "item", name = "flamethrower-uncommon", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "flamethrower-rare", shared_probability = { min = 0.7, max = 0.8 }, amount_min = 1, amount_max = 1},
+
+		{type = "item", name = "rocket-launcher-uncommon", shared_probability = { min = 0.5, max = 0.7 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "rocket-launcher-rare", shared_probability = { min = 0.4, max = 0.5 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "grenade-launcher-uncommon", shared_probability = { min = 0.2, max = 0.4 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "grenade-launcher-rare", shared_probability = { min = 0.1, max = 0.2 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "sniper-rifle", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 1, amount_max = 1},
+			
+		{type = "item", name = "flamethrower-ammo", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "rocket",shared_probability = { min = 0.4, max = 0.7 }, amount_min = 40, amount_max = 80},
+		{type = "item", name = "grenade-rounds",shared_probability = { min = 0.1, max = 0.4 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "sniper-shell",shared_probability = { min = 0.0, max = 0.1 }, amount_min = 20, amount_max = 40},
+		
+		{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
+	}),
+	
+	generate_storage_hut ("weapons3-heavy-varied", loothutboundingbox, 8.07,
+	{
+		{type = "item", name = "flamethrower-rare", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "flamethrower-epic", shared_probability = { min = 0.7, max = 0.8 }, amount_min = 1, amount_max = 1},
+
+		{type = "item", name = "rocket-launcher-rare", shared_probability = { min = 0.6, max = 0.7 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "rocket-launcher-epic", shared_probability = { min = 0.5, max = 0.6 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "grenade-launcher-rare", shared_probability = { min = 0.4, max = 0.5 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "grenade-launcher-epic", shared_probability = { min = 0.3, max = 0.4 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "mini-gun", shared_probability = { min = 0.25, max = 0.3 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "mini-gun-uncommon", shared_probability = { min = 0.2, max = 0.25 }, amount_min = 1, amount_max = 1},
+			
+		{type = "item", name = "sniper-rifle", shared_probability = { min = 0.1, max = 0.2 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "sniper-rifle-uncommon", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 1, amount_max = 1},
+			
+		{type = "item", name = "flamethrower-ammo", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "rocket",shared_probability = { min = 0.5, max = 0.7 }, amount_min = 60, amount_max = 180},
+		{type = "item", name = "grenade-rounds",shared_probability = { min = 0.3, max = 0.5 }, amount_min = 20, amount_max = 60},
+		{type = "item", name = "chaingun-ammo", shared_probability = { min = 0.2, max = 0.3 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "sniper-shell",shared_probability = { min = 0.0, max = 0.2 }, amount_min = 20, amount_max = 40},
+		
+		{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
+	}),
+	
+	generate_storage_hut ("weapons4-heavy-varied", loothutboundingbox, 10.07,
+	{
+		{type = "item", name = "flamethrower-epic", shared_probability = { min = 0.7, max = 0.8 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "flamethrower-legendary", shared_probability = { min = 0.7, max = 0.8 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "rocket-launcher-epic", shared_probability = { min = 0.5, max = 0.7 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "rocket-launcher-legendary", shared_probability = { min = 0.4, max = 0.5 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "grenade-launcher-epic", shared_probability = { min = 0.1, max = 0.4 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "grenade-launcher-legendary", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 1, amount_max = 1},
+	
+		{type = "item", name = "mini-gun", shared_probability = { min = 0.8, max = 1.0 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "mini-gun-uncommon", shared_probability = { min = 0.7, max = 0.8 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "mini-gun-rare", shared_probability = { min = 0.7, max = 0.8 }, amount_min = 1, amount_max = 1},
+
+		{type = "item", name = "multirocket-launcher", shared_probability = { min = 0.5, max = 0.7 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "multirocket-launcher-uncommon", shared_probability = { min = 0.4, max = 0.5 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "multirocket-launcher-rare", shared_probability = { min = 0.4, max = 0.5 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "sniper-rifle", shared_probability = { min = 0.1, max = 0.4 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "sniper-rifle-uncommon", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "sniper-rifle-rare", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 1, amount_max = 1},
+			
+		{type = "item", name = "flamethrower-ammo", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "rocket",shared_probability = { min = 0.4, max = 0.7 }, amount_min = 40, amount_max = 80},
+		{type = "item", name = "grenade-rounds",shared_probability = { min = 0.0, max = 0.4 }, amount_min = 20, amount_max = 40},	
+		{type = "item", name = "chaingun-ammo", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "rocket",shared_probability = { min = 0.4, max = 0.7 }, amount_min = 40, amount_max = 80},
+		{type = "item", name = "sniper-shell",shared_probability = { min = 0.0, max = 0.4 }, amount_min = 20, amount_max = 40},
+		
+		{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
+	}),
+	
+	generate_storage_hut ("weapons5-heavy-varied", loothutboundingbox, 12.07,
+	{
+		{type = "item", name = "flamethrower-legendary", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "rocket-launcher-legendary", shared_probability = { min = 0.8, max = 0.9 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "grenade-launcher-legendary", shared_probability = { min = 0.7, max = 0.8 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "mini-gun-rare", shared_probability = { min = 0.6, max = 0.7 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "mini-gun-epic", shared_probability = { min = 0.5, max = 0.6 }, amount_min = 1, amount_max = 1},
+
+		{type = "item", name = "multirocket-launcher-rare", shared_probability = { min = 0.4, max = 0.5 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "multirocket-launcher-epic", shared_probability = { min = 0.3, max = 0.4 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "sniper-rifle-rare", shared_probability = { min = 0.2, max = 0.3 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "sniper-rifle-epic", shared_probability = { min = 0.1, max = 0.2 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "rocket-poison", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 30, amount_max = 80},
+			
+		{type = "item", name = "flamethrower-ammo-napalm", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "rocket-micro",shared_probability = { min = 0.8, max = 0.9 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "explosive-rocket",shared_probability = { min = 0.8, max = 0.85 }, amount_min = 40, amount_max = 80},
+		{type = "item", name = "mortar-rounds-fire",shared_probability = { min = 0.7, max = 0.8 }, amount_min = 20, amount_max = 40},		
+		{type = "item", name = "chaingun-ammo", shared_probability = { min = 0.6, max = 0.7 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "chaingun-ammo-piercing", shared_probability = { min = 0.5, max = 0.6 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "rocket-micro",shared_probability = { min = 0.3, max = 0.5 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "explosive-rocket",shared_probability = { min = 0.3, max = 0.4 }, amount_min = 40, amount_max = 80},
+		{type = "item", name = "sniper-shell",shared_probability = { min = 0.2, max = 0.3 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "sniper-shell-piercing",shared_probability = { min = 0.1, max = 0.2 }, amount_min = 20, amount_max = 40},
+		
+		{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
+	}),
+	
+	generate_storage_hut ("weapons6-heavy-varied", loothutboundingbox, 14.07,
+	{
+		{type = "item", name = "mini-gun-rare", shared_probability = { min = 0.9, max = 1.0 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "mini-gun-epic", shared_probability = { min = 0.8, max = 0.9 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "mini-gun-legendary", shared_probability = { min = 0.7, max = 0.8 }, amount_min = 1, amount_max = 1},
+
+		{type = "item", name = "multirocket-launcher-rare", shared_probability = { min = 0.6, max = 0.7 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "multirocket-launcher-epic", shared_probability = { min = 0.5, max = 0.6 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "multirocket-launcher-legendary", shared_probability = { min = 0.4, max = 0.5 }, amount_min = 1, amount_max = 1},
+		
+		{type = "item", name = "sniper-rifle-rare", shared_probability = { min = 0.3, max = 0.4 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "sniper-rifle-epic", shared_probability = { min = 0.2, max = 0.3 }, amount_min = 1, amount_max = 1},
+		{type = "item", name = "sniper-rifle-legendary", shared_probability = { min = 0.1, max = 0.2 }, amount_min = 1, amount_max = 1},
+			
+		{type = "item", name = "atomic-bomb", shared_probability = { min = 0.0, max = 0.1 }, amount_min = 10, amount_max = 40},
+			
+		{type = "item", name = "chaingun-ammo-piercing", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "chaingun-ammo", shared_probability = { min = 0.7, max = 1.0 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "rocket",shared_probability = { min = 0.4, max = 0.7 }, amount_min = 100, amount_max = 200},
+		{type = "item", name = "rocket-micro",shared_probability = { min = 0.5, max = 0.6 }, amount_min = 200, amount_max = 400},
+		{type = "item", name = "explosive-rocket",shared_probability = { min = 0.4, max = 0.5 }, amount_min = 40, amount_max = 80},
+		{type = "item", name = "sniper-shell-piercing",shared_probability = { min = 0.2, max = 0.4 }, amount_min = 20, amount_max = 40},
+		{type = "item", name = "sniper-shell-uranium",shared_probability = { min = 0.1, max = 0.2 }, amount_min = 20, amount_max = 40},
+		
+		{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
+	}),
+})
+
+--[[
+data:extend{
 generate_storage_hut ("weapons0-flamethrower", loothutboundingbox, 5.07,
 {
-	{item = "flamethrower", probability = 1, count_min = 1, count_max = 1},
-	{item = "flamethrower-ammo", probability = 1, count_min = 15, count_max = 30},
-	{item = "flamethrower-ammo", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "flamethrower", independent_probability = 1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "flamethrower-ammo", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "flamethrower-ammo", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons1-flamethrower", loothutboundingbox, 6.07,
 {
-	{item = "flamethrower-uncommon", probability = 0.8, count_min = 1, count_max = 1},
-	{item = "flamethrower-ammo", probability = 1, count_min = 15, count_max = 30},
-	{item = "flamethrower-ammo", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "flamethrower-uncommon", independent_probability = 0.8, amount_min = 1, amount_max = 1},
+	{type = "item", name = "flamethrower-ammo", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "flamethrower-ammo", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons2-flamethrower", loothutboundingbox, 7.07,
 {
-	{item = "flamethrower-rare", probability = 0.4, count_min = 1, count_max = 1},
-	{item = "flamethrower-ammo", probability = 1, count_min = 15, count_max = 30},
-	{item = "flamethrower-ammo-napalm", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "flamethrower-rare", independent_probability = 0.4, amount_min = 1, amount_max = 1},
+	{type = "item", name = "flamethrower-ammo", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "flamethrower-ammo-napalm", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons3-flamethrower", loothutboundingbox, 8.07,
 {
-	{item = "flamethrower-epic", probability = 0.2, count_min = 1, count_max = 1},
-	{item = "flamethrower-ammo-napalm", probability = 1, count_min = 15, count_max = 30},
-	{item = "flamethrower-ammo-napalm", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "flamethrower-epic", independent_probability = 0.2, amount_min = 1, amount_max = 1},
+	{type = "item", name = "flamethrower-ammo-napalm", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "flamethrower-ammo-napalm", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons4-flamethrower", loothutboundingbox, 9.07,
 {
-	{item = "flamethrower-legendary", probability = 0.1, count_min = 1, count_max = 1},
-	{item = "flamethrower-ammo-napalm", probability = 1, count_min = 15, count_max = 30},
-	{item = "flamethrower-ammo-napalm", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "flamethrower-legendary", independent_probability = 0.1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "flamethrower-ammo-napalm", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "flamethrower-ammo-napalm", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons0-rocket-launcher", loothutboundingbox, 8.08,
 {
-	{item = "rocket-launcher", probability = 1, count_min = 1, count_max = 1},
-	{item = "rocket", probability = 1, count_min = 15, count_max = 30},
-	{item = "rocket", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "rocket-launcher", independent_probability = 1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "rocket", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "rocket", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons1-rocket-launcher", loothutboundingbox, 9.08,
 {
-	{item = "rocket-launcher-uncommon", probability = 0.8, count_min = 1, count_max = 1},
-	{item = "rocket", probability = 1, count_min = 15, count_max = 30},
-	{item = "rocket", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "rocket-launcher-uncommon", independent_probability = 0.8, amount_min = 1, amount_max = 1},
+	{type = "item", name = "rocket", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "rocket", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons2-rocket-launcher", loothutboundingbox, 10.08,
 {
-	{item = "rocket-launcher-rare", probability = 0.4, count_min = 1, count_max = 1},
-	{item = "explosive-rocket", probability = 1, count_min = 15, count_max = 30},
-	{item = "explosive-rocket", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "rocket-launcher-rare", independent_probability = 0.4, amount_min = 1, amount_max = 1},
+	{type = "item", name = "explosive-rocket", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "explosive-rocket", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons3-rocket-launcher", loothutboundingbox, 11.08,
 {
-	{item = "rocket-launcher-epic", probability = 0.2, count_min = 1, count_max = 1},
-	{item = "rocket-micro", probability = 1, count_min = 50, count_max = 200},
-	{item = "explosive-rocket", probability = 0.5, count_min = 25, count_max = 55},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "rocket-launcher-epic", independent_probability = 0.2, amount_min = 1, amount_max = 1},
+	{type = "item", name = "rocket-micro", independent_probability = 1, amount_min = 50, amount_max = 200},
+	{type = "item", name = "explosive-rocket", independent_probability = 0.5, amount_min = 25, amount_max = 55},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons4-rocket-launcher", loothutboundingbox, 12.08,
 {
-	{item = "rocket-launcher-legendary", probability = 0.1, count_min = 1, count_max = 1},
-	{item = "rocket-micro", probability = 1, count_min = 50, count_max = 200},
-	{item = "explosive-rocket", probability = 0.5, count_min = 45, count_max = 105},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "rocket-launcher-legendary", independent_probability = 0.1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "rocket-micro", independent_probability = 1, amount_min = 50, amount_max = 200},
+	{type = "item", name = "explosive-rocket", independent_probability = 0.5, amount_min = 45, amount_max = 105},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons0-sniper-rifle", loothutboundingbox, 6.59,
 {
-	{item = "sniper-rifle", probability = 1, count_min = 1, count_max = 1},
-	{item = "sniper-shell", probability = 1, count_min = 15, count_max = 30},
-	{item = "sniper-shell", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "sniper-rifle", independent_probability = 1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "sniper-shell", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "sniper-shell", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons1-sniper-rifle", loothutboundingbox, 7.29,
 {
-	{item = "sniper-rifle-uncommon", probability = 0.8, count_min = 1, count_max = 1},
-	{item = "sniper-shell", probability = 1, count_min = 15, count_max = 30},
-	{item = "sniper-shell-piercing", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "sniper-rifle-uncommon", independent_probability = 0.8, amount_min = 1, amount_max = 1},
+	{type = "item", name = "sniper-shell", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "sniper-shell-piercing", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons2-sniper-rifle", loothutboundingbox, 8.39,
 {
-	{item = "sniper-rifle-rare", probability = 0.4, count_min = 1, count_max = 1},
-	{item = "sniper-shell-piercing", probability = 1, count_min = 15, count_max = 30},
-	{item = "sniper-shell-piercing", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "sniper-rifle-rare", independent_probability = 0.4, amount_min = 1, amount_max = 1},
+	{type = "item", name = "sniper-shell-piercing", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "sniper-shell-piercing", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons3-sniper-rifle", loothutboundingbox, 9.09,
 {
-	{item = "sniper-rifle-epic", probability = 0.2, count_min = 1, count_max = 1},
-	{item = "sniper-shell-piercing", probability = 1, count_min = 15, count_max = 30},
-	{item = "sniper-shell-uranium", probability = 0.25, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "sniper-rifle-epic", independent_probability = 0.2, amount_min = 1, amount_max = 1},
+	{type = "item", name = "sniper-shell-piercing", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "sniper-shell-uranium", independent_probability = 0.25, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons4-sniper-rifle", loothutboundingbox, 10.19,
 {
-	{item = "sniper-rifle-legendary", probability = 0.1, count_min = 1, count_max = 1},
-	{item = "sniper-shell-piercing", probability = 1, count_min = 15, count_max = 30},
-	{item = "sniper-shell-uranium", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "sniper-rifle-legendary", independent_probability = 0.1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "sniper-shell-piercing", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "sniper-shell-uranium", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons0-multi-rocket-launcher", loothutboundingbox, 10.01,
 {
-	{item = "multirocket-launcher", probability = 1, count_min = 1, count_max = 1},
-	{item = "rocket", probability = 1, count_min = 15, count_max = 30},
-	{item = "rocket", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "multirocket-launcher", independent_probability = 1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "rocket", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "rocket", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons1-multi-rocket-launcher", loothutboundingbox, 11.01,
 {
-	{item = "multirocket-launcher-uncommon", probability = 0.8, count_min = 1, count_max = 1},
-	{item = "rocket", probability = 1, count_min = 15, count_max = 30},
-	{item = "explosive-rocket", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "multirocket-launcher-uncommon", independent_probability = 0.8, amount_min = 1, amount_max = 1},
+	{type = "item", name = "rocket", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "explosive-rocket", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons2-multi-rocket-launcher", loothutboundingbox, 12.01,
 {
-	{item = "multirocket-launcher-rare", probability = 0.4, count_min = 1, count_max = 1},
-	{item = "explosive-rocket", probability = 1, count_min = 15, count_max = 30},
-	{item = "explosive-rocket", probability = 0.5, count_min = 15, count_max = 35},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "multirocket-launcher-rare", independent_probability = 0.4, amount_min = 1, amount_max = 1},
+	{type = "item", name = "explosive-rocket", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "explosive-rocket", independent_probability = 0.5, amount_min = 15, amount_max = 35},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons3-multi-rocket-launcher", loothutboundingbox, 13.01,
 {
-	{item = "multirocket-launcher-epic", probability = 0.2, count_min = 1, count_max = 1},
-	{item = "explosive-rocket", probability = 1, count_min = 50, count_max = 200},
-	{item = "rocket-micro", probability = 0.5, count_min = 50, count_max = 200},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "multirocket-launcher-epic", independent_probability = 0.2, amount_min = 1, amount_max = 1},
+	{type = "item", name = "explosive-rocket", independent_probability = 1, amount_min = 50, amount_max = 200},
+	{type = "item", name = "rocket-micro", independent_probability = 0.5, amount_min = 50, amount_max = 200},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons4-multi-rocket-launcher", loothutboundingbox, 14.01,
 {
-	{item = "multirocket-launcher-legendary", probability = 0.1, count_min = 1, count_max = 1},
-	{item = "rocket-micro", probability = 1, count_min = 50, count_max = 200},
-	{item = "explosive-rocket", probability = 0.5, count_min = 45, count_max = 105},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "multirocket-launcher-legendary", independent_probability = 0.1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "rocket-micro", independent_probability = 1, amount_min = 50, amount_max = 200},
+	{type = "item", name = "explosive-rocket", independent_probability = 0.5, amount_min = 45, amount_max = 105},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons5-nuke", loothutboundingbox, 14.02,
 {
-	{item = "atomic-bomb", probability = 1, count_min = 1, count_max = 1},
-	{item = "atomic-bomb", probability = 0.5, count_min = 1, count_max = 1},
-	{item = "atomic-bomb", probability = 0.25, count_min = 1, count_max = 1},
-	{item = "atomic-bomb", probability = 0.125, count_min = 1, count_max = 1},
+	{type = "item", name = "atomic-bomb", independent_probability = 1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "atomic-bomb", independent_probability = 0.5, amount_min = 1, amount_max = 1},
+	{type = "item", name = "atomic-bomb", independent_probability = 0.25, amount_min = 1, amount_max = 1},
+	{type = "item", name = "atomic-bomb", independent_probability = 0.125, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons0-mini-gun", loothutboundingbox, 10.03,
 {
-	{item = "mini-gun", probability = 1, count_min = 1, count_max = 1},
-	{item = "chaingun-ammo", probability = 1, count_min = 5, count_max = 10},
-	{item = "chaingun-ammo", probability = 0.5, count_min = 5, count_max = 15},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "mini-gun", independent_probability = 1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "chaingun-ammo", independent_probability = 1, amount_min = 5, amount_max = 10},
+	{type = "item", name = "chaingun-ammo", independent_probability = 0.5, amount_min = 5, amount_max = 15},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons1-mini-gun", loothutboundingbox, 11.43,
 {
-	{item = "mini-gun-uncommon", probability = 0.8, count_min = 1, count_max = 1},
-	{item = "chaingun-ammo", probability = 1, count_min = 5, count_max = 10},
-	{item = "chaingun-ammo", probability = 0.5, count_min = 5, count_max = 15},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "mini-gun-uncommon", independent_probability = 0.8, amount_min = 1, amount_max = 1},
+	{type = "item", name = "chaingun-ammo", independent_probability = 1, amount_min = 5, amount_max = 10},
+	{type = "item", name = "chaingun-ammo", independent_probability = 0.5, amount_min = 5, amount_max = 15},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons2-mini-gun", loothutboundingbox, 11.83,
 {
-	{item = "mini-gun-rare", probability = 0.4, count_min = 1, count_max = 1},
-	{item = "chaingun-ammo", probability = 1, count_min = 5, count_max = 10},
-	{item = "chaingun-ammo-piercing", probability = 0.5, count_min = 5, count_max = 15},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "mini-gun-rare", independent_probability = 0.4, amount_min = 1, amount_max = 1},
+	{type = "item", name = "chaingun-ammo", independent_probability = 1, amount_min = 5, amount_max = 10},
+	{type = "item", name = "chaingun-ammo-piercing", independent_probability = 0.5, amount_min = 5, amount_max = 15},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons3-mini-gun", loothutboundingbox, 12.23,
 {
-	{item = "mini-gun-epic", probability = 0.2, count_min = 1, count_max = 1},
-	{item = "chaingun-ammo-piercing", probability = 1, count_min = 5, count_max = 15},
-	{item = "chaingun-ammo-piercing", probability = 0.5, count_min = 5, count_max = 15},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "mini-gun-epic", independent_probability = 0.2, amount_min = 1, amount_max = 1},
+	{type = "item", name = "chaingun-ammo-piercing", independent_probability = 1, amount_min = 5, amount_max = 15},
+	{type = "item", name = "chaingun-ammo-piercing", independent_probability = 0.5, amount_min = 5, amount_max = 15},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 generate_storage_hut ("weapons4-mini-gun", loothutboundingbox, 13.13,
 {
-	{item = "mini-gun-legendary", probability = 0.1, count_min = 1, count_max = 1},
-	{item = "chaingun-ammo-piercing", probability = 1, count_min = 5, count_max = 15},
-	{item = "chaingun-ammo-piercing", probability = 0.5, count_min = 5, count_max = 15},
-	{item = "weapon-forge", probability = weaponforge_chance, count_min = 1, count_max = 1},
+	{type = "item", name = "mini-gun-legendary", independent_probability = 0.1, amount_min = 1, amount_max = 1},
+	{type = "item", name = "chaingun-ammo-piercing", independent_probability = 1, amount_min = 5, amount_max = 15},
+	{type = "item", name = "chaingun-ammo-piercing", independent_probability = 0.5, amount_min = 5, amount_max = 15},
+	{type = "item", name = "weapon-forge", independent_probability = weaponforge_chance, amount_min = 1, amount_max = 1},
 }),
 }
+--]]
     
 data:extend{
-generate_storage_hut ("grenades1", loothutboundingbox, 1.04,
+generate_storage_hut ("grenades0", loothutboundingbox, 1.04,
 {
-	{item = "grenade", probability = 1, count_min = 5, count_max = 30},
-	{item = "grenade", probability = 0.5, count_min = 5, count_max = 30},
+	{type = "item", name = "basic-explosive", independent_probability = 1, amount_min = 25, amount_max = 60},
+	{type = "item", name = "grenade", independent_probability = 0.25, amount_min = 10, amount_max = 30},
+}),
+generate_storage_hut ("grenades1", loothutboundingbox, 2.04,
+{
+	{type = "item", name = "grenade", independent_probability = 1, amount_min = 15, amount_max = 40},
+	{type = "item", name = "grenade", independent_probability = 0.5, amount_min = 15, amount_max = 30},
 }),
 generate_storage_hut ("grenades2", loothutboundingbox, 3.04,
 {
-	{item = "flak-grenade", probability =  1, count_min = 5, count_max = 30},
-	{item = "flak-grenade", probability =  0.5, count_min = 5, count_max = 30},
+	{type = "item", name = "flak-grenade", independent_probability =  1, amount_min = 5, amount_max = 30},
+	{type = "item", name = "flak-grenade", independent_probability =  0.5, amount_min = 5, amount_max = 30},
+}),
+generate_storage_hut ("grenades2b", loothutboundingbox, 4.04,
+{
+	{type = "item", name = "healing-capsule", independent_probability =  1, amount_min = 5, amount_max = 30},
+	{type = "item", name = "poison-capsule", independent_probability =  0.5, amount_min = 15, amount_max = 30},
 }),
 generate_storage_hut ("grenades3", loothutboundingbox, 5.04,
 {
-	{item = "flak-grenade", probability =  1, count_min = 15, count_max = 30},
-	{item = "cluster-grenade", probability = 0.75, count_min = 5, count_max = 30},
-	{item = "cluster-grenade", probability =  0.5, count_min = 5, count_max = 30},
+	{type = "item", name = "flak-grenade", independent_probability =  1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "cluster-grenade", independent_probability = 0.75, amount_min = 5, amount_max = 30},
+	{type = "item", name = "cluster-grenade", independent_probability =  0.5, amount_min = 5, amount_max = 30},
 }),
 generate_storage_hut ("grenades3a", loothutboundingbox, 6.04,
 {
-	{item = "cluster-grenade", probability =  1, count_min = 15, count_max = 30},
-	{item = "cluster-grenade", probability = 0.75, count_min = 5, count_max = 30},
-	{item = "he-grenade", probability =  0.5, count_min = 5, count_max = 30},
+	{type = "item", name = "cluster-grenade", independent_probability =  1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "cluster-grenade", independent_probability = 0.75, amount_min = 5, amount_max = 30},
+	{type = "item", name = "he-grenade", independent_probability =  0.5, amount_min = 5, amount_max = 30},
 }),
 generate_storage_hut ("grenades3b", loothutboundingbox, 9.04,
 {
-	{item = "cluster-grenade", probability = 1, count_min = 5, count_max = 60},
-	{item = "he-grenade", probability =  0.5, count_min = 5, count_max = 30},
+	{type = "item", name = "cluster-grenade", independent_probability = 1, amount_min = 5, amount_max = 60},
+	{type = "item", name = "he-grenade", independent_probability =  0.5, amount_min = 5, amount_max = 30},
+}),
+generate_storage_hut ("grenades3c", loothutboundingbox, 8.04,
+{
+	{type = "item", name = "poison-capsule", independent_probability = 1, amount_min = 25, amount_max = 60},
+	{type = "item", name = "healing-capsule", independent_probability = 0.6, amount_min = 15, amount_max = 60},
+	{type = "item", name = "healing-capsule", independent_probability =  0.25, amount_min = 5, amount_max = 30},
 }),
 generate_storage_hut ("grenades4", loothutboundingbox, 11.04,
 {
-	{item = "flak-grenade", probability =  0.75, count_min = 15, count_max = 30},
-	{item = "he-grenade", probability = 1, count_min = 5, count_max = 10},
-	{item = "mirv-grenade", probability =  0.5, count_min = 5, count_max = 10},
+	{type = "item", name = "flak-grenade", independent_probability =  0.75, amount_min = 15, amount_max = 30},
+	{type = "item", name = "he-grenade", independent_probability = 1, amount_min = 5, amount_max = 10},
+	{type = "item", name = "mirv-grenade", independent_probability =  0.5, amount_min = 5, amount_max = 10},
 }),
 generate_storage_hut ("grenades5", loothutboundingbox, 14.04,
 {
-	{item = "mirv-grenade", probability = 1, count_min = 15, count_max = 30},
-	{item = "flak-grenade", probability =  1, count_min = 15, count_max = 60},
-	{item = "he-grenade", probability =  0.5, count_min = 15, count_max = 60},
+	{type = "item", name = "mirv-grenade", independent_probability = 1, amount_min = 15, amount_max = 30},
+	{type = "item", name = "flak-grenade", independent_probability =  1, amount_min = 15, amount_max = 60},
+	{type = "item", name = "he-grenade", independent_probability =  0.5, amount_min = 15, amount_max = 60},
 }),
 }
 
@@ -2364,20 +3366,24 @@ local function generate_storage_hut_with_packages(data)
 	local _picture
 	local _collision_box
 	local _selection_box
+	local _localised_name = {"",abandonment_loc, " ", {"entity-name.warehouse"} }
 
 	
 
 		if string.find(_warehousename,"weapon") or string.find(_warehousename,"equipment") or string.find(_warehousename,"turret")  or string.find(_warehousename,"magazine") or string.find(_warehousename,"rounds") or string.find(_warehousename,"shell") then
+			table.merge( _localised_name , {" ", "(", {"entity-name." .. "abandonment-warehouse-type-weapons"} ,")" } )
 			_picture = building_ammocache_picture
 			_collision_box = {{-3.75, -2.25}, {3.75, 2.25}}
 			_selection_box = {{-3.85, -2.5}, {3.85, 2.5}}
 			
 		elseif string.find(_warehousename,"grenade") or string.find(_warehousename,"explosive") then
+			table.merge( _localised_name , {" ", "(", {"entity-name." .. "abandonment-warehouse-type-explosive"} ,")" } )
 			_picture = building_explosivecache_picture
 			_collision_box = {{-1.75, -2.25}, {1.75, 2.25}}
 			_selection_box = {{-1.85, -2.5}, {1.85, 2.5}}
 			
 		elseif string.find(_warehousename,"tech") or string.find(_warehousename,"lab") or string.find(_warehousename,"sci")  then
+			table.merge( _localised_name , {" ", "(", {"entity-name." .. "abandonment-warehouse-type-lab"} ,")" } )
 			_picture = building_lab_picture
 			_collision_box = {{-3.75, -2.25}, {3.75, 2.25}}
 			_selection_box = {{-3.85, -2.5}, {3.85, 2.5}}
@@ -2417,7 +3423,7 @@ local function generate_storage_hut_with_packages(data)
 		type = "container",
 		name = "abandonment".."-".._warehousename,
 		localised_description = {"entity-description.abandonment-warehouse"}, 
-		localised_name = {"",abandonment_loc, " ", {"entity-name.warehouse"} },
+		localised_name = _localised_name,
 		icon = "__factorioplus__/graphics/icons/warehouse.png",
 		icon_size = 64, icon_mipmaps = 4,
 		flags = {"placeable-off-grid"},
@@ -3124,41 +4130,43 @@ data:extend({
 	create_abandonment_package({
 	item = "landfill",
 	tier = 1,
-	count = 600,
+	count = 300,
 	tint = {60 , 40 , 30 },
 	tint_item = {60 , 40 , 30 } ,
 	})
 })
 
-data:extend({create_warehouse_package_set("abandonment-package-landfill-1", 2.122, 3, 1)})
-data:extend({create_warehouse_package_set("abandonment-package-landfill-1", 5.122, 6, 2)})
+data:extend({create_warehouse_package_set("abandonment-package-landfill-1", 1.522, 1, 1)})
+data:extend({create_warehouse_package_set("abandonment-package-landfill-1", 2.122, 4, 1)})
+data:extend({create_warehouse_package_set("abandonment-package-landfill-1", 5.122, 8, 2)})
 
 data:extend({
 	create_abandonment_package({
 	item = "cliff-explosives",
 	tier = 1,
-	count = 50,
+	count = 25,
 	tint = {60 , 40 , 30 },
 	tint_item = {30 , 180 , 255 } ,
 	})
 })
 
-data:extend({create_warehouse_package_set("abandonment-package-cliff-explosives-1", 3.123, 3, 1)})
-data:extend({create_warehouse_package_set("abandonment-package-cliff-explosives-1", 6.123, 5, 2)})
+data:extend({create_warehouse_package_set("abandonment-package-cliff-explosives-1", 2.123, 1, 1)})
+data:extend({create_warehouse_package_set("abandonment-package-cliff-explosives-1", 3.123, 4, 1)})
+data:extend({create_warehouse_package_set("abandonment-package-cliff-explosives-1", 6.123, 8, 2)})
 
 data:extend({
 	create_abandonment_package({
 	item = "landfill-deep",
 	tier = 1,
-	count = 400,
+	count = 300,
 	tint = {60 , 70 , 190 },
 	tint_item = {60 , 40 , 30} ,
 	})
 })
 
-data:extend({create_warehouse_package_set("abandonment-package-landfill-deep-1", 5.134, 3, 1)})
-data:extend({create_warehouse_package_set("abandonment-package-landfill-deep-1", 10.134, 5, 2)})
-
+data:extend({create_warehouse_package_set("abandonment-package-landfill-deep-1", 4.134, 3, 1)})
+data:extend({create_warehouse_package_set("abandonment-package-landfill-deep-1", 7.134, 5, 2)})
+data:extend({create_warehouse_package_set("abandonment-package-landfill-deep-1", 10.134, 9, 3)})
 
 data:extend({
 	create_abandonment_package({
@@ -3183,9 +4191,9 @@ data:extend({
 	})
 })
 
-data:extend({create_warehouse_package_set("abandonment-package-stone-brick-1", 1.156, 3, 1)})
-data:extend({create_warehouse_package_set("abandonment-package-stone-brick-1", 3.156, 5, 2)})
-data:extend({create_warehouse_package_set("abandonment-package-stone-brick-1", 6.156, 7, 3)})
+data:extend({create_warehouse_package_set("abandonment-package-stone-brick-1", 1.156, 4, 1)})
+data:extend({create_warehouse_package_set("abandonment-package-stone-brick-1", 3.156, 6, 2)})
+data:extend({create_warehouse_package_set("abandonment-package-stone-brick-1", 6.156, 8, 3)})
 
 data:extend({
 	create_abandonment_package({

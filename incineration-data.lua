@@ -209,7 +209,7 @@ function generate_incinerator_recipe_icons_from_item(item)
 			{
 				icon = item.icon,
 				icon_size = item.icon_size,
-				scale = (0.5 * defines.default_icon_size / (item.icon_size or defines.default_icon_size)) * incineration_icon_size,
+				scale = (0.5 * defines.constant.default_icon_size / (item.icon_size or defines.constant.default_icon_size)) * incineration_icon_size,
 			}	
 		}
 	else
@@ -221,7 +221,7 @@ function generate_incinerator_recipe_icons_from_item(item)
 		}
 		for i = 1, #item.icons do
 		  local icon = table.deepcopy(item.icons[i]) 
-		  icon.scale = ((icon.scale == nil) and (0.5 * defines.default_icon_size / (icon.icon_size or defines.default_icon_size)) or icon.scale) * incineration_icon_size
+		  icon.scale = ((icon.scale == nil) and (0.5 * defines.constant.default_icon_size / (icon.icon_size or defines.constant.default_icon_size)) or icon.scale) * incineration_icon_size
 		  icon.shift = util.mul_shift(icon.shift, 0.8)
 		  _icons[#_icons + 1] = icon
 		end		
@@ -256,7 +256,7 @@ for k,v in pairs(data.raw["item"]) do
 		enabled = true,
 		hidden = true,
 		auto_recycle = false,
-		category = "incineration",
+		categories = {"incineration"},
 		energy_required = math.max( (getitemrecipeenergytime(v.name)), 2 ),
 		ingredients = {{type="item", name=v.name, amount=1}},
 	}

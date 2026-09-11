@@ -276,7 +276,7 @@ function worm_start_attack_animation(scale, tint)
           usage = "enemy"
         }
       ),
-      util.sprite_load("__base__/graphics/entity/worm/worm-attack-mask",
+      util.sprite_load("__factorioplus__/graphics/entity/worm/worm-attack-mask",
         {
           slice = 4,
           frame_count = 10,
@@ -325,7 +325,7 @@ function worm_end_attack_animation(scale, tint)
           usage = "enemy"
         }
       ),
-      util.sprite_load("__base__/graphics/entity/worm/worm-attack-mask",
+      util.sprite_load("__factorioplus__/graphics/entity/worm/worm-attack-mask",
         {
           slice = 4,
           frame_count = 10,

@@ -3,7 +3,6 @@ require ("__factorioplus__.enemies-stats")
 require ("__base__.prototypes.entity.biter-animations")
 require ("__base__.prototypes.entity.spitter-animations")
 enemy_autoplace = require ("__base__.prototypes.entity.enemy-autoplace-utils")
-require ("__base__.prototypes.entity.biter-ai-settings")
 require ("__factorioplus__.spitter-projectiles")
 require ("__factorioplus__.worm-animations")
 require ("__factorioplus__.util-attack-helpers")
@@ -23,9 +22,9 @@ biter_ai_settings =
 	size_in_group = 1.0
 }
 
--- currently unused
--- TODO Use in the future.
--- Take in an enemy scale, and then change their path reolution accordingly to better path/optimizaitons.
+	-- currently unused
+	-- TODO Use in the future.
+	-- Take in an enemy scale, and then change their path reolution accordingly to better path/optimizaitons.
 function Create_AISettings(scale)
 return
 { 
@@ -42,7 +41,8 @@ return
 	-- So, a resolution of -8 equals a grid of 256x256 tiles, 
 	-- and a resolution of 8 equals 1/256 of a tile.
 	-- 1 = 1/2x1/2 0 = 1x1, -1 = 2x2, -2 =4x4, -3 = 8x8
-	size_in_group = 0.25 + ( scale * 1 ) -- smaller units take up less space, larger take up more space. Generally this is related to power.
+	size_in_group = 0.25 + ( scale * 1 ) 
+	-- smaller units take up less space, larger take up more space. Generally this is related to power.
 }
 end
 
@@ -97,13 +97,6 @@ local function create_entity(entity, rad, probability, amount)
 					
 					probability = probability * (settings.startup["settings-chunks-probability"].value/100) or 1 * (settings.startup["settings-chunks-probability"].value/100),
 					as_enemy = false,
-					--repeat_count = amount or 2,
-					--repeat_count_deviation = math.ceil( amount),
-					
-					--check_buildability = true,
-					--find_non_colliding_position  = true,
-					--non_colliding_search_precision  = 0.25,
-					--non_colliding_search_radius = 3,
 					tile_collision_mask  = {not_colliding_with_itself = true, layers = {object = true} }
 				}
 			}
@@ -140,7 +133,7 @@ function create_alien_package(data)
 		impact_category = "organic",
 		dying_explosion = "medium-biter-die",
 		mined_sound = sounds.biter_dying(0.6),
-		-- corpse = "small-remnants",
+		remove_decoratives = "false",
 		minable =
 		{
 		  mining_time = 2,
@@ -151,6 +144,7 @@ function create_alien_package(data)
 		},
 		render_layer = "object",
 		max_health = 300,
+		healing_per_tick = 0.05,
 		resistances =
 	   {
 			{
@@ -189,8 +183,8 @@ function create_alien_package(data)
 				animation_speed = 0.1,
 				run_mode = "forward-then-backward",
 				draw_as_shadow = true,
-				shift = util.by_pixel(0, 0),
-				scale = 0.4
+				shift = util.by_pixel(2, 0),
+				scale = 0.45
 			  }
 			},
 		},
@@ -830,13 +824,195 @@ data:extend({
       sheet = spawner_integration(spitter_spawner_scale)
     }
   },
+})
+
+local worm_spitter_resistances = 
+{
+	{
+	type = "physical",
+	percent = 20,
+	},
+	  {
+	type = "piercing",
+	percent = 15,
+	},
+	{
+	type = "explosion",
+	percent = 25,
+	},
+	{
+	type = "fire",
+	percent = 30,
+	},
+	{
+	type = "acid",
+	percent = 100,
+	}
+}
+	
+function scaleresistances(data, scale)
+
+local _resistances = data
+
+
+return
+
+end
   
    ---------------------------------------------------------------------------------------------------------------------------------
   ----------------------------------------------------------  WORMS  ----------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------  
+
+function makeenemyworm(data)
+
+local _wormname = data.name or "worm"
+local _wormsize = data.size or "small"
+local _wormbasehealth = data.health or 1
+local _wormscale = data.scale or 1
+local _wormtier = data.tier or 1
+local _wormresistances = data.resistances or nil
+local _wormtint = data.tint or {1,1,1}
+local _wormglow = data.glow or false
+local _wormautoplace = data.autoplace or nil
+local _wormtilerestrictions = data.tilerestrictions or nil
+
+return    
+   {
+    type = "turret",
+    name = _wormsize .. _wormname,
+    icon = "__base__/graphics/icons/small-worm.png",
+    icon_size = 64, icon_mipmaps = 4,
+    flags = {"placeable-enemy", "placeable-off-grid", "not-repairable", "breaths-air"},
+    order= "b-c-a",
+    max_health = _wormbasehealth * _wormscale * _wormtier,
+    subgroup= "enemies",
+    resistances = scaleresistances(data, scale),
+    healing_per_tick = 0.05 * _wormscale * _wormtier,
+    collision_box = {{-0.9 * _wormscale, -0.8 * _wormscale }, {0.9 * _wormscale, 0.8 * _wormscale}},
+    map_generator_bounding_box = {{-worm_collision_map_scale_base * _wormscale - worm_collision_map_scale_addition, -worm_collision_map_scale_base * _wormscale - worm_collision_map_scale_addition}, {worm_collision_map_scale_base * _wormscale + worm_collision_map_scale_addition, worm_collision_map_scale_base * _wormscale + worm_collision_map_scale_addition}},
+    selection_box = {{-0.9 * _wormscale, -0.8  * _wormscale}, {0.9 * _wormscale, 0.8 * _wormscale}},
+    damaged_trigger_effect = hit_effects.biter(),
+    shooting_cursor_size = 3 * _wormscale,
+    corpse = _wormsize .. "-worm-corpse",
+    dying_explosion = _wormsize .. "-worm-die",
+	loot = boss_loot,
+	graphics_set = {},
+    dying_sound = sounds.worm_dying_small(1.0 * _wormscale),
+    folded_speed = 0.02 / _wormscale,
+    folded_speed_secondary = 0.02/ _wormscale,
+    folded_animation = worm_folded_animation(_wormscale, _wormtint),
+    preparing_speed = 0.02/ _wormscale,
+    preparing_animation = worm_preparing_animation(_wormscale, _wormtint, "forward"),
+    preparing_sound = sounds.worm_standup_small(1),
+    prepared_speed = 0.02/ _wormscale,
+    prepared_speed_secondary = 0.025 / _wormscale,
+    prepared_sound = sounds.worm_breath (0.5 / _wormscale),
+    prepared_animation = worm_prepared_animation(_wormscale, _wormtint),
+    prepared_alternative_speed = 0.02 / _wormscale,
+    prepared_alternative_speed_secondary = 0.025 / _wormscale,
+    prepared_alternative_chance = 0.25,
+    prepared_alternative_animation = worm_prepared_alternative_animation(_wormscale, _wormtint),
+    prepared_alternative_sound = sounds.worm_roar_alternative(0.64/ _wormscale),
+    starting_attack_speed = 0.03 / _wormscale,
+    starting_attack_animation = worm_start_attack_animation(_wormscale, _wormtint),
+    starting_attack_sound = sounds.worm_roars(0.4/ _wormscale),
+    ending_attack_speed = 0.02 / _wormscale,
+    ending_attack_animation = worm_end_attack_animation(_wormscale, _wormtint),
+    folding_speed = 0.02 / _wormscale,
+    folding_animation =  worm_preparing_animation(_wormscale, _wormtint, "backward"),
+    folding_sound = sounds.worm_fold(1),
+    secondary_animation = true,
+    random_animation_offset = true,
+    attack_from_start_frame = true,
+
+    integration = worm_integration(_wormscale),
+    prepare_range = range_worm_small + prepare_range_worm_small,
+    allow_turning_when_starting_attack = true,
+    attack_parameters =
+    {
+      type = "stream",
+      cooldown = worm_attack_speed_base * _wormscale,
+      range = range_worm_small,--defined in spitter-projectiles.lua
+      damage_modifier = damage_modifier_worm_small,--defined in spitter-projectiles.lua
+      min_range = range_worm_small_min,
+      projectile_creation_parameters = worm_shoot_shiftings(_wormscale, _wormscale * scale_worm_stream),
+      use_shooter_direction = true,
+
+      lead_target_for_projectile_speed = 0.2 * 0.75 * 1.5 * 1.5, -- this is same as particle horizontal speed of flamethrower fire stream
+
+	  ammo_category = "biological",
+      ammo_type =
+      {
+        action =
+        {
+          type = "direct",
+          action_delivery =
+          {
+            type = "stream",
+            stream = "acid-stream-worm-small",
+            source_offset = {0.15, -0.5}
+          }
+        }
+      },
+    },
+    autoplace = enemy_autoplace.enemy_worm_autoplace("enemy_autoplace_base("..autoplace_worm_small * powerscalingvalue..","..(autoplace_worm_small * powerscalingvalue )..")"),
+    call_for_help_radius = 40,
+    spawn_decorations_on_expansion = true,
+    spawn_decoration =
+    {
+      {
+        decorative = "worms-decal",
+        spawn_min = 0,
+        spawn_max = 2,
+        spawn_min_radius = 1,
+        spawn_max_radius = 2
+      },
+      {
+        decorative = "shroom-decal",
+        spawn_min = 1,
+        spawn_max = 1,
+        spawn_min_radius = 1,
+        spawn_max_radius = 2
+      },
+      {
+        decorative = "enemy-decal",
+        spawn_min = 1,
+        spawn_max = 2,
+        spawn_min_radius = 0,
+        spawn_max_radius = 1
+      },
+      {
+        decorative = "enemy-decal-transparent",
+        spawn_min = 2,
+        spawn_max = 4,
+        spawn_min_radius = 1,
+        spawn_max_radius = 2
+      }
+    }
+  }
+end
+
+--[[
+data:extend(
+{
+	makeenemyworm(
+	{
+		name = "worm-new",
+		size = "small",
+		health = 50,
+		scale = 1.0,
+		tier = 1,
+		resistances = worm_spitter_resistances,
+		tint = tint_worm_small,
+		autoplace = enemy_autoplace.enemy_worm_autoplace("enemy_autoplace_base("..autoplace_worm_small * powerscalingvalue..","..(autoplace_worm_small * powerscalingvalue )..")"),
+	})
+})
+]]--
   
    ----------------------------------------------------------  SMALL WORM  ----------------------------------------------------------
-   
+
+data:extend({  
+ 
    {
     type = "turret",
     name = "small-worm-turret",
@@ -922,7 +1098,7 @@ data:extend({
 
       lead_target_for_projectile_speed = 0.2* 0.75 * 1.5 *1.5, -- this is same as particle horizontal speed of flamethrower fire stream
 
-	ammo_category = "biological",
+	  ammo_category = "biological",
       ammo_type =
       {
         action =
@@ -1478,6 +1654,169 @@ collision_box = {{-0.9 * scale_worm_big, -0.8 * scale_worm_big }, {0.9 * scale_w
     {
       sheet = worm_integration(scale_worm_behemoth)
     }
+  },
+  
+     ----------------------------------------------------------  BOHEMOTH WORM  ----------------------------------------------------------
+  
+  {
+    type = "turret",
+    name = "boss-worm-turret",
+    icon = "__base__/graphics/icons/behemoth-worm.png",
+    icon_size = 64, icon_mipmaps = 4,
+    flags = {"placeable-player", "placeable-enemy", "placeable-off-grid", "not-repairable", "breaths-air"},
+	localised_name = {"entity-name.behemoth-worm-turret"},
+    max_health = health_behemoth_worm * enemy_health_scale,
+    order="b-c-d",
+    subgroup="enemies",
+    resistances =
+    {
+      {
+        type = "physical",
+		percent = math.ceil( 15 * scale_worm_behemoth )
+      },
+	  {
+        type = "piercing",
+        percent =  math.ceil( 20 * scale_worm_behemoth )
+      },
+      {
+        type = "explosion",
+        percent = math.ceil( 25 * scale_worm_behemoth )
+      },
+      {
+        type = "fire",
+        percent =  math.ceil( 30 * scale_worm_behemoth )
+      },
+	  {
+        type = "acid",
+        percent = 100
+      }
+    },
+    healing_per_tick = 0.05 * scale_worm_behemoth,
+	collision_box = {{-0.9 * scale_worm_behemoth, -0.8 * scale_worm_behemoth }, {0.9 * scale_worm_behemoth, 0.8 * scale_worm_behemoth}},
+    map_generator_bounding_box = {{-worm_collision_map_scale_base * scale_worm_behemoth - worm_collision_map_scale_addition, -worm_collision_map_scale_base * scale_worm_behemoth - worm_collision_map_scale_addition}, {worm_collision_map_scale_base * scale_worm_behemoth + worm_collision_map_scale_addition, worm_collision_map_scale_base * scale_worm_behemoth + worm_collision_map_scale_addition}},
+    selection_box = {{-0.9 * scale_worm_behemoth, -0.8  * scale_worm_behemoth}, {0.9 * scale_worm_behemoth, 0.8 * scale_worm_behemoth}},
+    damaged_trigger_effect = hit_effects.biter(),
+    shooting_cursor_size = 4,
+    rotation_speed = 1,
+    corpse = "behemoth-worm-corpse",
+    dying_explosion = "behemoth-worm-die",
+	loot = spawner_big_loot,
+    graphics_set = {},
+    dying_sound = sounds.worm_dying_small(1.0 * scale_worm_behemoth),
+    folded_speed = 0.02 / scale_worm_behemoth,
+    folded_speed_secondary = 0.02/ scale_worm_behemoth,
+    folded_animation = worm_folded_animation(scale_worm_behemoth, tint_worm_small),
+    preparing_speed = 0.02/ scale_worm_behemoth,
+    preparing_animation = worm_preparing_animation(scale_worm_behemoth, tint_worm_small, "forward"),
+    preparing_sound = sounds.worm_standup_small(1),
+    prepared_speed = 0.02/ scale_worm_behemoth,
+    prepared_speed_secondary = 0.025 / scale_worm_behemoth,
+    prepared_sound = sounds.worm_breath(0.6 / scale_worm_behemoth),
+    prepared_animation = worm_prepared_animation(scale_worm_behemoth, tint_worm_small),
+    prepared_alternative_speed = 0.02/ scale_worm_behemoth,
+    prepared_alternative_speed_secondary = 0.025 / scale_worm_behemoth,
+    prepared_alternative_chance = 0.2/ scale_worm_behemoth,
+    prepared_alternative_animation = worm_prepared_alternative_animation(scale_worm_behemoth, tint_worm_small),
+    prepared_alternative_sound = sounds.worm_roar_alternative(0.64/ scale_worm_behemoth),
+    starting_attack_speed = 0.03/ scale_worm_behemoth,
+    starting_attack_animation = worm_start_attack_animation(scale_worm_behemoth, tint_worm_small),
+    starting_attack_sound = sounds.worm_roars(0.62/ scale_worm_behemoth),
+    ending_attack_speed = 0.02/ scale_worm_behemoth,
+    ending_attack_animation = worm_end_attack_animation(scale_worm_behemoth, tint_worm_small),
+    folding_speed = 0.02/ scale_worm_behemoth,
+    folding_animation =  worm_preparing_animation(scale_worm_behemoth, tint_worm_small, "backward"),
+    folding_sound = sounds.worm_fold(1),
+	
+    integration = worm_integration(scale_worm_behemoth),
+    secondary_animation = true,
+    random_animation_offset = true,
+    attack_from_start_frame = true,
+
+    prepare_range = range_worm_behemoth + prepare_range_worm_behemoth,
+    allow_turning_when_starting_attack = true,
+    attack_parameters =
+    {
+      type = "stream",
+      ammo_category = "biological",
+      damage_modifier = damage_modifier_worm_behemoth,--defined in spitter-projectiles.lua
+      cooldown = worm_attack_speed_base * scale_worm_behemoth,
+      range = range_worm_behemoth,--defined in spitter-projectiles.lua
+      min_range = range_worm_behemoth_min,
+      projectile_creation_parameters = worm_shoot_shiftings(scale_worm_behemoth, scale_worm_behemoth * scale_worm_stream),
+      use_shooter_direction = true,
+
+      lead_target_for_projectile_speed = 0.2* 0.75 * 1.5 * 1.5, -- this is same as particle horizontal speed of flamethrower fire stream
+
+      ammo_type =
+      {
+        action =
+        {
+          type = "direct",
+          action_delivery =
+          {
+            type = "stream",
+            stream = "acid-stream-worm-behemoth",
+            source_offset = {0.15, -0.5}
+          }
+        }
+      }
+    },
+    build_base_evolution_requirement = 0.9,
+    autoplace = enemy_autoplace.enemy_worm_autoplace("enemy_autoplace_base("..autoplace_worm_behemoth * powerscalingvalue..", "..(autoplace_worm_behemoth * powerscalingvalue )..")"),
+    --autoplace = enemy_autoplace.enemy_worm_autoplace(8),
+    call_for_help_radius = 80,
+    spawn_decorations_on_expansion = true,
+    spawn_decoration =
+    {
+      {
+        decorative = "worms-decal",
+        spawn_min = 1,
+        spawn_max = 3,
+        spawn_min_radius = 1,
+        spawn_max_radius = 5
+      },
+      {
+        decorative = "shroom-decal",
+        spawn_min = 1,
+        spawn_max = 2,
+        spawn_min_radius = 1,
+        spawn_max_radius = 2
+      },
+      {
+        decorative = "enemy-decal",
+        spawn_min = 1,
+        spawn_max = 4,
+        spawn_min_radius = 1,
+        spawn_max_radius = 4
+      },
+      {
+        decorative = "enemy-decal-transparent",
+        spawn_min = 3,
+        spawn_max = 5,
+        spawn_min_radius = 1,
+        spawn_max_radius = 4
+      }
+    }
+  },
+  
+   {
+    type = "corpse",
+    name = "boss-worm-corpse",
+    icon = "__base__/graphics/icons/behemoth-worm-corpse.png",
+    icon_size = 64, icon_mipmaps = 4,
+    selection_box = {{-0.8, -0.8}, {0.8, 0.8}},
+    selectable_in_game = false,
+    subgroup="corpses",
+    order = "c[corpse]-c[worm]-d[big]",
+    flags = {"placeable-neutral", "placeable-off-grid", "building-direction-8-way", "not-repairable", "not-on-map"},
+    dying_speed = 0.005,
+    time_before_removed = 15 * 60 * 60,
+    final_render_layer = "lower-object-above-shadow",
+    animation = worm_die_animation(scale_worm_behemoth, tint_worm_behemoth),
+    ground_patch =
+    {
+      sheet = worm_integration(scale_worm_behemoth)
+    }
   }
    
 })
@@ -1489,28 +1828,29 @@ function makeenemyspawner(spawnername, spawnerbasehealth, spawning_amount, spawn
 	local spawnertierfactor = 1 + ((spawnertier-1)/_tierreductionfactor)
 	local build_base_tier = 0
 	local hpt = 0.01
+	local spawner_ce = nil
 
 	local enemy_default_size = "small"
 	local prefix = ""
 	if (spawnertier == 1) then
-	prefix = "small"
-	enemy_default_size = "small"
-	elseif (spawnertier == 2) then
-	prefix = "medium"
-	enemy_default_size = "medium"
-	build_base_tier = 0.3
-	elseif (spawnertier == 3) then
-	prefix = "big"
-	enemy_default_size = "big"
-	build_base_tier = 0.6
-	elseif (spawnertier == 4) then
-	prefix = "behemoth"
-	enemy_default_size = "behemoth"
-	build_base_tier = 0.8
-	elseif (spawnertier == 5) then
-	prefix = "huge"
-	enemy_default_size = "boss"
-	build_base_tier = 0.95
+			prefix = "small"
+			enemy_default_size = "small"
+		elseif (spawnertier == 2) then
+			prefix = "medium"
+			enemy_default_size = "medium"
+			build_base_tier = 0.3
+		elseif (spawnertier == 3) then
+			prefix = "big"
+			enemy_default_size = "big"
+			build_base_tier = 0.6
+		elseif (spawnertier == 4) then
+			prefix = "behemoth"
+			enemy_default_size = "behemoth"
+			build_base_tier = 0.8
+		elseif (spawnertier == 5) then
+			prefix = "huge"
+			enemy_default_size = "boss"
+			build_base_tier = 0.95
 	end
 
 	_ap = enemy_autoplace.enemy_spawner_autoplace("enemy_autoplace_base(" .. (spawnerautoplace[1] ) * ( ( 1 + spawnertier * powerscalingvalue ) * spawnertier ) .."," .. spawnertier ..")")
@@ -1560,13 +1900,13 @@ function makeenemyspawner(spawnername, spawnerbasehealth, spawning_amount, spawn
 		end
 
 		_ap.tile_restriction = spawner_tilerestrictions_swarmer
-	elseif (string.find(spawnername, "tanker")) then	
+	elseif (string.find(spawnername, "tanker")) then
 		hpt = hpt * 10
 		if (settings.startup["settings-chunks-probability"].value ~= 0) then
 			dte = {}
 			table.insert(dte,create_entity("alien-polyp-"..enemy_default_size , 6 *spawnerscale , 0.1 , 2 + (1 * spawnertier)))
 		end
-
+		_ap.tile_restriction = spawner_tilerestrictions_tanker
 	elseif (string.find(spawnername, "webber")) then
 		dte =
 		{
@@ -1593,6 +1933,7 @@ function makeenemyspawner(spawnername, spawnerbasehealth, spawning_amount, spawn
 		if (settings.startup["settings-chunks-probability"].value ~= 0) then
 			table.insert(dte,create_entity("alien-polyp-"..enemy_default_size , 6 *spawnerscale , 0.1 , 2 + (1 * spawnertier)) )
 		end
+		_ap.tile_restriction = spawner_tilerestrictions_webber
 	elseif (string.find(spawnername, "hatcher")) then	
 		dte =
 		{
@@ -1641,9 +1982,10 @@ function makeenemyspawner(spawnername, spawnerbasehealth, spawning_amount, spawn
 		  },
 		}
 		if (settings.startup["settings-chunks-probability"].value ~= 0) then
-			table.insert(dte,create_entity("alien-polyp-"..enemy_default_size , 6 *spawnerscale , 0.1 , 2 + (1 * spawnertier)) )
+			table.insert(dte,create_entity("alien-polyp-"..enemy_default_size , 6 * spawnerscale , 0.1 , 2 + (1 * spawnertier)) )
 		end
-		_ap.tile_restriction =spawner_tilerestrictions_spitter
+		spawner_ce = create_entity2( enemy_default_size .. "-worm-turret", 20 * spawnerscale, 0.25, 4)
+		_ap.tile_restriction = spawner_tilerestrictions_spitter
 	elseif (string.find(spawnername, "stinger")) then	
 		_ap.tile_restriction = spawner_tilerestrictions_stinger
 		if (settings.startup["settings-chunks-probability"].value ~= 0) then
@@ -1665,6 +2007,7 @@ function makeenemyspawner(spawnername, spawnerbasehealth, spawning_amount, spawn
 		_gs.animations[2].layers[4].draw_as_light = true
 		_gs.animations[3].layers[4].draw_as_light = true
 		_gs.animations[4].layers[4].draw_as_light = true
+		_ap.tile_restriction = spawner_tilerestrictions_blaster
 		
 	elseif (string.find(spawnername, "flamer")) then
 	dte =
@@ -1719,6 +2062,7 @@ function makeenemyspawner(spawnername, spawnerbasehealth, spawning_amount, spawn
 				dte = {}
 				table.insert(dte,create_entity("alien-polyp-"..enemy_default_size , 6 *spawnerscale , 0.1 , 2 + (1 * spawnertier)) )
 			end
+			_ap.tile_restriction = spawner_tilerestrictions_biter
 		end
 	end
 
@@ -1848,6 +2192,7 @@ local res =
 		
 		--enemy_autoplace.enemy_spawner_autoplace((spawnerautoplace[1] ) * ( (2* spawnertier) * spawnertier )),
 		call_for_help_radius = 30 * spawnertierfactor,
+		created_effect = spawner_ce,
 		spawn_decorations_on_expansion = true,
 		spawn_decoration =
 		{
@@ -1920,16 +2265,23 @@ return
     selection_box = {{-2, -2}, {2, 2}},
     selectable_in_game = false,
     dying_speed = 0.04,
-    time_before_removed = 15 * 60 * 60,
+    time_before_removed = 8 * 60 * 60 * (enemyscale),
     subgroup="corpses",
     order = "c[corpse]-b[biter-spawner]",
-    final_render_layer = "remnants",
+    final_render_layer = "lower-object-above-shadow",
     animation =
     {
       spawner_die_animation(0, enemytint,enemyscale),
       spawner_die_animation(1, enemytint,enemyscale),
       spawner_die_animation(2, enemytint,enemyscale),
       spawner_die_animation(3, enemytint,enemyscale)
+    },
+	decay_animation =
+    {
+      spawner_decay_animation(0, enemytint,enemyscale),
+      spawner_decay_animation(1, enemytint,enemyscale),
+      spawner_decay_animation(2, enemytint,enemyscale),
+      spawner_decay_animation(3, enemytint,enemyscale)
     },
     ground_patch =
     {
@@ -2438,7 +2790,7 @@ make_hatcher_egg("boss",boss_swarmer_scale,swarmer_spawner_tint),
 })
 
 -- FISH
-data.raw["fish"]["fish"].minable = {mining_time = 0.4, result = "raw-fish", count = 1}
+data.raw["fish"]["fish"].minable = {mining_time = 0.4, results = { {type = "item", name = "raw-fish", amount_min = 1, amount_max = 2} }}
 data.raw["fish"]["fish"].autoplace = {  tile_restriction = {"water", "water-shallow"}, probability_expression = 0.01 }
 data.raw["fish"]["fish"].pictures =
 {

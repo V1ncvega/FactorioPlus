@@ -203,3 +203,5 @@ for i, v in pairs(data.raw["asteroid"]) do
 		table.insert(v.resistances , {type = "piercing" , decrease = 100, percent = 90} )
 	end
 end
+
+

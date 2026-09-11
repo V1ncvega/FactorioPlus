@@ -139,7 +139,7 @@ data:extend({
 		type = "int-setting",
 		name = "settings-combat-friendlyfire-percent",
 		setting_type = "startup",
-		allowed_values = {0, 5, 10, 25, 50, 100},
+		allowed_values = {0, 1, 5, 10, 25, 50, 100},
 		default_value = 10,
     },
 	
@@ -250,9 +250,19 @@ data:extend({
 	{
         type = "string-setting",
         name = "settings-recipe-cost",
+		order = "f-a[tech]",
         setting_type = "startup",
 		default_value = "normal",
 		allowed_values = {"easy", "normal", "hard", "extreme", "insane"},
+    },	
+	
+	{
+        type = "int-setting",
+        name = "settings-tech-progressive-increment-amount",
+		order = "f-b[tech]",
+        setting_type = "startup",
+		allowed_values = {0, 1, 2, 5, 10, 25, 50},
+		default_value = 0,
     },	
 	
 	
@@ -309,7 +319,7 @@ data:extend({
         type = "bool-setting",
         name = "settings-loaders-electricity",
         setting_type = "startup",
-		default_value = false,
+		default_value = true,
     },
 	{
         type = "string-setting",
@@ -322,6 +332,13 @@ data:extend({
 	
 	
 	-- Turret Veterancy
+	{
+        type = "bool-setting",
+        name = "settings-turrets-vet-active",
+		order = "c-9[veterancy]",
+        setting_type = "startup",
+		default_value = true,
+    },
 	{
         type = "string-setting",
         name = "settings-turrets-vet-kill-damage-check-type",

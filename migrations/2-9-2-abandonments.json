@@ -1,0 +1,45 @@
+{
+ "entity":
+  [
+	["abandonment-resource-extraction-1", "abandonment-buildings-machines-varied-2"],
+	["abandonment-resource-extraction-2", "abandonment-buildings-machines-varied-3"],
+	["abandonment-resource-extraction-3", "abandonment-buildings-machines-varied-4"],
+	["abandonment-resource-extraction-4", "abandonment-buildings-machines-varied-5"],
+	["abandonment-resource-extraction-5", "abandonment-buildings-machines-varied-6"],
+	["abandonment-resource-extraction-6", "abandonment-buildings-machines-varied-7"],
+
+	["abandonment-buildings-smelters-1", "abandonment-buildings-machines-varied-0"],
+	["abandonment-buildings-smelters-2", "abandonment-buildings-machines-varied-1"],
+	["abandonment-buildings-smelters-3", "abandonment-buildings-machines-varied-2"],
+	["abandonment-buildings-smelters-4", "abandonment-buildings-machines-varied-3"],
+	["abandonment-buildings-smelters-5", "abandonment-buildings-machines-varied-3"],
+	["abandonment-buildings-smelters-6", "abandonment-buildings-machines-varied-4"],
+	["abandonment-buildings-smelters-7", "abandonment-buildings-machines-varied-5"],
+	["abandonment-buildings-smelters-8", "abandonment-buildings-machines-varied-6"],
+	["abandonment-buildings-smelters-9", "abandonment-buildings-machines-varied-7"],
+	
+	["abandonment-buildings-machines-1", "abandonment-buildings-machines-varied-0"],
+	["abandonment-buildings-machines-2", "abandonment-buildings-machines-varied-1"],
+	["abandonment-buildings-machines-3", "abandonment-buildings-machines-varied-2"],
+	["abandonment-buildings-machines-4", "abandonment-buildings-machines-varied-3"],
+	["abandonment-buildings-machines-5", "abandonment-buildings-machines-varied-4"],
+	["abandonment-buildings-machines-6", "abandonment-buildings-machines-varied-5"],
+	["abandonment-buildings-machines-7", "abandonment-buildings-machines-varied-6"],
+	["abandonment-buildings-machines-8", "abandonment-buildings-machines-varied-7"],
+  
+	["abandonment-buildings-poles-0", "abandonment-buildings-power-varied-0"],
+	["abandonment-buildings-poles-1", "abandonment-buildings-power-varied-1"],
+	["abandonment-buildings-poles-2", "abandonment-buildings-power-varied-2"],
+	["abandonment-buildings-poles-3", "abandonment-buildings-power-varied-3"],
+	["abandonment-buildings-poles-4", "abandonment-buildings-power-varied-4"],
+
+	["abandonment-energy-production-0", "abandonment-buildings-power-varied-0"],
+	["abandonment-energy-production-1", "abandonment-buildings-power-varied-0"],
+	["abandonment-energy-production-2", "abandonment-buildings-power-varied-1"],
+	["abandonment-energy-production-3", "abandonment-buildings-power-varied-1"],
+	["abandonment-energy-production-4", "abandonment-buildings-power-varied-2"],
+	["abandonment-energy-production-5", "abandonment-buildings-power-varied-2"],
+	["abandonment-energy-production-6", "abandonment-buildings-power-varied-3"],
+	["abandonment-energy-production-7", "abandonment-buildings-power-varied-4"]
+  ]
+}

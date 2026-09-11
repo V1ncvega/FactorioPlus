@@ -274,25 +274,52 @@ end
 
 ---------------------------------------------------  HUT/WAREHOUSE CIRCUIT CONNECTIONS  ------------------------------------------------------------
 
-circuit_connector_definitions["hut"] = circuit_connector_definitions.create_single
+circuit_connector_definitions["hut"] = circuit_connector_definitions.create_vector
 (
   universal_connector_template,
   {
-	variation = 26, 
-	main_offset = util.by_pixel(-22, 16), 
-	shadow_offset = util.by_pixel(-26, 12), 
-	show_shadow = true 
+	{
+		variation = 26, 
+		main_offset = util.by_pixel(-22, 16), 
+		shadow_offset = util.by_pixel(-26, 12), 
+		show_shadow = true 
+	}
+  }
+)
+
+circuit_connector_definitions["medium-turret"] = circuit_connector_definitions.create_vector -- TurretPrototype takes vector
+(
+  universal_connector_template,
+  {
+    { variation = 17, main_offset = util.by_pixel( -18, 13), shadow_offset = util.by_pixel( -12, 25), show_shadow = false }
+  }
+)
+
+circuit_connector_definitions["medium-turret-rotatable"] = circuit_connector_definitions.create_vector -- TurretPrototype takes vector
+(
+  universal_connector_template,
+  {
+    { variation = 17, main_offset = util.by_pixel( -18, 13), shadow_offset = util.by_pixel( -12, 25), show_shadow = false },
+	{ variation = 17, main_offset = util.by_pixel( -18, 13), shadow_offset = util.by_pixel( -12, 25), show_shadow = false },
+	{ variation = 17, main_offset = util.by_pixel( -18, 13), shadow_offset = util.by_pixel( -12, 25), show_shadow = false },
+	{ variation = 17, main_offset = util.by_pixel( -18, 13), shadow_offset = util.by_pixel( -12, 25), show_shadow = false },
+	{ variation = 17, main_offset = util.by_pixel( -18, 13), shadow_offset = util.by_pixel( -12, 25), show_shadow = false },
+	{ variation = 17, main_offset = util.by_pixel( -18, 13), shadow_offset = util.by_pixel( -12, 25), show_shadow = false },
+	{ variation = 17, main_offset = util.by_pixel( -18, 13), shadow_offset = util.by_pixel( -12, 25), show_shadow = false },
+	{ variation = 17, main_offset = util.by_pixel( -18, 13), shadow_offset = util.by_pixel( -12, 25), show_shadow = false },
   }
 )
 	
-circuit_connector_definitions["warehouse"] = circuit_connector_definitions.create_single
+circuit_connector_definitions["warehouse"] = circuit_connector_definitions.create_vector
 (
   universal_connector_template,
-  {    
-	variation = 26, 
-	main_offset = util.by_pixel(-68, 64), 
-	shadow_offset = util.by_pixel(-72, 60), 
-	show_shadow = true 
+  {  
+	{  
+		variation = 26, 
+		main_offset = util.by_pixel(-68, 64), 
+		shadow_offset = util.by_pixel(-72, 60), 
+		show_shadow = true 
+	} 
   }
 )
 

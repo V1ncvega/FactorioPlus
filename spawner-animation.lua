@@ -68,50 +68,91 @@ return
 end
 
 function spawner_die_animation(variation, tint, scale)
-local scale = scale or 1
-return
-  {
+	local scale = scale or 1
+	return
+	  {
+		layers =
+		{
+		  util.sprite_load("__base__/graphics/entity/spawner/spawner-death-v" .. tostring(variation+1),
+			{
+			  frame_count = 18,
+			  direction_count = 1,
+			  scale = 0.5 * scale,
+			  flags = {"corpse-decay"},
+			  allow_forced_downscale = true,
+			  surface = "nauvis",
+			  usage = "enemy"
+			}
+		  ),
+		  util.sprite_load("__base__/graphics/entity/spawner/spawner-death-mask-v" .. tostring(variation+1),
+			{
+			  frame_count = 18,
+			  direction_count = 1,
+			  scale = 0.5 * scale,
+			  tint = tint,
+			  flags = {"corpse-decay"},
+			  allow_forced_downscale = true,
+			  surface = "nauvis",
+			  usage = "enemy"
 
+			}
+		  ),
+		  util.sprite_load("__base__/graphics/entity/spawner/spawner-death-shadow-v" .. tostring(variation+1),
+			{
+			  draw_as_shadow = true,
+			  frame_count = 18,
+			  direction_count = 1,
+			  scale = 0.5 * scale,
+			  allow_forced_downscale = true,
+			  surface = "nauvis",
+			  usage = "enemy"
+			}
+		  ),
+		}
+	  }
+end
 
-    layers =
-    {
-      {
-          filename = "__base__/graphics/entity/spawner/spawner-death-v1.png",
-          line_length = 6,
-          width = 486,
-		  height = 304,
-          frame_count = 18,
-          direction_count = 1,
-          shift = util.by_pixel( -5.5, -4.5),
-         -- y = variation * 354,
-          scale = scale*0.5
-      },
-      {
-          filename = "__base__/graphics/entity/spawner/spawner-death-mask-v1.png",
-          flags = { "mask" },
-	      width = 300,
-		  height = 240,
-          frame_count = 18,
-          direction_count = 1,
-          shift = util.by_pixel( -1.0, -15.0),
-          line_length = 6,
-          tint = tint,
-          --y = variation * 234,
-          scale = scale*0.5
-      },
-      {
-          filename = "__base__/graphics/entity/spawner/spawner-death-shadow-v1.png",
-          draw_as_shadow = true,
-			width = 480,
-			height = 286,
-          frame_count = 18,
-          direction_count = 1,
-          shift = util.by_pixel( -0.5, -0.5),
-          line_length = 6,
-          -- y = variation * 406,
-          scale = scale*0.5
-      }
-    }
-  }
+function spawner_decay_animation(variation, tint, scale)
+	local scale = scale or 1
+	return
+		{
+		  layers =
+		  {
+			util.sprite_load("__base__/graphics/entity/spawner/spawner-decay-v" .. tostring(variation+1),
+			  {
+				frame_count = 24,
+				direction_count = 1,
+				scale = scale * 0.5,
+				flags = {"corpse-decay"},
+				allow_forced_downscale = true,
+				surface = "nauvis",
+				usage = "corpse-decay"
+			  }
+			),
+			util.sprite_load("__base__/graphics/entity/spawner/spawner-decay-mask-v" .. tostring(variation+1),
+			  {
+				frame_count = 24,
+				direction_count = 1,
+				scale = scale * 0.5,
+				tint = tint,
+				flags = {"corpse-decay"},
+				allow_forced_downscale = true,
+				surface = "nauvis",
+				usage = "corpse-decay"
+			  }
+			),
+			util.sprite_load("__base__/graphics/entity/spawner/spawner-decay-shadow-v" .. tostring(variation+1),
+			  {
+				draw_as_shadow = true,
+				frame_count = 24,
+				direction_count = 1,
+				scale = scale * 0.5,
+				allow_forced_downscale = true,
+				surface = "nauvis",
+				usage = "corpse-decay"
+			  }
+			),
+		  }
+		}
 end
 

@@ -1,4 +1,8 @@
 -- Space age overrides
+local function add_recipe_category(recipe, category)
+  recipe.categories = recipe.categories or {"crafting"}
+  table.insert(recipe.categories, category)
+end
 
 -- RECIPE DIFFICULTY
 
@@ -151,7 +155,7 @@ elseif settings.startup["settings-recipe-cost"].value == "extreme" then
 		
 elseif settings.startup["settings-recipe-cost"].value == "insane" then
 
-	data.raw["recipe"]["space-science-pack"].category = "crafting-with-fluid"
+	data.raw["recipe"]["space-science-pack"].categories = {"crafting-with-fluid"}
 	data.raw["recipe"]["space-science-pack"].ingredients =
 	{
 		{type = "item", name = "steel-plate", amount = 1},
@@ -227,7 +231,7 @@ data.extend({
 		type = "recipe",
 		name = "molten-aluminium-from-lava",
 		icon = "__factorioplus__/graphics/icons/molten-aluminium-from-lava.png",
-		category = "metallurgy",
+		categories = {"metallurgy"},
 		subgroup = "vulcanus-processes",
 		order = "a[melting]-b[lava-a]",
 		auto_recycle = false,
@@ -264,7 +268,7 @@ data.extend({
 	{
 		type = "recipe",
 		name = "casting-aluminium",
-		category = "metallurgy",
+		categories = {"metallurgy"},
 		subgroup = "vulcanus-processes",
 		order = "b[casting]-b[casting-iron]",
 		icon = "__factorioplus__/graphics/icons/aluminium-casting.png",
@@ -330,7 +334,7 @@ data.extend({
   {
     type = "recipe",
     name = "glass-from-lava",
-    category = "metallurgy",
+    categories = {"metallurgy"},
     subgroup = "vulcanus-processes",
     order = "b[casting]-g[glass]",
     icon = "__factorioplus__/graphics/icons/glass-from-lava.png",
@@ -350,8 +354,8 @@ data.extend({
 
 
 -- this will allow fulgora to be rocket complete.
-table.insert(data.raw["recipe"]["scrap-recycling"].results ,{type = "item", name = "explosives", amount = 1, probability = 0.01, show_details_in_recipe_tooltip = false} )
-table.insert(data.raw["recipe"]["scrap-recycling"].results ,{type = "item", name = "carbon", amount = 1, probability = 0.01, show_details_in_recipe_tooltip = false} )
+table.insert(data.raw["recipe"]["scrap-recycling"].results ,{type = "item", name = "explosives", amount = 1, independent_probability = 0.01, show_details_in_recipe_tooltip = false} )
+table.insert(data.raw["recipe"]["scrap-recycling"].results ,{type = "item", name = "carbon", amount = 1, independent_probability = 0.01, show_details_in_recipe_tooltip = false} )
 
 data.raw["furnace"]["recycler"].result_inventory_size = 14, -- Recycler needs the amount of free output slots as number of items recycled from scrap (default 12).
 
@@ -367,7 +371,7 @@ data.extend({
     icon = "__factorioplus__/graphics/icons/ammonia-true-rocket-fuel.png",
     energy_required = 20,
     enabled = false,
-    category = "chemistry-or-cryogenics",
+    categories = {"chemistry", "cryogenics" },
     subgroup = "aquilo-processes",
     order = "a[ammonia]-c[ammonia-rocket-fuel]",
     ingredients =
@@ -395,7 +399,7 @@ data.extend({
     type = "recipe",
     name = "bioexplosives",
     icon = "__factorioplus__/graphics/icons/bioexplosives.png",
-    category = "organic",
+    categories = {"organic"},
     subgroup = "agriculture-products",
     order = "a[organic-products]-a[rocket-fuel-from-jelly]",
     auto_recycle = false,
@@ -424,7 +428,7 @@ data.extend({
  {
     type = "recipe",
     name = "process-biter-egg-to-chunks",
-    category = "crafting-with-fluid",
+    categories = {"crafting-with-fluid"},
     enabled = false,
     allow_productivity = true,
     energy_required = 6,
@@ -440,37 +444,65 @@ data.extend({
 
 -- Category updates 
 
-data.raw.recipe["solar-panel"].category = "electronics"
-data.raw.recipe["solar-array"].category = "electronics"
-data.raw.recipe["solar-array-2"].category = "electronics"
+add_recipe_category(data.raw.recipe["solar-panel"], "electromagnetics")
+add_recipe_category(data.raw.recipe["solar-array"], "electromagnetics")
+add_recipe_category(data.raw.recipe["solar-array-2"],  "electromagnetics")
 
-data.raw.recipe["accumulator"].category = "electronics"
-data.raw.recipe["accumulator-battery"].category = "electronics"
-data.raw.recipe["adv-accumulator-battery"].category = "electronics"
+add_recipe_category(data.raw.recipe["accumulator"], "electromagnetics")
+add_recipe_category(data.raw.recipe["accumulator-battery"], "electromagnetics")
+add_recipe_category(data.raw.recipe["adv-accumulator-battery"], "electromagnetics")
 
-data.raw.recipe["speed-module"].category = "electronics"
-data.raw.recipe["speed-module-2"].category = "electronics"
-data.raw.recipe["speed-module-3"].category = "electronics"
-data.raw.recipe["speed-module-4"].category = "electronics"
+add_recipe_category(data.raw.recipe["speed-module"], "electromagnetics")
+add_recipe_category(data.raw.recipe["speed-module-2"], "electromagnetics")
+add_recipe_category(data.raw.recipe["speed-module-3"], "electromagnetics")
+add_recipe_category(data.raw.recipe["speed-module-4"], "electromagnetics")
 
-data.raw.recipe["productivity-module"].category = "electronics"
-data.raw.recipe["productivity-module-2"].category = "electronics"
-data.raw.recipe["productivity-module-3"].category = "electronics"
-data.raw.recipe["productivity-module-4"].category = "electronics"
+add_recipe_category(data.raw.recipe["productivity-module"], "electromagnetics")
+add_recipe_category(data.raw.recipe["productivity-module-2"], "electromagnetics")
+add_recipe_category(data.raw.recipe["productivity-module-3"], "electromagnetics")
+add_recipe_category(data.raw.recipe["productivity-module-4"], "electromagnetics")
 
-data.raw.recipe["efficiency-module"].category = "electronics"
-data.raw.recipe["efficiency-module-2"].category = "electronics"
-data.raw.recipe["efficiency-module-3"].category = "electronics"
-data.raw.recipe["efficiency-module-4"].category = "electronics"
+add_recipe_category(data.raw.recipe["efficiency-module"], "electromagnetics")
+add_recipe_category(data.raw.recipe["efficiency-module-2"], "electromagnetics")
+add_recipe_category(data.raw.recipe["efficiency-module-3"], "electromagnetics")
+add_recipe_category(data.raw.recipe["efficiency-module-4"], "electromagnetics")
 
-data.raw.recipe["electronic-circuit"].category = "electronics"
-data.raw.recipe["advanced-circuit"].category = "electronics"
-data.raw.recipe["processing-unit"].category = "electronics-with-fluid"
-data.raw.recipe["cpu-item"].category = "electronics"
+add_recipe_category(data.raw.recipe["electronic-circuit"], "electromagnetics")
+add_recipe_category(data.raw.recipe["advanced-circuit"], "electromagnetics")
+add_recipe_category(data.raw.recipe["processing-unit"], "electromagnetics")
+add_recipe_category(data.raw.recipe["cpu-item"], "electromagnetics")
 
-data.raw.recipe["medium-wooden-electric-pole"].category = "electronics"
-data.raw.recipe["electrical-distributor"].category = "electronics"
-data.raw.recipe["huge-electric-pole"].category = "electronics"
+add_recipe_category(data.raw.recipe["medium-wooden-electric-pole"], "electromagnetics")
+add_recipe_category(data.raw.recipe["electrical-distributor"],"electromagnetics")
+add_recipe_category(data.raw.recipe["huge-electric-pole"], "electromagnetics")
 
 
---end
+add_recipe_category(data.raw.recipe["basic-transport-belt"], "metallurgy")
+add_recipe_category(data.raw.recipe["basic-underground-belt"], "metallurgy")
+add_recipe_category(data.raw.recipe["basic-splitter"], "metallurgy")
+
+add_recipe_category(data.raw.recipe["transport-belt"], "metallurgy")
+add_recipe_category(data.raw.recipe["underground-belt"], "metallurgy")
+add_recipe_category(data.raw.recipe["splitter"], "metallurgy")
+
+add_recipe_category(data.raw.recipe["fast-transport-belt"], "metallurgy")
+add_recipe_category(data.raw.recipe["fast-underground-belt"], "metallurgy")
+add_recipe_category(data.raw.recipe["fast-splitter"], "metallurgy")
+
+add_recipe_category(data.raw.recipe["express-transport-belt"], "metallurgy")
+add_recipe_category(data.raw.recipe["express-underground-belt"], "metallurgy")
+add_recipe_category(data.raw.recipe["express-splitter"], "metallurgy")
+
+add_recipe_category(data.raw.recipe["turbo-transport-belt"], "metallurgy")
+add_recipe_category(data.raw.recipe["turbo-underground-belt"], "metallurgy")
+add_recipe_category(data.raw.recipe["turbo-splitter"], "metallurgy")
+
+add_recipe_category(data.raw.recipe["supersonic-transport-belt"], "metallurgy")
+add_recipe_category(data.raw.recipe["supersonic-underground-belt"], "metallurgy")
+add_recipe_category(data.raw.recipe["supersonic-splitter"], "metallurgy")
+
+-- Add extra materials to asteroid chunks
+
+table.insert(data.raw["recipe"]["carbonic-asteroid-crushing"].results ,{type = "item", name = "coal", amount = 3} )
+table.insert(data.raw["recipe"]["advanced-carbonic-asteroid-crushing"].results ,{type = "item", name = "coal", amount = 6} )
+table.insert(data.raw["recipe"]["advanced-metallic-asteroid-crushing"].results ,{type = "item", name = "bauxite-ore", amount = 4} )

@@ -171,7 +171,7 @@ data:extend({
     mining_speed = 1.0,
 	input_fluid_box =
     {
-      pipe_picture = assembler3pipepictures(),
+      pipe_picture = require("__base__.prototypes.entity.assembler-pictures").assembler2pipepictures,
       pipe_covers = pipecoverspictures(),
       volume = 100,
       pipe_connections =
@@ -497,7 +497,7 @@ data:extend({
     damaged_trigger_effect = hit_effects.entity(),
 	input_fluid_box =
     {
-      pipe_picture = assembler2pipepictures(),
+      pipe_picture = require("__base__.prototypes.entity.assembler-pictures").assembler2pipepictures,
       pipe_covers = pipecoverspictures(),
       volume = 200,
       pipe_connections =
@@ -853,7 +853,7 @@ data:extend({
 	  fluid_box =
 		{
 		  production_type = "input-output",
-		  pipe_picture = assembler3pipepictures(),
+		  pipe_picture = require("__base__.prototypes.entity.assembler-pictures").assembler2pipepictures,
 		  pipe_covers = pipecoverspictures(),
 		  volume = 100,
 		  minimum_temperature = 100.0,
@@ -1265,7 +1265,7 @@ data:extend({
     {
 	  production_type = "output",
       volume = 1000,
-      pipe_picture = assembler2pipepictures(),
+      pipe_picture = require("__base__.prototypes.entity.assembler-pictures").assembler2pipepictures,
 	  pipe_covers = pipecoverspictures(),
       pipe_connections =
       {
@@ -1289,100 +1289,200 @@ data:extend({
     },
     monitor_visualization_tint = {r=78, g=173, b=255},
     base_render_layer = "object",
-    base_picture =
-    {
-      sheets =
-      {
-        {
-          filename = "__factorioplus__/graphics/gas-extractor.png",
-          priority = "extra-high",
-          width = 2000/4,
-          height = 469,
-		  scale = 0.4,
-		  shift = util.by_pixel(0, -16),
-        },
-		{
-          filename = "__factorioplus__/graphics/gas-extractor-shadow.png",
-          priority = "extra-high",
-          width = 2488/4,
-		  height = 469,
-		  scale = 0.4,
-		  shift = util.by_pixel(32, -16),
-		  draw_as_shadow = true,
-		  repeat_count = 4,
-        },
-      }
-    },
+	use_mirroring = false,
 	
-	 graphics_set =
-    {
-      animation =
-      {
-        north =
-        {
-          layers =
-          {
-             {
-            priority = "high",
-            filename = "__factorioplus__/graphics/gas-extractor-anim.png",
-			animation_speed = 2,
-            line_length = 4,			
-            width = 500,
-			height = 506,
-			scale = 0.4,
-            frame_count = 16,
-            shift = util.by_pixel(0, -4),
+	-- These have to be sliced to each direction. "north_animation" etc.
+
+	
+	graphics_set =
+	{
+		animation =
+			{
+			north =
+			{
+			  layers =
+			  {
+				 {
+				priority = "high",
+				filename = "__factorioplus__/graphics/gas-extractor-anim.png",
+				animation_speed = 2,
+				line_length = 4,			
+				width = 500,
+				height = 506,
+				scale = 0.4,
+				frame_count = 16,
+				shift = util.by_pixel(0, -4),
+				},
+			  }
+			}
+		  },
+		  
+		  working_visualisations =
+		  {
+			  {
+				always_draw = true, 
+				secondary_draw_order = -1,
+				
+				north_animation =
+				{
+					
+				  layers =
+				  {
+					{
+					  filename = "__factorioplus__/graphics/gas-extractor.png",
+					  priority = "extra-high",
+					  width = 2000/4,
+					  x = 0,
+					  height = 469,
+					  scale = 0.4,
+					  shift = util.by_pixel(0, -16),	 
+					  },
+					{
+					  filename = "__factorioplus__/graphics/gas-extractor-shadow.png",
+					  priority = "extra-high",
+					  width = 2488/4,
+					  x = 0,
+					  height = 469,
+					  scale = 0.4,
+					  shift = util.by_pixel(32, -16),
+					  draw_as_shadow = true,
+					},
+
+				  }
+				},
+				
+				east_animation =
+				{
+					
+				  layers =
+				  {
+					{
+					  filename = "__factorioplus__/graphics/gas-extractor.png",
+					  priority = "extra-high",
+					  width = 2000/4,
+					  x = (2000/4) * 1,
+					  height = 469,
+					  scale = 0.4,
+					  shift = util.by_pixel(0, -16),	 
+					  },
+					{
+					  filename = "__factorioplus__/graphics/gas-extractor-shadow.png",
+					  priority = "extra-high",
+					  width = 2488/4,
+					  x = (2488/4) * 1,
+					  height = 469,
+					  scale = 0.4,
+					  shift = util.by_pixel(32, -16),
+					  draw_as_shadow = true,
+					},
+
+				  }
+				},
+				
+				
+				south_animation =
+				{
+					
+				  layers =
+				  {
+					{
+					  filename = "__factorioplus__/graphics/gas-extractor.png",
+					  priority = "extra-high",
+					  width = 2000/4,
+					  x = (2000/4) * 2,
+					  height = 469,
+					  scale = 0.4,
+					  shift = util.by_pixel(0, -16),	 
+					  },
+					{
+					  filename = "__factorioplus__/graphics/gas-extractor-shadow.png",
+					  priority = "extra-high",
+					  width = 2488/4,
+					  x = (2488/4) * 2,
+					  height = 469,
+					  scale = 0.4,
+					  shift = util.by_pixel(32, -16),
+					  draw_as_shadow = true,
+					},
+
+				  }
+				},
+				
+				
+				west_animation =
+				{
+					
+				  layers =
+				  {
+					{
+					  filename = "__factorioplus__/graphics/gas-extractor.png",
+					  priority = "extra-high",
+					  width = 2000/4,
+					  x = (2000/4) * 3,
+					  height = 469,
+					  scale = 0.4,
+					  shift = util.by_pixel(0, -16),	 
+					  },
+					{
+					  filename = "__factorioplus__/graphics/gas-extractor-shadow.png",
+					  priority = "extra-high",
+					  width = 2488/4,
+					  x = (2488/4) * 3,
+					  height = 469,
+					  scale = 0.4,
+					  shift = util.by_pixel(32, -16),
+					  draw_as_shadow = true,
+					},
+
+				  }
+				},
 			},
-          }
-        }
-      },
-	  working_visualisations =
-	  {
-		{
-		  -- "resource-color" or "input-fluid-base-color" or "input-fluid-flow-color" or "status" or "none" or "visual-state-color"
-          apply_tint = "resource-color",
-          fadeout = true,
-          constant_speed = true,
-          north_position = util.by_pixel_hr(120, -128),
-          east_position = util.by_pixel_hr(120, -128),
-          south_position = util.by_pixel_hr(120, -128),
-          west_position = util.by_pixel_hr(120, -128),
-          render_layer = "wires",
-          animation =
-          {
-            filename = "__base__/graphics/entity/chemical-plant/chemical-plant-smoke-outer.png",
-            frame_count = 47,
-            line_length = 16,
-            width = 90,
-            height = 188,
-            animation_speed = 0.3,
-            shift = util.by_pixel(-2, -40),
-            scale = 0.3
-          }
-        },
-        {
-          apply_tint = "resource-color",
-          fadeout = true,
-          constant_speed = true,
-          north_position = util.by_pixel_hr(120, -128),
-          east_position = util.by_pixel_hr(120, -128),
-          south_position = util.by_pixel_hr(120, -128),
-          west_position = util.by_pixel_hr(120, -128),
-          render_layer = "wires",
-          animation =
-          {
-            filename = "__base__/graphics/entity/chemical-plant/chemical-plant-smoke-inner.png",
-            frame_count = 47,
-            line_length = 16,
-            width = 40,
-            height = 84,
-            animation_speed = 0.5,
-            shift = util.by_pixel(0, -14),
-            scale = 0.3
-          }
-        }
-		}
-    },
+			
+			{
+			  -- "resource-color" or "input-fluid-base-color" or "input-fluid-flow-color" or "status" or "none" or "visual-state-color"
+			  apply_tint = "resource-color",
+			  fadeout = true,
+			  constant_speed = true,
+			  north_position = util.by_pixel_hr(120, -128),
+			  east_position = util.by_pixel_hr(120, -128),
+			  south_position = util.by_pixel_hr(120, -128),
+			  west_position = util.by_pixel_hr(120, -128),
+			  render_layer = "wires",
+			  animation =
+			  {
+				filename = "__base__/graphics/entity/chemical-plant/chemical-plant-smoke-outer.png",
+				frame_count = 47,
+				line_length = 16,
+				width = 90,
+				height = 188,
+				animation_speed = 0.3,
+				shift = util.by_pixel(-2, -40),
+				scale = 0.3
+			  }
+			},
+			{
+			  apply_tint = "resource-color",
+			  fadeout = true,
+			  constant_speed = true,
+			  north_position = util.by_pixel_hr(120, -128),
+			  east_position = util.by_pixel_hr(120, -128),
+			  south_position = util.by_pixel_hr(120, -128),
+			  west_position = util.by_pixel_hr(120, -128),
+			  render_layer = "wires",
+			  animation =
+			  {
+				filename = "__base__/graphics/entity/chemical-plant/chemical-plant-smoke-inner.png",
+				frame_count = 47,
+				line_length = 16,
+				width = 40,
+				height = 84,
+				animation_speed = 0.5,
+				shift = util.by_pixel(0, -14),
+				scale = 0.3
+			  }
+			}
+			}
+		},
 	
 	vehicle_impact_sound = sounds.generic_impact,
     open_sound = sounds.machine_open,

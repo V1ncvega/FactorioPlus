@@ -7,19 +7,69 @@ require ("stats")
 script.on_init(function() InitMod() end)
 script.on_load(function() OnLocalLoad()  end)
 
--- Turret Veterancy Script
+local csaAmount = 1
+if settings.startup["settings-crashsite-bonus-buildingstats"].value == "more" then
+	csaAmount = 2
+elseif settings.startup["settings-crashsite-bonus-buildingstats"].value == "extra" then
+	csaAmount = 3
+end
+
+local siAmountPct = ( settings.startup["settings-tech-progressive-increment-amount"].value / 100 )
+
+-- Storage
 local turretPairs = {}
 
-script.on_event(defines.events.on_entity_died, function(event)  DidTurretDie(event.entity)  if event.cause ~= nil then DidTurretKill(event.cause) end end)
+-- Events
+if settings.startup["settings-turrets-vet-active"].value then
+	script.on_event(defines.events.on_entity_died, function(event)  DidTurretDie(event.entity)  if event.cause ~= nil then DidTurretKill(event.cause) end end)
+end
 script.on_event(defines.events.on_player_mined_entity, function(event) OnRemoved(event.entity) end,  {{filter="turret"}} )
 script.on_event(defines.events.on_robot_mined_entity, function(event) RemoveTurretListEntry(event.entity) end, {{filter="turret"}} )
 script.on_event(defines.events.on_post_entity_died, function(eventinfo)  ReplaceTurretGhost(eventinfo)  end )
 script.on_event(defines.events.on_built_entity, function(event)  ChangePastedTurret(event)  end,  {{filter="ghost", force="player"}} )
 script.on_event(defines.events.on_player_created, function(event) OnPlayerCreated(event) end)
 script.on_event(defines.events.on_space_platform_mined_entity, function(event) OnRemoved(event.entity) end,  {{filter="turret"}} )
+script.on_event(defines.events.on_entity_spawned, function(event) EnemyBiterBuff(event.entity) end)
+script.on_event(defines.events.on_research_finished, function(event) IncreaseScienceDifficulty(event.research) end)
+script.on_event(defines.events.on_research_reversed, function(event) ReduceScienceDifficulty(event.research) end)
 
+-- Randomly give enemies a small speed buff.
+function EnemyBiterBuff(entity)
+	if ( entity.has_flag("breaths-air") and entity.speed ~=nil ) then
+		if (math.random()>0.9) then
+			entity.speed = entity.speed * 1.35
+		end
+	end
+end
+
+
+
+function TestSciencePrice()
+	if (storage.scienceIncAmount == nil) then
+		storage.scienceBaseMulti = game.difficulty_settings.technology_price_multiplier
+		storage.scienceIncAmount = (storage.scienceBaseMulti * siAmountPct)
+	end
+end
+
+function ReduceScienceDifficulty(research)
+	TestSciencePrice()
+	if (research.prototype.research_unit_ingredients ~= nil) then
+		game.difficulty_settings.technology_price_multiplier = game.difficulty_settings.technology_price_multiplier - storage.scienceIncAmount 
+	end
+end
+
+function IncreaseScienceDifficulty(research)
+	TestSciencePrice()
+	if (research.prototype.research_unit_ingredients ~= nil) then
+		game.difficulty_settings.technology_price_multiplier = game.difficulty_settings.technology_price_multiplier + storage.scienceIncAmount 
+	end
+end
+
+-- Initmod is called once when mod is loaded for first time on a save file (or a game is started with this mod active)
 function InitMod() 
 	storage.generator = game.create_random_generator()
+	
+	TestSciencePrice()
 
 	if game.forces["abandonments"] ~= nil then 
 		game.forces["abandonments"].ai_controllable = false
@@ -32,9 +82,9 @@ function InitMod()
 end
 
 function CreateForce(force)
-f = game.create_force(force)
-f.custom_color = abandonments_force_color_tint
-f.ai_controllable = false
+	f = game.create_force(force)
+	f.custom_color = abandonments_force_color_tint
+	f.ai_controllable = false
 end
 
 -- function OnForceCreated(event) 
@@ -60,6 +110,7 @@ function SetTargets(targets, entity)
 	 end
 end
 
+-- If a veteran turret is copy and pasted. It is reverted to the base turret level.
 -- on_built_entity
 function ChangePastedTurret(event) 
 --game.print("ChangePastedTurret")
@@ -68,6 +119,9 @@ function ChangePastedTurret(event)
 	if (IsTurret(event.entity.ghost_prototype)) then
 		local targets = GetTargets(event.entity)
 		local ignoretargets = event.entity.ignore_unprioritised_targets
+		local playerindex = event.player_index 
+		local wireconnections = GetWireConnections(event.entity)
+		local conditions = GetConditions(event.entity)
 		local turretpasted = event.entity.surface.create_entity
 		{							
 		  name = "entity-ghost",
@@ -76,21 +130,27 @@ function ChangePastedTurret(event)
 		  position = event.entity.position,
 		  direction = event.entity.direction,
 		  expires = false,
-		  force = "player"
+		  force = "player",
+		  player = playerindex
 		}
 		event.entity.destroy()
 		
 		SetTargets(targets,turretpasted)
 		turretpasted.ignore_unprioritised_targets = ignoretargets
+		RecreateWireConnections(turretpasted,wireconnections)
+		RecreateConditions(turretpasted,conditions)
 	end
 end
 
+-- If a veteran turret dies. It is reverted to the base turret level.
 -- on_post_entity_died
 function ReplaceTurretGhost(eventinfo) 
 if (IsTurret(eventinfo.prototype)) then
 	if eventinfo.ghost ~= nil then -- Check to see if ghosts are being created first!
 		local targets = GetTargets(eventinfo.ghost)
 		local ignoretargets = eventinfo.ghost.ignore_unprioritised_targets
+		local wireconnections = GetWireConnections(eventinfo.ghost)
+		local conditions = GetConditions(eventinfo.ghost)
 		local turretghost = eventinfo.ghost.surface.create_entity
 		{							
 		  name = "entity-ghost",
@@ -98,7 +158,6 @@ if (IsTurret(eventinfo.prototype)) then
 		  quality = eventinfo.quality,
 		  position = eventinfo.position,
 		  direction = eventinfo.ghost.direction,
-		  --ignore_unprioritised_targets = event.entity.ignore_unprioritised_targets,
 		  expires = true,
 		  force = "player"
 		}
@@ -106,6 +165,8 @@ if (IsTurret(eventinfo.prototype)) then
 		
 		SetTargets(targets,turretghost)
 		turretghost.ignore_unprioritised_targets = ignoretargets
+		RecreateWireConnections(turretghost,wireconnections)
+		RecreateConditions(turretghost,conditions)
 	end
 end
 
@@ -124,21 +185,37 @@ function IsTurret(entity)
 	return false
 end
 
+function table.merge(t1, t2)
+	for _,v in ipairs(t2) do
+	   table.insert(t1, v)
+   end
+end
 
-
-local shipStartPieces = {"crash-site-lab-repaired","crash-site-assembling-machine-1-repaired","crash-site-assembling-machine-2-repaired","crash-site-generator"}
+local shipStartLab = "crash-site-lab-repaired"
+local shipStartGenerator = "crash-site-generator"
+local shipAssemblers = {"crash-site-assembling-machine-1-repaired","crash-site-assembling-machine-2-repaired" }
 local shipElectricPole = "crash-site-electric-pole"
+local shipStartPieces = {}
+
+function FinalShipPieces(count) 
+	table.insert(shipStartPieces, shipStartLab)
+	table.insert(shipStartPieces, shipStartGenerator)
+	for i = (count -1), 0, -1 do
+		table.merge(shipStartPieces,shipAssemblers)
+	end
+end
 
 function PlaceShipParts() 
-ship = FindStartShip()
-thisPosition = {math.random(-4,4),math.random(-4,4)}
+	ship = FindStartShip()
+	thisPosition = {math.random(-4,4),math.random(-4,4)}
 	if ship then
+		FinalShipPieces(csaAmount)
 		for k, name in pairs (shipStartPieces) do
 			thisPosition = game.surfaces[1].find_non_colliding_position( name, thisPosition, 7, 3, true )
 			game.surfaces[1].create_entity{ position = thisPosition, name = name, force = "player" } 
 			if (k ~= #shipStartPieces) then
-			thisPosition = game.surfaces[1].find_non_colliding_position( name, thisPosition, 5, 2, true )
-			game.surfaces[1].create_entity{ position = thisPosition, name = shipElectricPole, force = "player" } 
+				thisPosition = game.surfaces[1].find_non_colliding_position( name, thisPosition, 5, 2, true )
+				game.surfaces[1].create_entity{ position = thisPosition, name = shipElectricPole, force = "player" } 
 			end
 		end
 	end
@@ -159,7 +236,7 @@ local robotitems =
 	{name="harness-generator-equipment", count=1},
 	{name="harness-battery-equipment", count=1},
 	{name="harness-roboport-equipment", count=1},	
-	{name="construction-robot", count=10},
+	{name="construction-robot", count=20},
 }
 
 function PlaceShipContainer(items, position) 
@@ -211,12 +288,12 @@ if settings.startup["settings-crashsite-bonus-scrap"].value == "more" then
 	}
 elseif settings.startup["settings-crashsite-bonus-scrap"].value == "extra" then
 	extra_loot_large_wreck = {
-		{name="iron-plate", count=80},
-		{name="copper-plate", count=20},
-		{name="steel-plate", count=10},
+		{name="iron-plate", count=100},
+		{name="copper-plate", count=40},
+		{name="steel-plate", count=20},
 	}
 	extra_loot_medium_wreck = {
-		{name="iron-plate", count=15},
+		{name="iron-plate", count=25},
 		{name="iron-gear-wheel", count=30},
 	}
 end
@@ -237,12 +314,6 @@ function InsertItemsStack(items, object)
 		object.insert(v)
 	end
 end
-
-
-
-
-
-
 
 function OnPlayerCreated()
 	if ( remote.interfaces["freeplay"] and  settings.startup["settings-crashsite"].value == true and storage.crashsiteplaced == nil) then
@@ -388,6 +459,97 @@ function DidTurretKill(entity)
 
 end
 
+function GetConditions(entity, conditions)
+	local control_behavior = entity.get_control_behavior()
+    local controlBehaviorData = nil
+	if control_behavior ~=  nil then	
+			controlBehaviorData = 
+			{			
+				circuit_enable_disable = control_behavior.circuit_enable_disable,
+				circuit_condition = control_behavior.circuit_condition,
+				connect_to_logistic_network = control_behavior.connect_to_logistic_network,
+				logistic_condition = control_behavior.logistic_condition,
+
+				set_priority_list = control_behavior.set_priority_list,
+				set_ignore_unlisted_targets = control_behavior.set_ignore_unlisted_targets,
+				ignore_unlisted_targets_condition = control_behavior.ignore_unlisted_targets_condition,
+				read_ammo = control_behavior.read_ammo
+			}
+	end
+	return controlBehaviorData
+end
+
+function RecreateConditions(entity, conditions)
+	if (conditions ~= nil) then
+		local new_conditions = entity.get_or_create_control_behavior()
+
+		new_conditions.circuit_enable_disable = conditions.circuit_enable_disable
+		new_conditions.circuit_condition = conditions.circuit_condition
+		new_conditions.connect_to_logistic_network = conditions.connect_to_logistic_network
+		new_conditions.logistic_condition = conditions.logistic_condition
+
+		new_conditions.set_priority_list = conditions.set_priority_list
+		new_conditions.set_ignore_unlisted_targets = conditions.set_ignore_unlisted_targets
+		new_conditions.ignore_unlisted_targets_condition = conditions.ignore_unlisted_targets_condition
+	end
+
+end
+
+function GetWireConnections(entity)
+	if not entity.valid then return {} end
+
+	local current_wire_connections = entity.get_wire_connectors()
+	local source_connections = {}
+
+	for k,v in pairs(current_wire_connections) do
+		if not v.valid then break end
+		
+		if v.connection_count > 0 and v.connections ~= nil then
+			if v.wire_connector_id == defines.wire_connector_id.circuit_red then 
+				source_connections.red = {}
+				for _, connection in ipairs(v.connections) do
+					table.insert(source_connections.red,connection)
+				end
+			elseif v.wire_connector_id == defines.wire_connector_id.circuit_green then
+				source_connections.green = {}
+				for _, connection in ipairs(v.connections) do
+					table.insert(source_connections.green,connection)
+				end
+			end
+
+		end
+	  end
+	return source_connections
+end
+
+function RecreateWireConnections(entity,source_connections)
+	if (source_connections ~= nil) then
+		if next(source_connections) ~= nil  then
+			local dest_connections = entity.get_wire_connectors(true) 
+			for k,v in pairs(dest_connections) do
+				if not v.valid then break end
+
+				if v.wire_connector_id == defines.wire_connector_id.circuit_red then 
+					if source_connections.red ~= nil then
+						for _, connection in ipairs(source_connections.red) do
+							if connection ~= nil then
+								v.connect_to(connection.target)
+							end
+						end
+					end
+				elseif v.wire_connector_id == defines.wire_connector_id.circuit_green then
+					if source_connections.green ~= nil then
+						for _, connection in ipairs(source_connections.green) do
+							if connection ~= nil then
+								v.connect_to(connection.target)
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+end
 	
 function UpgradeTurret(turret, newName, icon)
 	
@@ -414,18 +576,23 @@ function UpgradeTurret(turret, newName, icon)
 	local turretQuality = turret.quality
 	local targets = GetTargets(turret)
 	local ignoretargets = turret.ignore_unprioritised_targets
-		 
+	local wireconnections = GetWireConnections(turret)
+	local conditions = GetConditions(turret)
 	
 	RemoveOldTurret(turret) -- This fixed the issue of flame turrets not working correctly by removing the old turret before making the new one.
 	
 	-- Create a new turret and copy in the stats of the old one.
 	local newTurret = turretSurface.create_entity{position=turretPosition, quality =turretQuality, name=newName, force = turretForce, direction=turretDirection, target=turretPosition, fast_replace=true}
 	newTurret.kills = kills
-	newTurret.damage_dealt = damage_dealt
-	
+	newTurret.damage_dealt = damage_dealt	
 	SetTargets(targets,newTurret)
 	newTurret.ignore_unprioritised_targets = ignoretargets
 	
+	-- Apply circuit conditions and wires if there is.
+	
+	RecreateWireConnections(newTurret, wireconnections)
+	RecreateConditions(newTurret, conditions)
+
 	-- Create the veterancy icon at the Bottom Right of the turrets bounding box
 	local newIcon = newTurret.surface.create_entity{position = BoundingBoxBottomRightPosition(newTurret), name = icon}
 	

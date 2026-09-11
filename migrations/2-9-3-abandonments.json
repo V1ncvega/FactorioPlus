@@ -1,0 +1,79 @@
+{
+ "entity":
+  [
+  
+  	["abandonment-weapons0-flamethrower", "abandonment-weapons1-heavy-varied"],
+	["abandonment-weapons1-flamethrower", "abandonment-weapons2-heavy-varied"],
+	["abandonment-weapons2-flamethrower", "abandonment-weapons3-heavy-varied"],
+	["abandonment-weapons3-flamethrower", "abandonment-weapons4-heavy-varied"],
+	["abandonment-weapons4-flamethrower", "abandonment-weapons5-heavy-varied"],
+	
+	["abandonment-weapons0-rocket-launcher", "abandonment-weapons1-heavy-varied"],
+	["abandonment-weapons1-rocket-launcher", "abandonment-weapons2-heavy-varied"],
+	["abandonment-weapons2-rocket-launcher", "abandonment-weapons3-heavy-varied"],
+	["abandonment-weapons3-rocket-launcher", "abandonment-weapons4-heavy-varied"],
+	["abandonment-weapons4-rocket-launcher", "abandonment-weapons5-heavy-varied"],
+
+	["abandonment-weapons0-sniper-rifle", "abandonment-weapons2-heavy-varied"],
+	["abandonment-weapons1-sniper-rifle", "abandonment-weapons3-heavy-varied"],
+	["abandonment-weapons2-sniper-rifle", "abandonment-weapons4-heavy-varied"],
+	["abandonment-weapons3-sniper-rifle", "abandonment-weapons5-heavy-varied"],
+	["abandonment-weapons4-sniper-rifle", "abandonment-weapons6-heavy-varied"],	
+	
+	["abandonment-weapons0-multi-rocket-launcher", "abandonment-weapons2-heavy-varied"],
+	["abandonment-weapons1-multi-rocket-launcher", "abandonment-weapons3-heavy-varied"],
+	["abandonment-weapons2-multi-rocket-launcher", "abandonment-weapons4-heavy-varied"],
+	["abandonment-weapons3-multi-rocket-launcher", "abandonment-weapons5-heavy-varied"],
+	["abandonment-weapons4-multi-rocket-launcher", "abandonment-weapons6-heavy-varied"],
+	
+	["abandonment-weapons0-mini-gun", "abandonment-weapons2-heavy-varied"],
+	["abandonment-weapons1-mini-gun", "abandonment-weapons3-heavy-varied"],
+	["abandonment-weapons2-mini-gun", "abandonment-weapons4-heavy-varied"],
+	["abandonment-weapons3-mini-gun", "abandonment-weapons5-heavy-varied"],
+	["abandonment-weapons4-mini-gun", "abandonment-weapons6-heavy-varied"],
+	
+	["abandonment-weapons5-nuke", "abandonment-weapons6-heavy-varied"],
+	
+	["abandonment-logistics-inserters-0", "abandonment-logistics-varied-0"],
+	["abandonment-logistics-inserters-1", "abandonment-logistics-varied-1"],
+	["abandonment-logistics-inserters-2", "abandonment-logistics-varied-2"],
+	["abandonment-logistics-inserters-3", "abandonment-logistics-varied-3"],
+	["abandonment-logistics-inserters-4", "abandonment-logistics-varied-4"],
+
+	["abandonment-logistics-inserters-0", "abandonment-logistics-varied-0"],
+	["abandonment-logistics-inserters-1", "abandonment-logistics-varied-1"],
+	["abandonment-logistics-inserters-2", "abandonment-logistics-varied-2"],
+	["abandonment-logistics-inserters-2b", "abandonment-logistics-varied-2"],
+	["abandonment-logistics-inserters-3", "abandonment-logistics-varied-3"],
+	["abandonment-logistics-inserters-4", "abandonment-logistics-varied-4"],
+	
+	["abandonment-buildings-logistics-0", "abandonment-logistics-varied-0"],
+	["abandonment-buildings-logistics-1", "abandonment-logistics-varied-1"],
+	["abandonment-buildings-logistics-2", "abandonment-logistics-varied-2"],
+	["abandonment-buildings-logistics-3", "abandonment-logistics-varied-2"],
+	["abandonment-buildings-logistics-4", "abandonment-logistics-varied-3"],
+	["abandonment-buildings-logistics-5", "abandonment-logistics-varied-4"],
+	
+	["abandonment-repair-packs-1", "abandonment-random-bits-varied-1"],
+	["abandonment-repair-packs-2", "abandonment-random-bits-varied-3"],
+	
+	["abandonment-buildings-speed-modules-1", "abandonment-modules-varied-1"],
+	["abandonment-buildings-speed-modules-2", "abandonment-modules-varied-2"],
+	["abandonment-buildings-speed-modules-3", "abandonment-modules-varied-3"],
+	["abandonment-buildings-speed-modules-4", "abandonment-modules-varied-4"],
+	
+	["abandonment-buildings-eff-modules-1", "abandonment-modules-varied-1"],
+	["abandonment-buildings-eff-modules-2", "abandonment-modules-varied-2"],
+	["abandonment-buildings-eff-modules-3", "abandonment-modules-varied-3"],
+	["abandonment-buildings-eff-modules-4", "abandonment-modules-varied-4"],
+	
+	["abandonment-buildings-productivity-modules-1", "abandonment-modules-varied-1"],
+	["abandonment-buildings-productivity-modules-2", "abandonment-modules-varied-2"],
+	["abandonment-buildings-productivity-modules-3", "abandonment-modules-varied-3"],
+	["abandonment-buildings-productivity-modules-4", "abandonment-modules-varied-4"],
+	
+	["abandonment-buildings-beacon-1", "abandonment-modules-varied-1"],
+	["abandonment-buildings-beacon-2", "abandonment-modules-varied-2"]
+
+  ]
+}

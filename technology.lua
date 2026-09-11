@@ -125,6 +125,13 @@ if (mods["space-age"]) then
 else
 end
 
+-- ROCKETRY OVERRIDE
+
+
+table.removeentry(data.raw["technology"]["rocketry"].prerequisites, "explosives") 
+--table.insert(data.raw["technology"]["rocketry"].prerequisites,"explosive-ammo-2")
+table.insert(data.raw["technology"]["rocketry"].prerequisites,"military-3")
+
 -- MODULE 2 OVERRIDE
 
 table.removeentry(data.raw["technology"]["speed-module-2"].prerequisites, "processing-unit") 
@@ -152,11 +159,10 @@ data.raw["technology"]["explosive-rocketry"].hidden = true
 -- FLUID HANDLING OVERRIDE
 
 table.insert(data.raw["technology"]["fluid-handling"].effects,
-{
-        type = "unlock-recipe",
-        recipe = "barrel-recycling"
-}
-)
+	{
+			type = "unlock-recipe",
+			recipe = "barrel-recycling"
+	})
 
 -- FACTORIOPLUS TECHNOLOGIES
 
@@ -203,7 +209,7 @@ data:extend
         recipe = "explosive-rounds-magazine"
         }
       },
-      prerequisites = {"military-2","explosives"},
+      prerequisites = {"military-2"},
       unit =
       {
         count = 200,
@@ -465,6 +471,7 @@ data:extend
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"bio-science-pack", 1},
 	  },
       time = 60
@@ -683,6 +690,7 @@ data.extend({
 	  {
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"bio-science-pack", 1},
 	  },
       time = 30
@@ -711,6 +719,7 @@ data.extend({
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"bio-science-pack", 1},
 	  },
       time = 40
@@ -739,6 +748,7 @@ data.extend({
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"bio-science-pack", 1},
 	  },
       time = 40
@@ -767,6 +777,7 @@ data.extend({
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"production-science-pack", 1},
 	  {"bio-science-pack", 1},
 	  },
@@ -796,6 +807,7 @@ data.extend({
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"production-science-pack", 1},
 	  {"bio-science-pack", 1},
 	  },
@@ -825,6 +837,7 @@ data.extend({
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"production-science-pack", 1},
 	  {"utility-science-pack", 1},
 	  {"bio-science-pack", 1},
@@ -855,6 +868,7 @@ data.extend({
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"production-science-pack", 1},
 	  {"utility-science-pack", 1},
 	  {"bio-science-pack", 1},
@@ -885,6 +899,7 @@ data.extend({
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"production-science-pack", 1},
 	  {"utility-science-pack", 1},
 	  {"space-science-pack", 1},
@@ -916,6 +931,7 @@ data.extend({
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"production-science-pack", 1},
 	  {"utility-science-pack", 1},
 	  {"space-science-pack", 1},
@@ -973,6 +989,7 @@ data.extend({
 	  {
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"bio-science-pack", 1},
 	  },
       time = 30
@@ -1000,6 +1017,7 @@ data.extend({
 	  {
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"chemical-science-pack", 1},
 	  {"bio-science-pack", 1},
 	  },
@@ -1028,6 +1046,7 @@ data.extend({
 	  {
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"chemical-science-pack", 1},
 	  {"bio-science-pack", 1},
 	  },
@@ -1057,6 +1076,7 @@ data.extend({
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"production-science-pack", 1},
 	  {"bio-science-pack", 1},
 	  },
@@ -1086,6 +1106,7 @@ data.extend({
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"production-science-pack", 1},
 	  {"bio-science-pack", 1},
 	  },
@@ -1115,6 +1136,7 @@ data.extend({
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"production-science-pack", 1},
 	  {"utility-science-pack", 1},
 	  {"bio-science-pack", 1},
@@ -1145,6 +1167,7 @@ data.extend({
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"production-science-pack", 1},
 	  {"utility-science-pack", 1},
 	  {"bio-science-pack", 1},
@@ -1175,6 +1198,7 @@ data.extend({
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"production-science-pack", 1},
 	  {"utility-science-pack", 1},
 	  {"space-science-pack", 1},
@@ -1206,6 +1230,7 @@ data.extend({
 	  {"automation-science-pack", 1},
 	  {"logistic-science-pack", 1},
 	  {"chemical-science-pack", 1},
+	  {"military-science-pack", 1},
 	  {"production-science-pack", 1},
 	  {"utility-science-pack", 1},
 	  {"space-science-pack", 1},
@@ -1416,18 +1441,11 @@ data.extend({
         recipe = "glass-plate"
       },
     },
-
-    -- unit =
-    -- {
-      -- count = 50,
-      -- ingredients = {{"automation-science-pack", 1}},
-      -- time = 5
-    -- },
 	
 	research_trigger =
 		{
 		  type = "mine-entity",
-		  entity = "sand-ore",
+		  entities = {"sand-ore", "big-sand-rock", "medium-sand-rock"},
 		},
     order = "c-a"
   },
@@ -1531,7 +1549,7 @@ data.extend({
         recipe = "logistic-warehouse-passive-provider"
       },
     },
-    prerequisites = {"storage-2"},
+    prerequisites = {"storage-2","chemical-science-pack"},
     unit =
     {
       count = 200,
@@ -2071,7 +2089,7 @@ data.extend({
         modifier = 0.5
       },
     },
-    prerequisites = {"lubricant","advanced-circuit","upgraded-tools"},
+    prerequisites = {"lubricant","advanced-circuit","upgraded-tools","repair-pack"},
     unit =
     {
       count = 200,
@@ -2760,7 +2778,7 @@ data.extend({
 	    research_trigger =
     {
       type = "mine-entity",
-      entity = "natural-gas"
+      entities = {"natural-gas"}
     },
     -- unit =
     -- {
@@ -3268,6 +3286,32 @@ data.extend({
 ------------------------------------------ OVERRIDES / EXTENDINGS / CHANGES ------------------------------------------
 ------------------------------------------------------------------------------------
 
+table.insert(data.raw["technology"]["circuit-network"].effects, 
+	  {
+        type = "unlock-recipe",
+        recipe = "led-lamp"
+      } )
+
+table.insert(data.raw["technology"]["advanced-material-processing-2"].prerequisites, "basic-electric-furnace" )
+
+
+data.raw["technology"]["steel-processing"].unit =
+    {
+      count = 25,
+      ingredients = {{"automation-science-pack", 1}},
+      time = 5
+    }
+
+data.raw["technology"]["fast-inserter"].prerequisites = {"logistic-science-pack"}
+data.raw["technology"]["fast-inserter"].unit =
+    {
+      count = 25,
+      ingredients = {{"automation-science-pack", 1},{"logistic-science-pack", 1}},
+      time = 5
+    }
+
+data.raw["technology"]["stone-wall"].prerequisites = {"military"}
+
 -- REPLACE ENTRY data.raw["electric-pole"]["big-electric-pole"].maximum_wire_distance = 32
 -- INSERT ENTRY table.insert(data.raw["technology"]["advanced-circuit"].effects,{type = "unlock-recipe",recipe = "silicon-wafer"})
   
@@ -3283,40 +3327,17 @@ table.insert(data.raw["technology"]["steel-processing"].effects,{type = "unlock-
 
 --table.removetablewithmatchingentry(data.raw["technology"]["oil-processing"].effects, "recipe", "solid-fuel-from-petroleum-gas")
 data.raw["recipe"]["solid-fuel-from-petroleum-gas"].hidden = true
---data.raw["item"]["solid-fuel-from-petroleum-gas"].hidden = true 
 
 -- Insert our own petrol vehicle fuel item.
 table.insert(data.raw["technology"]["oil-processing"].effects,{type = "unlock-recipe",recipe = "petroleum-fuel"})
 
   
     ------------------------------------------ LOGISTIC SCIENCE PACK OVERRIDE ------------------------------------------
+
+data.raw["technology"]["logistic-science-pack"].prerequisites = {"logistics"}
 	
   data:extend
 ({
-	{
-    type = "technology",
-    name = "logistic-science-pack",
-    localised_name = {"technology-name.logistic-science-pack"},
-    localised_description = {"technology-description.logistic-science-pack"},
-    icon_size = 256, icon_mipmaps = 4,
-    icon = "__base__/graphics/technology/logistic-science-pack.png",
-	 prerequisites = {"logistics"},
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "logistic-science-pack"
-      }
-    },
-    unit =
-    {
-      count = 75,
-      ingredients = {{"automation-science-pack", 1}},
-      time = 5
-    },
-    order = "c-a"
-  },
-  
    {
     type = "technology",
     name = "personal-longrangeroboport-equipment",
@@ -3388,7 +3409,7 @@ table.removetablewithmatchingentry(data.raw["technology"]["military-3"].effects,
 table.removetablewithmatchingentry(data.raw["technology"]["military-3"].effects, "recipe", "slowdown-capsule") 
 table.removetablewithmatchingentry(data.raw["technology"]["military-3"].effects, "recipe", "combat-shotgun") 
 table.insert(data.raw["technology"]["military-3"].effects,{type = "unlock-recipe",recipe = "longrange-rounds-magazine"})
-table.insert(data.raw["technology"]["military-3"].effects,{type = "unlock-recipe",recipe = "piercing-shotgun-shell"})
+-- table.insert(data.raw["technology"]["military-3"].effects,{type = "unlock-recipe",recipe = "piercing-shotgun-shell"})
 table.insert(data.raw["technology"]["military-3"].effects,{type = "unlock-recipe",recipe = "flak-grenade"})
 table.insert(data.raw["technology"]["military-3"].effects,{type = "unlock-recipe",recipe = "blunderbuss"})
 
@@ -3415,6 +3436,17 @@ table.insert(data.raw["technology"]["distractor"].effects,{type = "unlock-recipe
 table.insert(data.raw["technology"]["gun-turret"].effects,{type = "unlock-recipe",recipe = "shotgun-turret"})
 data.raw["technology"]["gun-turret"].icon = "__factorioplus__/graphics/technology/smg-turret.png"
 data.raw["technology"]["gun-turret"].prerequisites = {"military"}
+data.raw["technology"]["gun-turret"].unit =
+    {
+      count = 25,
+      ingredients = {{"automation-science-pack", 1}},
+      time = 10
+    }
+table.insert(data.raw["technology"]["gun-turret"].effects,
+	{
+		type = "unlock-recipe",
+		recipe = "turret-base"
+	})  
 
 table.removetablewithmatchingentry(data.raw["technology"]["military-4"].effects, "recipe", "piercing-shotgun-shell") 
 
@@ -3769,7 +3801,7 @@ table.insert(data.raw["technology"]["advanced-material-processing"].effects,{typ
     order = "c-c-b"
   },
   {
-     type = "technology",
+    type = "technology",
     name = "mass-smelting-2",
     icon_size = 256,
     icon = "__factorioplus__/graphics/technology/mass-smelt-2.png",
@@ -3780,7 +3812,7 @@ table.insert(data.raw["technology"]["advanced-material-processing"].effects,{typ
         recipe = "steel-forge"
       }
     },
-    prerequisites = {"chemical-science-pack","advanced-material-processing"},
+    prerequisites = {"chemical-science-pack","advanced-material-processing","concrete"},
     unit =
     {
       count = 250,
@@ -3847,8 +3879,9 @@ table.insert(data.raw["technology"]["advanced-material-processing"].effects,{typ
     {
       count = 25,
       ingredients = {{"automation-science-pack", 1}},
-      time = 15
+      time = 15	   
     },
+	ignore_tech_cost_multiplier = true,
     order = "a-f-a"
   },
 })
@@ -3961,7 +3994,7 @@ data:extend
     prerequisites = {"electronics"},
     unit =
     {
-      count = 50,
+      count = 25,
       ingredients =
       {
         {"automation-science-pack", 1},
@@ -3983,7 +4016,7 @@ data:extend
         recipe = "basic-electric-furnace"
       },
     },
-    prerequisites = {"advanced-material-processing","electric-energy-distribution-1"},
+    prerequisites = {"steel-processing","basic-electric-energy-distribution"},
     unit =
     {
       count = 150,
@@ -4000,20 +4033,16 @@ data:extend
   
 })
 
--- data.raw["technology"]["logistics"].unit = { count = 100, ingredients = { {"automation-science-pack", 1}, }, time = 20 }
--- data.raw["technology"]["logistics"].prerequisites = {"logistics-basic"}
--- table.insert(data.raw["technology"]["logistics"].effects,{type = "unlock-recipe",recipe = "transport-belt"});  
-
-
 
 data.raw["technology"]["electric-energy-distribution-1"].unit = 
-{ 
-count = 150, ingredients = 
 	{ 
-	{"automation-science-pack", 1},{"logistic-science-pack", 1}, 
-	}, 
-	time = 30 	
-}
+		count = 150, 
+		ingredients = 
+		{ 
+			{"automation-science-pack", 1},{"logistic-science-pack", 1}, 
+		}, 
+		time = 30 	
+	}
 
 table.removeentry(data.raw["technology"]["electric-energy-distribution-1"].prerequisites, "electronics")  
 table.insert(data.raw["technology"]["electric-energy-distribution-1"].prerequisites,"basic-electric-energy-distribution")
@@ -4075,12 +4104,7 @@ table.insert(data.raw["technology"]["tank"].effects,
 
 table.insert(data.raw["technology"]["tank"].prerequisites,"cannons")
   
-table.insert(data.raw["technology"]["gun-turret"].effects,
-	{
-		type = "unlock-recipe",
-		recipe = "turret-base"
-	}
-)  
+
 
 -- Update power armor mk2 tech req
 table.removeentry(data.raw["technology"]["power-armor-mk2"].prerequisites, "military-4") 

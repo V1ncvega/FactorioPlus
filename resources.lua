@@ -3,6 +3,7 @@ local resource_autoplace = require("resource-autoplace")
 local tile_sounds = require("__base__.prototypes.tile.tile-sounds")
 local item_sounds = require("__base__.prototypes.item_sounds")
 local item_tints = require("__base__.prototypes.item-tints")
+-- local abandonments_autoplace = require ("__factorioplus__.abandonments-autoplace-util")
 
 --
 
@@ -34,7 +35,7 @@ local function create_tiles(tilename, rad)
 	}
 end
 
-local function create_decoratives(decorative, rad, probability, amount_multiplier)
+local function create_decoratives(decorative, rad, independent_probability, amount_multiplier)
   return {
 		type = "direct",
 		action_delivery =
@@ -45,7 +46,7 @@ local function create_decoratives(decorative, rad, probability, amount_multiplie
 				{
 					type = "create-decorative",
 					decorative = decorative,
-					probability = probability or 1,
+					independent_probability = independent_probability or 1,
 					spawn_min = math.floor((rad * amount_multiplier) / 2),
 					spawn_max = math.ceil(rad * amount_multiplier),
 					spawn_min_radius = 1,
@@ -276,7 +277,7 @@ data:extend
     type = "recipe",
 	name = "petroleum-fuel",
     --name = "solid-fuel-from-petroleum-gas",
-    category = "chemistry",
+    categories = {"chemistry"},
     energy_required = 2,
     ingredients =
     {
@@ -326,7 +327,7 @@ data:extend
     name = "true-rocket-fuel",
     energy_required = 45,
 	enabled = false,
-	category = "advanced-crafting",
+	categories = {"advanced-crafting"},
     ingredients =
     {
       {type="item", name="rocket-fuel", amount=2},
@@ -361,7 +362,7 @@ data:extend
     name = "bio-fuel",
     energy_required = 45,
 	enabled = false,
-    category = "advanced-crafting",
+    categories = {"advanced-crafting"},
     ingredients =
     {
       {type="item", name="petroleum-fuel", amount=1},
@@ -521,25 +522,25 @@ data:extend
 		{
 			type = "item",
 			name = "stone",
-			probability = 0.18*goblin_ore_scalar,
+			independent_probability = 0.18*goblin_ore_scalar,
 			amount = 1
 		},
 		{
 			type = "item",
 			name = "iron-ore",
-			probability = 0.28*goblin_ore_scalar,
+			independent_probability = 0.28*goblin_ore_scalar,
 			amount = 1
 		},
 		{
 			type = "item",
 			name = "copper-ore",
-			probability = 0.20*goblin_ore_scalar,
+			independent_probability = 0.20*goblin_ore_scalar,
 			amount = 1
 		},
 		{
 			type = "item",
 			name = "coal",
-			probability = 0.23*goblin_ore_scalar,
+			independent_probability = 0.23*goblin_ore_scalar,
 			amount = 1
 		},
 	  },
@@ -613,25 +614,25 @@ data:extend
 		{
 			type = "item",
 			name = "stone",
-			probability = 0.48*goblin_ore_scalar,
+			independent_probability = 0.48*goblin_ore_scalar,
 			amount = 1
 		},
 		{
 		type = "item",
 			name = "iron-ore",
-			probability = 0.22*goblin_ore_scalar,
+			independent_probability = 0.22*goblin_ore_scalar,
 			amount = 1
 		},
 		{
 		type = "item",
 			name = "copper-ore",
-			probability = 0.1*goblin_ore_scalar,
+			independent_probability = 0.1*goblin_ore_scalar,
 			amount = 1
 		},
 		{
 		type = "item",
 			name = "coal",
-			probability = 0.37*goblin_ore_scalar,
+			independent_probability = 0.37*goblin_ore_scalar,
 			amount = 1
 		},
 	  },
@@ -706,25 +707,25 @@ data:extend
 		{
 		type = "item",
 			name = "stone",
-			probability = 0.08*goblin_ore_scalar,
+			independent_probability = 0.08*goblin_ore_scalar,
 			amount = 1
 		},
 		{
 		type = "item",
 			name = "iron-ore",
-			probability = 0.65*goblin_ore_scalar,
+			independent_probability = 0.65*goblin_ore_scalar,
 			amount = 1
 		},
 		{
 		type = "item",
 			name = "copper-ore",
-			probability = 0.28*goblin_ore_scalar,
+			independent_probability = 0.28*goblin_ore_scalar,
 			amount = 1
 		},
 		{
 		type = "item",
 			name = "coal",
-			probability = 0.17*goblin_ore_scalar,
+			independent_probability = 0.17*goblin_ore_scalar,
 			amount = 1
 		},
 	  },
@@ -765,7 +766,18 @@ data:extend
     mining_visualisation_tint = {r = 0.2, g = 0.1, b = 0.3, a = 1.000}, -- #cfff7fff
     map_color = {0.25, 0.1, 0.3}
   },
+})
    ---------------------------------------------------  SAND  ------------------------------------------------------------
+local sand_starting_bool = false
+
+if settings.startup["settings-recipe-cost"].value == "extreme" then
+	sand_starting_bool = true
+elseif settings.startup["settings-recipe-cost"].value == "insane" then
+	sand_starting_bool = true
+end
+
+data:extend
+({
   {
    type = "item",
     name = "sand-ore",
@@ -826,12 +838,16 @@ data:extend
       order = "c",
       base_density = 3 * sand_ore_spotsperkm2,
       base_spots_per_km2 = sand_ore_spotsperkm2,
-      has_starting_area_placement = false,
       random_spot_size_minimum = 1,
       random_spot_size_maximum = 4,
-	  regular_blob_amplitude_multiplier =  17, -- 1
-      regular_rq_factor_multiplier = 1,
-	  richness_post_multiplier = 0.01, 
+	  regular_blob_amplitude_multiplier =  12, -- 1
+      regular_rq_factor_multiplier = 1.1,
+	  richness_post_multiplier = 0.02, 
+	  regular_rq_factor = 1, -- 1
+	  starting_rq_factor = 1.1, --1 
+	  
+		has_starting_area_placement = sand_starting_bool,
+	 
     },
     stage_counts = {12000/2, 8000/2, 4000/2, 2000/2, 1200/2, 600/2, 300/2, 100/2},
     stages =
@@ -879,8 +895,8 @@ data:extend
     order="a-b-a",
     infinite = true,
     highlight = true,
-    minimum = 40000,
-    normal = 1300000,
+    minimum = 80000,
+    normal = 1800000,
 	remove_decoratives = "true",
     infinite_depletion_amount = 1,
     resource_patch_search_radius = 22,
@@ -896,7 +912,7 @@ data:extend
           name = "water",
           amount_min = 50,
           amount_max = 200,
-          probability = 1
+          independent_probability = 1
         }
       }
     },
@@ -907,14 +923,14 @@ data:extend
     {
       name = "aquifer",
       order = "c", -- Other resources are "b"; oil won't get placed if something else is already there.
-      base_density = 0.4,
+      base_density = 3,
       base_spots_per_km2 = 0.6,
-      random_probability = 1/50,
+      random_probability = 1/150,
       random_spot_size_minimum = 1,
       random_spot_size_maximum = 2, -- don't randomize spot size
-      additional_richness = 340000, -- this increases the total everywhere, so base_density needs to be decreased to compensate
+      additional_richness = 840000, -- this increases the total everywhere, so base_density needs to be decreased to compensate
       has_starting_area_placement = false,
-      regular_rq_factor_multiplier = 1
+      regular_rq_factor_multiplier = 1.2
     },
     stage_counts = {7000000, 2500000 ,800000, 300000},
     stages =
@@ -979,7 +995,7 @@ data:extend
           amount_min = 25,
           amount_max = 25,
 		  temperature = 250,
-          probability = 1
+          independent_probability = 1
         }
       }
     },
@@ -1051,7 +1067,12 @@ data:extend
         }
       }
     },
-	created_effect = {create_decoratives("geothermal-decal", 8 ,1.0, 2.5),create_tiles("dirt-2", 4)},
+	created_effect = 
+	{
+		create_decoratives("geothermal-decal", 8 ,1.0, 2.5),
+		create_tiles("dirt-2", 3),
+		create_clustertiles("dirt-2", 5, 0.4, 10)	
+	},
 	
     map_color = {0.7, 0.7, 0.7},
     map_grid = false
@@ -1136,14 +1157,14 @@ data:extend
 		
 		additional_richness = 0, -- 0
 		minimum_richness = 0, -- 0
-		richness_post_multiplier = 0.075, 
+		richness_post_multiplier = 0.085, 
 		-- 1 * control setting
 		
 		regular_rq_factor = 1.3, -- 1
 		starting_rq_factor = 1.8, --1 
 
     },
-    stage_counts = {9000,4000,900,300,100},
+    stage_counts = {12000,4000,800,200,70},
     stages =
     {
       sheets =
@@ -1252,15 +1273,19 @@ data:extend
 		}
 	  },
 	},
-	created_effect = create_tiles("forest-floor", 3.5),
-
+	created_effect = 
+	{
+		create_tiles("forest-floor", 2),
+		create_clustertiles("forest-floor", 4, 0.4, 10)	
+	}
+	
 	},
-  
+
 	
 	{
     type = "recipe",
     name = "resin-extraction",
-    category = "oil-processing",
+    categories = {"oil-processing"},
     enabled = false,
     energy_required = 8,
     ingredients =
@@ -1338,7 +1363,7 @@ data:extend
           name = "natural-gas",
           amount_min = 30,
           amount_max = 30,
-          probability = 1
+          independent_probability = 1
         }
       }
     },
@@ -1454,7 +1479,7 @@ data:extend
     type = "recipe",
 	name = "nat-gas-fuel",
     --name = "solid-fuel-from-nat-gas",
-    category = "chemistry",
+    categories = {"chemistry"},
     energy_required = 4,
 	enabled = false,
     ingredients =
@@ -1509,7 +1534,7 @@ data:extend
 	{
     type = "recipe",
     name = "basic-natural-gas-processing",
-    category = "oil-processing",
+    categories = {"oil-processing"},
     energy_required = 6,
 	enabled = false,
 	allow_productivity = true,
@@ -1537,7 +1562,7 @@ data:extend
 	{
     type = "recipe",
     name = "iron-plates",
-    category = "smelting",
+    categories = {"smelting"},
 	subgroup = "raw-material",
     auto_recycle = false,
     energy_required = 3.2,

@@ -189,7 +189,7 @@ if mods["Moshine"] then
           name = "glas-plate-Quartz",
           localised_name = {"item-name.glass-plate"},
           localised_description = {"item-description.glass-plate"},
-          category = "smelting",
+          categories = {"smelting"},
           energy_required = 4,
           ingredients = {
             {type = "item", name = "sand", amount = 4}
@@ -197,37 +197,19 @@ if mods["Moshine"] then
           results = {{type = "item", name = "glass-plate", amount = 1}},
           allow_productivity = true,
           enabled = false,
-        },
-        
-    -- Change research to FactorioPlus
-
-        {
-        type = "technology",
-        name = "moshine-tech-glass",
-        icon = "__Moshine__/graphics/technology/moshine-tech-glass.png",
-        icon_size = 256,
-        effects =
-        {
-          {
-            type = "unlock-recipe",
-            recipe = "glas-plate-Quartz"
-          },
-        },
-        prerequisites = {"planet-discovery-moshine"},
-        unit =
-        {
-          count = 70,
-          ingredients =
-          {
-            {"automation-science-pack", 1},
-            {"logistic-science-pack", 1},
-            {"chemical-science-pack", 1},
-          },
-          time = 60
-        }
-      },
-      })
+        },  
+	})
 	
+	    -- Change research to FactorioPlus
+	data.raw["technology"]["moshine-tech-glass"].effects =
+	{
+	  {
+		type = "unlock-recipe",
+		recipe = "glas-plate-Quartz"
+	  }
+    }
+       
+	   
 	-- Hide the now unsed Item
 
 	local item_name = "glass"

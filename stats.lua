@@ -32,7 +32,7 @@ atv_resistances =
   },
 }
 atv_effectivity = 0.6
-atv_braking = "100kW"
+atv_braking = (100 * 1000) / 60
 atv_consumption = "60kW"
 atv_friction = 0.004
 atv_turnrate = 0.022
@@ -59,7 +59,7 @@ car_resistances =
   },
 }
 car_effectivity = 0.8
-car_braking = "250kW"
+car_braking = (200 * 1000) / 60
 car_consumption = "180kW"
 car_friction = 0.004
 car_turnrate =0.015
@@ -86,7 +86,7 @@ truck_resistances =
   },
 }
 truck_effectivity = 0.7
-truck_braking = "920kW"
+truck_braking = (300 * 1000) / 60
 truck_consumption = "250kW"
 truck_friction = 0.003
 truck_turnrate = 0.01
@@ -123,7 +123,7 @@ apc_resistances =
   },
 }
 apc_effectivity = 0.7
-apc_braking = "1520kW"
+apc_braking = (600 * 1000) / 60
 apc_consumption = "475kW"
 apc_friction = 0.003
 apc_turnrate = 0.01
@@ -163,7 +163,7 @@ flametank_resistances =
   }
 }
 flametank_effectivity = 0.8
-flametank_braking = "1400kW"
+flametank_braking = (800 * 1000) / 60
 flametank_consumption = "600kW"
 flametank_friction_terrain_modifier =  0.3
 flametank_friction = 0.002
@@ -204,7 +204,7 @@ tank_resistances =
   }
 }
 tank_effectivity = 0.7
-tank_braking = "2650kW"
+tank_braking = (1400 * 1000) / 60
 tank_consumption = "1600kW"
 tank_friction_terrain_modifier =  0.2
 tank_friction = 0.002
@@ -233,7 +233,7 @@ speeder_resistances =
   },
 }
 speeder_effectivity = 0.8
-speeder_braking = "350kW"
+speeder_braking = (100 * 1000) / 60
 speeder_consumption = "200kW"
 speeder_friction = 0.0025
 speeder_turnrate = 0.0135
@@ -431,6 +431,7 @@ firerate_grenade = 60 / 0.5
 firerate_grenade_large = 60 / 0.3333
 
 firerate_brick = firerate_grenade
+firerate_simple_explosives = firerate_grenade
 
 range_grenade_min = 3
 range_brick = 26
@@ -442,11 +443,15 @@ range_mirvgrenade = 26
 brick_damage = 60
 brick_radius = 1
 
-grenade_damage = 80
+simple_explosives_damage = 50
+simple_explosives_radius = 5.0
+simple_explosives_falloff = 0.75
+
+grenade_damage = 90
 grenade_radius = 10.0
 grenade_falloff = 1
 
-he_grenade_damage = 350
+he_grenade_damage = 450
 he_grenade_radius = 16
 he_grenade_falloff = 1.5
 
@@ -454,7 +459,7 @@ flak_explosion_damage = 60
 flak_explosion_radius = 4
 flak_pellet_range = 12
 flak_pellet_count = 40 * 1.5
-flak_piercing_damage = 35 /1.5
+flak_piercing_damage = 35 / 1.5
 
 clustergrenade_count = 8
 

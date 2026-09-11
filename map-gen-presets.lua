@@ -101,7 +101,7 @@ data.raw["map-gen-presets"]["default"]["snakey-continents-z-authors-pick"] =
 		  ["natural-gas"] = {  frequency = 0.2, size =  1, richness = 5},
 		  ["bauxite-ore"] = {  frequency = 0.2, size =  0.5, richness = 5},
 		  ["goblin-ore"] = { frequency = 0.2, size =  0.5, richness = 5},
-          ["enemy-base"] = { frequency = 2, size = 3},
+          ["enemy-base"] = { frequency = 1.5, size = 3},
 		  ["water"] =  {frequency = 3.0, size = 1.5},
 		  ["starting_area_moisture"] =  {frequency = 4.0, size = 6},
         },
@@ -121,9 +121,9 @@ data.raw["map-gen-presets"]["default"]["snakey-continents-z-authors-pick"] =
 		enemy_expansion =
 		{
 			max_expansion_distance = 9,
-			settler_group_min_size = 10,
-			settler_group_max_size = 30,
-			min_expansion_cooldown = 60 * 60 * 20,
+			settler_group_min_size = 20,
+			settler_group_max_size = 40,
+			min_expansion_cooldown = 60 * 60 * 30,
 			max_expansion_cooldown = 60 * 60 * 60,
 		},
         difficulty_settings =

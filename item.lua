@@ -534,6 +534,16 @@ data.extend({
     place_result = "floor-lamp",
     stack_size = 50
   },
+       {
+    type = "item",
+    name = "led-lamp",
+    icon = "__factorioplus__/graphics/icons/led-light.png",
+    icon_size = 64, icon_mipmaps = 4,
+    subgroup = "circuit-network",
+    order = "a[light]-abc[floor-lamp]",
+    place_result = "led-lamp",
+    stack_size = 50
+  },
     {
     type = "item",
     name = "floodlight-lamp",
@@ -544,6 +554,7 @@ data.extend({
     place_result = "floodlight-lamp",
     stack_size = 25
   },
+  --[[
    {
     type = "item",
     name = "basic-explosive",
@@ -554,6 +565,7 @@ data.extend({
     stack_size = 100,
 	weight = 0.5*kg
   },
+  --]]
     {
     type = "item",
     name = "aluminium-plate",

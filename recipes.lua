@@ -146,7 +146,7 @@ data:extend
   {
     type = "recipe",
     name = "machinepress-iron-gear-wheel",
-	category = "crafting-machinepress",
+	categories = {"crafting-machinepress"},
 	icon = "__factorioplus__/graphics/icons/double-iron-gear-wheel.png",
 	enabled = false,
 	--energy_required = 1,
@@ -157,7 +157,7 @@ data:extend
    {
     type = "recipe",
     name = "machinepress-iron-stick",
-	category = "crafting-machinepress",
+	categories = {"crafting-machinepress"},
 	icon = "__factorioplus__/graphics/icons/double-iron-stick.png",
 	hide_from_player_crafting = true,
 	enabled = false,
@@ -168,7 +168,7 @@ data:extend
   {
     type = "recipe",
     name = "machinepress-copper-cable",
-	category = "crafting-machinepress",
+	categories = {"crafting-machinepress"},
 	icon = "__factorioplus__/graphics/icons/double-copper-cable.png",
 	hide_from_player_crafting = true,
 	enabled = false,
@@ -180,7 +180,7 @@ data:extend
     type = "recipe",
     name = "stone-crushing",
 	enabled = false,
-    category = "crafting-machinepress",
+    categories = {"crafting-machinepress"},
     --energy_required = 1,
     ingredients = 
 	{
@@ -256,7 +256,7 @@ data:extend
 	name = "fish-processing",
 	energy_required = 30,
 	enabled = false,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
 	ingredients = {{type = "fluid", name = "water", amount = 3000}},
 	icon = "__factorioplus__/graphics/icons/fish-processing.png",
 	icon_size = 64, icon_mipmaps = 4,
@@ -268,7 +268,7 @@ data:extend
 	  {
 		type="item",
 		name = "raw-fish",
-		probability = 0.2,
+		independent_probability = 0.2,
 		amount = 1
 	  },
 	}
@@ -402,7 +402,7 @@ data:extend
     name = "air-scrubber-large",
 	energy_required = 50,
     enabled = false,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
     ingredients =
     {
       {type="item", name="air-scrubber", amount=3},
@@ -457,7 +457,7 @@ data:extend
     type = "recipe",
     name = "metal-press-machine",
 	energy_required = 15,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
 	enabled = false,
       ingredients =
       {
@@ -472,7 +472,7 @@ data:extend
     type = "recipe",
     name = "compressor",
 	energy_required = 20,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
 	enabled = false,
       ingredients =
       {
@@ -747,8 +747,9 @@ data:extend
     ingredients =
     {
       {type="item", name="solar-panel", amount=2},
-      {type="item", name="advanced-circuit", amount=10},
-      {type="item", name="steel-plate", amount=10}
+      {type="item", name="advanced-circuit", amount=14},
+      {type="item", name="steel-plate", amount=14},
+	  {type="item", name="glass-plate", amount=20}
     },
     results = {{type="item", name="solar-array", amount=1}},
   },
@@ -760,8 +761,9 @@ data:extend
     ingredients =
     {
       {type="item", name="solar-array", amount=4},
-      {type="item", name="processing-unit", amount=10},
-      {type="item", name="aluminium-plate", amount=26}
+      {type="item", name="processing-unit", amount=16},
+      {type="item", name="aluminium-plate", amount=40},
+	  {type="item", name="glass-plate", amount=60}
     },
     results = {{type="item", name="solar-array-2", amount=1}},
   },
@@ -777,6 +779,19 @@ data:extend
       {type="item", name="steel-plate", amount=2}
     },
     results = {{type="item", name="floodlight-lamp", amount=1}},
+  },
+    {
+    type = "recipe",
+    name = "led-lamp",
+	energy_required = 2,
+	enabled = false,
+    ingredients =
+    {
+      {type="item", name="electronic-circuit", amount = 2},
+	  {type="item", name="glass-plate", amount = 1},
+      {type="item", name="iron-plate", amount = 1}
+    },
+    results = {{type="item", name="led-lamp", amount=1}},
   },
   {
     type = "recipe",
@@ -795,7 +810,7 @@ data:extend
     type = "recipe",
     name = "aluminium-plate",
 	enabled = false,
-    category = "smelting",
+    categories = {"smelting"},
     energy_required = 15,
     ingredients = {{type="item", name="bauxite-ore", amount=2}},
     results = {{type="item", name="aluminium-plate", amount=1}},
@@ -805,7 +820,7 @@ data:extend
     type = "recipe",
     name = "glass-plate",
 	enabled = false,
-    category = "smelting",
+    categories = {"smelting"},
     energy_required = 8,
     ingredients = {{type="item", name="sand-ore", amount=4}},
     results = {{type="item", name="glass-plate", amount=1}},
@@ -815,7 +830,7 @@ data:extend
     type = "recipe",
     name = "barrel-recycling",
 	enabled = false,
-    category = "smelting",
+    categories = {"smelting"},
     energy_required = 8,
     ingredients = {{type="item", name="barrel", amount=1}},
     results = {{type="item", name="iron-plate", amount=3}},
@@ -825,7 +840,7 @@ data:extend
     type = "recipe",
     name = "stone-compression",
 	enabled = false,
-    category = "crafting-compressor",
+    categories = {"crafting-compressor"},
     energy_required = 4,
     ingredients = 
 	{
@@ -839,7 +854,7 @@ data:extend
     type = "recipe",
     name = "sulfer-compression",
 	enabled = false,
-    category = "crafting-compressor",
+    categories = {"crafting-compressor"},
     energy_required = 4,
     ingredients = 
 	{
@@ -853,7 +868,7 @@ data:extend
     type = "recipe",
     name = "steam-compression",
 	enabled = false,
-    category = "crafting-compressor",
+    categories = {"crafting-compressor"},
 	subgroup = "fluid-recipes",
     energy_required = 8,
     ingredients = 
@@ -867,24 +882,11 @@ data:extend
 	icon = "__factorioplus__/graphics/icons/steamtowater.png",
     icon_size = 64, icon_mipmaps = 4,
   },
-    {
-    type = "recipe",
-    name = "basic-explosive",
-	enabled = false,
-    category = "crafting",
-    energy_required = 1,
-    ingredients =  
-	{
-	  {type="item", name="coal", amount=8},
-      {type="item", name="iron-plate", amount=1},
-    },
-    results = {{type="item", name="basic-explosive", amount=2}},
-	allow_productivity = true,
-  },
+
   {
     type = "recipe",
     name = "silicon-wafer",
-    category = "crafting-with-fluid",
+    categories = {"crafting-with-fluid"},
 
       enabled = false,
       energy_required = 10,
@@ -901,7 +903,7 @@ data:extend
     -- type = "recipe",
     -- name = "silicon-wafer",
 	-- enabled = false,
-    -- category = "smelting",
+    -- categories = {"smelting"},
     -- energy_required = 20,
     -- ingredients = {{type="item", name="glass-plate", amount=3}},
     -- results = {{type="item", name="silicon-wafer", amount=1}},
@@ -912,7 +914,7 @@ data:extend
     name = "tarmac",
     energy_required = 10,
     enabled = false,
-    category = "crafting-with-fluid",
+    categories = {"crafting-with-fluid"},
     ingredients =
     {
       {type="item", name="concrete", amount=4},
@@ -926,7 +928,7 @@ data:extend
     name = "landfill-deep",
 	enabled = false,
     energy_required = 10,
-    category = "advanced-crafting",
+    categories = {"advanced-crafting"},
     ingredients =
     {
 	  {type="item", name="sand-ore", amount=6},
@@ -940,7 +942,7 @@ data:extend
     name = "waterfill-barrel",
 	enabled = false,
     energy_required = 40,
-    category = "crafting-with-fluid",
+    categories = {"crafting-with-fluid"},
     ingredients =
     {
 	  {type="item", name="barrel", amount=10},
@@ -958,12 +960,13 @@ data.extend({
     type = "recipe",
     name = "accumulator-battery",
 	enabled = false,
-    energy_required = 15,
+    energy_required = 20,
     ingredients =
     {
       {type="item", name="accumulator", amount=4},
-      {type="item", name="electronic-circuit", amount=6},
-	  {type="item", name="advanced-circuit", amount=2}
+      {type="item", name="electronic-circuit", amount=12},
+	  {type="item", name="advanced-circuit", amount=6},
+	  {type="item", name="steel-plate", amount=20},
     },
     results = {{type="item", name="accumulator-battery", amount=1}},
   },
@@ -977,13 +980,14 @@ data.extend({
     type = "recipe",
     name = "adv-accumulator-battery",
 	enabled = false,
-    energy_required = 25,
+    energy_required = 40,
     ingredients =
     {
       {type="item", name="accumulator-battery", amount=2},
 	  {type="item", name="supercapacitor", amount=12},
 	  {type="item", name="advanced-circuit", amount=4},
-	  {type="item", name="processing-unit", amount=2},	  
+	  {type="item", name="processing-unit", amount=2},
+	  {type="item", name="aluminium-plate", amount=20},	 	  
     },
     results = {{type="item", name="adv-accumulator-battery", amount=1}},
   },
@@ -996,12 +1000,13 @@ data.extend({
     type = "recipe",
     name = "adv-accumulator-battery",
 	enabled = false,
-    energy_required = 25,
+    energy_required = 60,
     ingredients =
     {
       {type="item", name="accumulator-battery", amount=2},
-	  {type="item", name="advanced-circuit", amount=10},
-	  {type="item", name="processing-unit", amount=6},	  
+	  {type="item", name="advanced-circuit", amount=24},
+	  {type="item", name="processing-unit", amount=10},	
+	  {type="item", name="aluminium-plate", amount=60},	 	  
     },
     results = {{type="item", name="adv-accumulator-battery", amount=1}},
   },
@@ -1213,7 +1218,7 @@ data.extend({
     type = "recipe",
     name = "repair-pack-advanced",
 	energy_required = 10,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
 	enabled = false,
     ingredients =
     {
@@ -1372,7 +1377,7 @@ data.extend({
   {
     type = "recipe",
     name = "express-transport-belt",
-    category = "crafting-with-fluid",
+    categories = {"crafting-with-fluid"},
 	  enabled = false,
 
 	  ingredients =
@@ -1387,7 +1392,7 @@ data.extend({
   {
     type = "recipe",
     name = "express-splitter",
-    category = "crafting-with-fluid",
+    categories = {"crafting-with-fluid"},
     enabled = false,
     energy_required = 2,
     ingredients =
@@ -1404,7 +1409,7 @@ data.extend({
     type = "recipe",
     name = "express-underground-belt",
     energy_required = 2,
-    category = "crafting-with-fluid",
+    categories = {"crafting-with-fluid"},
     enabled = false,
     ingredients =
     {
@@ -1421,7 +1426,7 @@ data.extend({
     type = "recipe",
     name = "turbo-transport-belt",
 	enabled = false,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
 	energy_required = 4,
     ingredients =
     {
@@ -1436,7 +1441,7 @@ data.extend({
     type = "recipe",
     name = "turbo-splitter",
     enabled = false,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
 	energy_required = 4,
     ingredients =
     {
@@ -1451,7 +1456,7 @@ data.extend({
     type = "recipe",
     name = "turbo-underground-belt",
     enabled = false,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
 	energy_required = 4,
     ingredients =
     {
@@ -1469,7 +1474,7 @@ data.extend({
     type = "recipe",
     name = "supersonic-transport-belt",
 	enabled = false,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
 	energy_required = 4,
     ingredients =
     {
@@ -1484,7 +1489,7 @@ data.extend({
     type = "recipe",
     name = "supersonic-splitter",
     enabled = false,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
 	energy_required = 4,
     ingredients =
     {
@@ -1499,7 +1504,7 @@ data.extend({
     type = "recipe",
     name = "supersonic-underground-belt",
     enabled = false,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
 	energy_required = 4,
     ingredients =
     {
@@ -1569,7 +1574,7 @@ data:extend
     type = "recipe",
     name = "express-loader",
     enabled = false,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
     energy_required = 14,
     ingredients =
     {
@@ -1584,7 +1589,7 @@ data:extend
     type = "recipe",
     name = "turbo-loader",
     enabled = false,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
     energy_required = 22,
     ingredients =
     {
@@ -1599,7 +1604,7 @@ data:extend
     type = "recipe",
     name = "supersonic-loader",
     enabled = false,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
     energy_required = 32,
     ingredients =
     {
@@ -1636,7 +1641,7 @@ data.raw["recipe"]["chemical-science-pack"].ingredients =
     type = "recipe",
     name = "steam-turbine",
     enabled = false,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
     energy_required = 5,
     ingredients = {{type="item", name="iron-gear-wheel", amount=40}, {type="item", name="copper-plate", amount=20}, {type="item", name="pipe", amount=20}, {type="fluid", name="lubricant", amount=20}},
     results = {{type="item", name="steam-turbine", amount=1}},
@@ -1691,7 +1696,7 @@ data.raw["recipe"]["chemical-science-pack"].ingredients =
   {
     type = "recipe",
     name = "low-density-structure",
-    category = "crafting",
+    categories = {"crafting"},
 	energy_required = 20,
 	enabled = false,
 	ingredients =
@@ -1723,7 +1728,7 @@ data.raw["recipe"]["chemical-science-pack"].ingredients =
     {
     type = "recipe",
     name = "processing-unit",
-    category = "advanced-crafting",
+    categories = {"advanced-crafting"},
 
       enabled = false,
       energy_required = 10,
@@ -1772,7 +1777,7 @@ data.raw["recipe"]["chemical-science-pack"].ingredients =
  {
     type = "recipe",
     name = "bio-science-pack",
-	 --category = "crafting-with-fluid",
+	 --categories = {"crafting-with-fluid"},
     enabled = false,
     energy_required = 25,
     ingredients =
@@ -1804,7 +1809,7 @@ data.raw["recipe"]["chemical-science-pack"].ingredients =
 
       enabled = false,
       energy_required = 20,
-	  category = "advanced-crafting",
+	  categories = {"advanced-crafting"},
       ingredients =
       {
 		{type="item", name="advanced-circuit", amount=4},
@@ -1900,7 +1905,7 @@ data.raw["recipe"]["chemical-science-pack"].ingredients =
     name = "landfill",
     energy_required = 6,
     enabled = false,
-    category = "crafting",
+    categories = {"crafting"},
     ingredients =
     {
       {type="item", name="stone", amount=6}
@@ -2014,7 +2019,7 @@ data.raw["recipe"]["chemical-science-pack"].ingredients =
     {
     type = "recipe",
     name = "charcoal",
-	category = "smelting",
+	categories = {"smelting"},
     energy_required = 15,
 	allow_productivity = true,
     ingredients =
@@ -2078,39 +2083,28 @@ data.raw["recipe"]["chemical-science-pack"].ingredients =
 })
 
  ---------------------------------------------------  EQUIPMENT OVERRIDES  ------------------------------------------------------------
- 
-data:extend({
- {
-    type = "recipe",
-    name = "night-vision-equipment",
-    enabled = false,
-    energy_required = 10,
-    ingredients =
+
+data.raw["recipe"]["concrete"].ingredients =
     {
+      {type = "item", name = "stone-brick", amount = 5},
+      {type = "item", name = "iron-stick", amount = 2},
+      {type = "fluid", name = "water", amount = 100}
+    }
+
+data.raw["recipe"]["night-vision-equipment"].ingredients =
+	{
       {type="item", name="advanced-circuit", amount=2},
       {type="item", name="steel-plate", amount=6},
 	  {type="item", name="glass-plate", amount=2},
-    },
-    results = {{type="item", name="night-vision-equipment", amount=1}},
-  },
-  {
-    type = "recipe",
-    name = "fission-reactor-equipment",
-    enabled = false,
-    energy_required = 30,
-    ingredients =
+    }
+
+data.raw["recipe"]["fission-reactor-equipment"].ingredients =	
     {
       {type="item", name="processing-unit", amount=5},
       {type="item", name="low-density-structure", amount=40},
 	  {type="item", name="uranium-fuel-cell", amount=3}
-    },
-    results = {{type="item", name="fission-reactor-equipment", amount=1}},
-  },
-
-
-
-})
-  
+    }
+	
 --
 
 if (mods["space-age"]) then
@@ -2365,7 +2359,7 @@ data.extend({
     type = "recipe",
     name = "cooked-fish",
 	enabled = true,
-    category = "smelting",
+    categories = {"smelting"},
     energy_required = 10,
     ingredients = {{type="item", name="raw-fish", amount=1}},
     results = {{type="item", name="cooked-fish", amount=1}},
@@ -2423,7 +2417,7 @@ if settings.startup["settings-recipe-cost"].value == "easy" then
 		}
 	data.raw["recipe"]["logistic-science-pack"].ingredients =
 		{
-		  {type = "item", name = "burner-inserter", amount = 1},
+		  {type = "item", name = "inserter", amount = 1},
 		  {type = "item", name = "basic-transport-belt", amount = 1}
 		}
 	data.raw["recipe"]["military-science-pack"].ingredients =	
@@ -2467,7 +2461,7 @@ elseif settings.startup["settings-recipe-cost"].value == "hard" then
 		{
 		  {type = "item", name = "inserter", amount = 1},
 		  {type = "item", name = "transport-belt", amount = 1},
-		   {type = "item", name = "small-electric-pole", amount = 2}
+		  {type = "item", name = "small-electric-pole", amount = 2}
 		}
 	data.raw["recipe"]["military-science-pack"].ingredients =	
 		{
@@ -2581,7 +2575,7 @@ elseif settings.startup["settings-recipe-cost"].value == "insane" then
 		  {type = "item", name = "stone-wall", amount = 2},
 		  {type = "item", name = "shotgun-shell", amount = 1}
 		}
-	data.raw["recipe"]["bio-science-pack"].category = "crafting-with-fluid"
+	data.raw["recipe"]["bio-science-pack"].categories = {"crafting-with-fluid"}
 	data.raw["recipe"]["bio-science-pack"].ingredients =	
 		{
 			{type="item", name= "charcoal", amount= 10},

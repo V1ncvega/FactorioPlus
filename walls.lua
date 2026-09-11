@@ -23,7 +23,7 @@ local sounds = require("__base__.prototypes.entity.sounds")
 		mining_time = 0.25, 
 		results = 
 		{
-			{type="item", name = "stone", amount = 2}, 
+			{type= "item", name = "stone", amount = 2}, 
 		},
    },
     fast_replaceable_group = "wall",
@@ -34,10 +34,11 @@ local sounds = require("__base__.prototypes.entity.sounds")
 	loot =
 	{
 		{
-		count_max = 2,
-		count_min = 0,
-		item = "stone",
-		probability = 1
+			amount_max = 2,
+			amount_min = 0,
+			type = "item",
+			name = "stone",
+			independent_probability = 1
 		},
 	},
     dying_explosion = "wall-explosion",

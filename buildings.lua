@@ -154,7 +154,11 @@ if (data.raw["transport-belt"]["fast-transport-belt"].resistances == nil)
 ---------------------------------------------------  PUMP OVERRIDES  ------------------------------------------------------------
 
 data.raw["offshore-pump"]["offshore-pump"].pumping_speed = 6
-
+data.raw["offshore-pump"]["offshore-pump"].tile_buildability_rules =
+    {
+      {area = {{-0.4, -0.4}, {0.4, 0.4}}, required_tiles = {layers={ground_tile=true}}, colliding_tiles = {layers={water_tile=true}}, remove_on_collision = true},
+      {area = {{-2, -5}, {2, -1}}, required_tiles = {layers={water_tile=true}}, colliding_tiles = {layers={}}},
+    }
 
 local lft_pipespacing = 2.5
 local lft_pipespacing_y = lft_pipespacing - 1
@@ -499,7 +503,7 @@ data.extend({
 		},		
 	},
 	
-    crafting_categories = {"crafting", "basic-crafting", "advanced-crafting"},
+    crafting_categories = {"crafting",  "advanced-crafting"},
     crafting_speed = 2.5,
     energy_source =
     {
@@ -594,7 +598,7 @@ data.extend({
 		  }
 		},
 	},
-    crafting_categories = {"crafting", "basic-crafting", "advanced-crafting"},
+    crafting_categories = {"crafting",  "advanced-crafting"},
     crafting_speed = 0.8,
 	ingredient_count = 2,
     energy_source =
@@ -755,7 +759,7 @@ data.extend({
     {
       {
         production_type = "input",
-        pipe_picture = assembler3pipepictures(),
+        pipe_picture = require("__base__.prototypes.entity.assembler-pictures").assembler2pipepictures,
         pipe_covers = pipecoverspictures(),
         volume = 1000,
         pipe_connections = {{ flow_direction="input",direction = defines.direction.north, position = {0, - 2} }},
@@ -763,7 +767,7 @@ data.extend({
       },
       {
         production_type = "output",
-        pipe_picture = assembler3pipepictures(),
+        pipe_picture = require("__base__.prototypes.entity.assembler-pictures").assembler2pipepictures,
         pipe_covers = pipecoverspictures(),
         volume = 1000,
         pipe_connections = {{ flow_direction="output",direction = defines.direction.south, position = {0,2} }},
@@ -2307,36 +2311,39 @@ data.extend({
     inventory_size = hut_size,
     logistic_mode = "storage",
     open_sound = { filename = "__base__/sound/metallic-chest-open.ogg", volume=0.43 },
-    close_sound = { filename = "__base__/sound/metallic-chest-close.ogg", volume = 0.43 },
-    animation_sound = sounds.logistics_chest_open,
-    vehicle_impact_sound = sounds.generic_impact,
-    opened_duration = logistic_chest_opened_duration,
-    animation =
+    close_sound = { filename = "__base__/sound/metallic-chest-close.ogg", volume = 0.43 },  
+    vehicle_impact_sound = sounds.generic_impact,    
+	robot_door =
     {
-      layers =
-      {
-         {
-          filename = "__factorioplus__/graphics/storage-logistics-1.png",
-          priority = "extra-high",
-          width = 128,
-          height = 192,
-		  frame_count = 8,
-          shift = util.by_pixel(0, -16),
-		  scale = 0.5,
-        },
-        {
-          filename = "__factorioplus__/graphics/storage-logistics-1-shadow.png",
-          priority = "extra-high",
-          width = 192,
-          height = 128,
-		  repeat_count = 8,
-          shift = util.by_pixel(16, 0),
-		  scale = 0.5,
-		  draw_as_shadow = true,
-        },     
-      }
+      animation_sound = sounds.logistics_chest_open,
+      opened_duration = logistic_chest_opened_duration,
+	  landing_location_offset = {0.5, -0.5},
+      animation =
+		{
+		  layers =
+		  {
+			 {
+			  filename = "__factorioplus__/graphics/storage-logistics-1.png",
+			  priority = "extra-high",
+			  width = 128,
+			  height = 192,
+			  frame_count = 8,
+			  shift = util.by_pixel(0, -16),
+			  scale = 0.5,
+			},
+			{
+			  filename = "__factorioplus__/graphics/storage-logistics-1-shadow.png",
+			  priority = "extra-high",
+			  width = 192,
+			  height = 128,
+			  repeat_count = 8,
+			  shift = util.by_pixel(16, 0),
+			  scale = 0.5,
+			  draw_as_shadow = true,
+			},     
+		  }
+		},
     },
-	landing_location_offset = {0.5, -0.5},
     circuit_connector = circuit_connector_definitions["hut"],
     circuit_wire_max_distance = default_circuit_wire_max_distance,
 	
@@ -2374,35 +2381,40 @@ data.extend({
     logistic_mode = "active-provider",
     open_sound = { filename = "__base__/sound/metallic-chest-open.ogg", volume=0.43 },
     close_sound = { filename = "__base__/sound/metallic-chest-close.ogg", volume = 0.43 },
-    animation_sound = sounds.logistics_chest_open,
     vehicle_impact_sound = sounds.generic_impact,
-    opened_duration = logistic_chest_opened_duration,
-    animation =
+    robot_door =
     {
-      layers =
-      {
-         {
-          filename = "__factorioplus__/graphics/storage-logistics-hut-purple.png",
-          priority = "extra-high",
-          width = 128,
-          height = 192,
-		  frame_count = 8,
-          shift = util.by_pixel(0, -16),
-		  scale = 0.5,
-        },
-        {
-          filename = "__factorioplus__/graphics/storage-logistics-1-shadow.png",
-          priority = "extra-high",
-          width = 192,
-          height = 128,
-		  repeat_count = 8,
-          shift = util.by_pixel(16, 0),
-		  scale = 0.5,
-		  draw_as_shadow = true,
-        },     
-      }
-    }, 
-	landing_location_offset = {0.5, -0.5},
+      animation_sound = sounds.logistics_chest_open,
+      opened_duration = logistic_chest_opened_duration,
+		landing_location_offset = {0.5, -0.5},
+       animation =
+		{
+		  layers =
+		  {
+			 {
+			  filename = "__factorioplus__/graphics/storage-logistics-hut-purple.png",
+			  priority = "extra-high",
+			  width = 128,
+			  height = 192,
+			  frame_count = 8,
+			  shift = util.by_pixel(0, -16),
+			  scale = 0.5,
+			},
+			{
+			  filename = "__factorioplus__/graphics/storage-logistics-1-shadow.png",
+			  priority = "extra-high",
+			  width = 192,
+			  height = 128,
+			  repeat_count = 8,
+			  shift = util.by_pixel(16, 0),
+			  scale = 0.5,
+			  draw_as_shadow = true,
+			},     
+		  }
+		}, 
+    },
+   
+
     circuit_connector = circuit_connector_definitions["hut"],
     circuit_wire_max_distance = default_circuit_wire_max_distance,
   },
@@ -2437,35 +2449,42 @@ data.extend({
     logistic_mode = "passive-provider",
     open_sound = { filename = "__base__/sound/metallic-chest-open.ogg", volume=0.43 },
     close_sound = { filename = "__base__/sound/metallic-chest-close.ogg", volume = 0.43 },
-    animation_sound = sounds.logistics_chest_open,
+   
     vehicle_impact_sound = sounds.generic_impact,
-    opened_duration = logistic_chest_opened_duration,
-    animation =
+
+	robot_door =
     {
-      layers =
-      {
-         {
-          filename = "__factorioplus__/graphics/storage-logistics-hut-red.png",
-          priority = "extra-high",
-          width = 128,
-          height = 192,
-		  frame_count = 8,
-          shift = util.by_pixel(0, -16),
-		  scale = 0.5,
-        },
-        {
-          filename = "__factorioplus__/graphics/storage-logistics-1-shadow.png",
-          priority = "extra-high",
-          width = 192,
-          height = 128,
-		  repeat_count = 8,
-          shift = util.by_pixel(16, 0),
-		  scale = 0.5,
-		  draw_as_shadow = true,
-        },     
-      }
+      animation_sound = sounds.logistics_chest_open,
+      opened_duration = logistic_chest_opened_duration,
+	  landing_location_offset = {0.5, -0.5},
+       animation =
+		{
+		  layers =
+		  {
+			 {
+			  filename = "__factorioplus__/graphics/storage-logistics-hut-red.png",
+			  priority = "extra-high",
+			  width = 128,
+			  height = 192,
+			  frame_count = 8,
+			  shift = util.by_pixel(0, -16),
+			  scale = 0.5,
+			},
+			{
+			  filename = "__factorioplus__/graphics/storage-logistics-1-shadow.png",
+			  priority = "extra-high",
+			  width = 192,
+			  height = 128,
+			  repeat_count = 8,
+			  shift = util.by_pixel(16, 0),
+			  scale = 0.5,
+			  draw_as_shadow = true,
+			},     
+		  }
+		},
     },
-	landing_location_offset = {0.5, -0.5},
+    
+	
     circuit_connector = circuit_connector_definitions["hut"],
     circuit_wire_max_distance = default_circuit_wire_max_distance,
 	
@@ -2501,35 +2520,41 @@ data.extend({
     logistic_mode = "buffer",
     open_sound = { filename = "__base__/sound/metallic-chest-open.ogg", volume=0.43 },
     close_sound = { filename = "__base__/sound/metallic-chest-close.ogg", volume = 0.43 },
-    animation_sound = sounds.logistics_chest_open,
     vehicle_impact_sound = sounds.generic_impact,
-    opened_duration = logistic_chest_opened_duration,
-    animation =
+    
+	robot_door =
     {
-      layers =
-      {
-         {
-          filename = "__factorioplus__/graphics/storage-logistics-hut-green.png",
-          priority = "extra-high",
-          width = 128,
-          height = 192,
-		  frame_count = 8,
-          shift = util.by_pixel(0, -16),
-		  scale = 0.5,
-        },
-        {
-          filename = "__factorioplus__/graphics/storage-logistics-1-shadow.png",
-          priority = "extra-high",
-          width = 192,
-          height = 128,
-		  repeat_count = 8,
-          shift = util.by_pixel(16, 0),
-		  scale = 0.5,
-		  draw_as_shadow = true,
-        },     
-      }
+      animation_sound = sounds.logistics_chest_open,
+      opened_duration = logistic_chest_opened_duration,
+	  landing_location_offset = {0.5, -0.5},
+       animation =
+		{
+		  layers =
+		  {
+			 {
+			  filename = "__factorioplus__/graphics/storage-logistics-hut-green.png",
+			  priority = "extra-high",
+			  width = 128,
+			  height = 192,
+			  frame_count = 8,
+			  shift = util.by_pixel(0, -16),
+			  scale = 0.5,
+			},
+			{
+			  filename = "__factorioplus__/graphics/storage-logistics-1-shadow.png",
+			  priority = "extra-high",
+			  width = 192,
+			  height = 128,
+			  repeat_count = 8,
+			  shift = util.by_pixel(16, 0),
+			  scale = 0.5,
+			  draw_as_shadow = true,
+			},     
+		  }
+		},
     },
-	landing_location_offset = {0.5, -0.5},
+    
+	
     circuit_connector = circuit_connector_definitions["hut"],
     circuit_wire_max_distance = default_circuit_wire_max_distance,
 	
@@ -2565,35 +2590,41 @@ data.extend({
     logistic_mode = "requester",
     open_sound = { filename = "__base__/sound/metallic-chest-open.ogg", volume=0.43 },
     close_sound = { filename = "__base__/sound/metallic-chest-close.ogg", volume = 0.43 },
-    animation_sound = sounds.logistics_chest_open,
     vehicle_impact_sound = sounds.generic_impact,
-    opened_duration = logistic_chest_opened_duration,
-    animation =
+    
+	robot_door =
     {
-      layers =
-      {
-         {
-          filename = "__factorioplus__/graphics/storage-logistics-hut-blue.png",
-          priority = "extra-high",
-          width = 128,
-          height = 192,
-		  frame_count = 8,
-          shift = util.by_pixel(0, -16),
-		  scale = 0.5,
-        },
-        {
-          filename = "__factorioplus__/graphics/storage-logistics-1-shadow.png",
-          priority = "extra-high",
-          width = 192,
-          height = 128,
-		  repeat_count = 8,
-          shift = util.by_pixel(16, 0),
-		  scale = 0.5,
-		  draw_as_shadow = true,
-        },     
-      }
+      animation_sound = sounds.logistics_chest_open,
+      opened_duration = logistic_chest_opened_duration,
+	  landing_location_offset = {0.5, -0.5},
+        animation =
+		{
+		  layers =
+		  {
+			 {
+			  filename = "__factorioplus__/graphics/storage-logistics-hut-blue.png",
+			  priority = "extra-high",
+			  width = 128,
+			  height = 192,
+			  frame_count = 8,
+			  shift = util.by_pixel(0, -16),
+			  scale = 0.5,
+			},
+			{
+			  filename = "__factorioplus__/graphics/storage-logistics-1-shadow.png",
+			  priority = "extra-high",
+			  width = 192,
+			  height = 128,
+			  repeat_count = 8,
+			  shift = util.by_pixel(16, 0),
+			  scale = 0.5,
+			  draw_as_shadow = true,
+			},     
+		  }
+		},
     },
-	landing_location_offset = {0.5, -0.5},
+   
+	
     circuit_connector = circuit_connector_definitions["hut"],
     circuit_wire_max_distance = default_circuit_wire_max_distance,
 	
@@ -2693,6 +2724,73 @@ data.extend({
 		},
     }
   },
+  
+  {
+    type = "corpse",
+    name = "warehouse-ammo-remnants",
+    icon = "__base__/graphics/icons/steel-chest.png",
+    icon_size = 64, icon_mipmaps = 4,
+    flags = {"placeable-neutral", "building-direction-8-way", "not-on-map"},
+    subgroup = "storage-remnants",
+    order = "a-c-a",
+    selection_box = {{-0.5, -0.5}, {0.5, 0.5}},
+    tile_width = 5,
+    tile_height = 5,
+    selectable_in_game = false,
+    time_before_removed = 60 * 60 * 15, -- 15 minutes
+    final_render_layer = "remnants",
+    remove_on_tile_placement = true,
+    animation =
+    {
+	 layers =
+		{
+			{
+			  filename = "__factorioplus__/graphics/abandonment-warehouse-ammo-rubble.png",
+			  priority = "extra-high",
+			  width = 450,
+			  height = 256,
+			  frame_count = 1,
+			  direction_count = 1,
+			  shift = util.by_pixel(-8, -0),
+			  scale = 0.75,
+			},
+		},
+    }
+  },
+  
+  {
+    type = "corpse",
+    name = "warehouse-explosives-remnants",
+    icon = "__base__/graphics/icons/steel-chest.png",
+    icon_size = 64, icon_mipmaps = 4,
+    flags = {"placeable-neutral", "building-direction-8-way", "not-on-map"},
+    subgroup = "storage-remnants",
+    order = "a-c-a",
+    selection_box = {{-0.5, -0.5}, {0.5, 0.5}},
+    tile_width = 5,
+    tile_height = 5,
+    selectable_in_game = false,
+    time_before_removed = 60 * 60 * 15, -- 15 minutes
+    final_render_layer = "remnants",
+    remove_on_tile_placement = true,
+    animation =
+    {
+	 layers =
+		{
+			{
+			  filename = "__factorioplus__/graphics/abandonment-warehouse-explosives-rubble.png",
+			  priority = "extra-high",
+			  width = 363,
+			  height = 256,
+			  frame_count = 1,
+			  direction_count = 1,
+			  shift = util.by_pixel(-8, -0),
+			  scale = 0.75,
+			},
+		},
+    }
+  },
+  
   ---------------------------------------------------  LOGISTICS WAREHOUSE  ------------------------------------------------------------
   {
     type = "logistic-container",
@@ -2725,35 +2823,42 @@ data.extend({
     logistic_mode = "storage",
     open_sound = { filename = "__base__/sound/metallic-chest-open.ogg", volume=0.43 },
     close_sound = { filename = "__base__/sound/metallic-chest-close.ogg", volume = 0.43 },
-    animation_sound = sounds.logistics_chest_open,
+    
     vehicle_impact_sound = sounds.generic_impact,
-    opened_duration = logistic_chest_opened_duration,
-    animation =
+   
+   robot_door =
     {
-      layers =
-      {
-         {
-          filename = "__factorioplus__/graphics/warehouse-logistics-1.png",
-          priority = "extra-high",
-          width = 320,
-          height = 384,
-		  frame_count = 8,
-          shift = util.by_pixel(0, -16),
-		  scale = 0.5,
-        },
+      animation_sound = sounds.logistics_chest_open,
+      opened_duration = logistic_chest_opened_duration,
+	  landing_location_offset = {1.5, -0.5},
+         animation =
 		{
-            filename = "__factorioplus__/graphics/warehouse-shadow.png",
-            priority = "extra-high",
-			width = 384,
-			height = 384,
-			repeat_count = 8,
-            shift = util.by_pixel(16, -16),
-            scale = 0.5,
-			draw_as_shadow = true,
-        },
-      }
+		  layers =
+		  {
+			 {
+			  filename = "__factorioplus__/graphics/warehouse-logistics-1.png",
+			  priority = "extra-high",
+			  width = 320,
+			  height = 384,
+			  frame_count = 8,
+			  shift = util.by_pixel(0, -16),
+			  scale = 0.5,
+			},
+			{
+				filename = "__factorioplus__/graphics/warehouse-shadow.png",
+				priority = "extra-high",
+				width = 384,
+				height = 384,
+				repeat_count = 8,
+				shift = util.by_pixel(16, -16),
+				scale = 0.5,
+				draw_as_shadow = true,
+			},
+		  }
+		},
     },
-	landing_location_offset = {1.5, -0.5},
+   
+	
     circuit_connector = circuit_connector_definitions["warehouse"],
     circuit_wire_max_distance = default_circuit_wire_max_distance
   },
@@ -2788,35 +2893,42 @@ data.extend({
     logistic_mode = "passive-provider",
     open_sound = { filename = "__base__/sound/metallic-chest-open.ogg", volume=0.43 },
     close_sound = { filename = "__base__/sound/metallic-chest-close.ogg", volume = 0.43 },
-    animation_sound = sounds.logistics_chest_open,
     vehicle_impact_sound = sounds.generic_impact,
-    opened_duration = logistic_chest_opened_duration,
-    animation =
+	
+	robot_door =
     {
-      layers =
-      {
-         {
-          filename = "__factorioplus__/graphics/storage-logistics-warehouse-red.png",
-          priority = "extra-high",
-          width = 320,
-          height = 384,
-		  frame_count = 8,
-          shift = util.by_pixel(0, -16),
-		  scale = 0.5,
-        },
+      animation_sound = sounds.logistics_chest_open,
+      opened_duration = logistic_chest_opened_duration,
+	  landing_location_offset = {1.5, -0.5},
+         animation =
 		{
-            filename = "__factorioplus__/graphics/warehouse-shadow.png",
-            priority = "extra-high",
-			width = 384,
-			height = 384,
-			repeat_count = 8,
-            shift = util.by_pixel(16, -16),
-            scale = 0.5,
-			draw_as_shadow = true,
-        },
-      }
+		  layers =
+		  {
+			 {
+			  filename = "__factorioplus__/graphics/storage-logistics-warehouse-red.png",
+			  priority = "extra-high",
+			  width = 320,
+			  height = 384,
+			  frame_count = 8,
+			  shift = util.by_pixel(0, -16),
+			  scale = 0.5,
+			},
+			{
+				filename = "__factorioplus__/graphics/warehouse-shadow.png",
+				priority = "extra-high",
+				width = 384,
+				height = 384,
+				repeat_count = 8,
+				shift = util.by_pixel(16, -16),
+				scale = 0.5,
+				draw_as_shadow = true,
+			},
+		  }
+		},
     },
-	landing_location_offset = {1.5, -0.5},
+	
+   
+	
     circuit_connector = circuit_connector_definitions["warehouse"],
     circuit_wire_max_distance = default_circuit_wire_max_distance
   },
@@ -2851,35 +2963,42 @@ data.extend({
     logistic_mode = "active-provider",
     open_sound = { filename = "__base__/sound/metallic-chest-open.ogg", volume=0.43 },
     close_sound = { filename = "__base__/sound/metallic-chest-close.ogg", volume = 0.43 },
-    animation_sound = sounds.logistics_chest_open,
     vehicle_impact_sound = sounds.generic_impact,
-    opened_duration = logistic_chest_opened_duration,
-    animation =
+	
+	
+	robot_door =
     {
-      layers =
-      {
-         {
-          filename = "__factorioplus__/graphics/storage-logistics-warehouse-purple.png",
-          priority = "extra-high",
-          width = 320,
-          height = 384,
-		  frame_count = 8,
-          shift = util.by_pixel(0, -16),
-		  scale = 0.5,
-        },
+      animation_sound = sounds.logistics_chest_open,
+      opened_duration = logistic_chest_opened_duration,
+	  landing_location_offset = {1.5, -0.5},
+          animation =
 		{
-            filename = "__factorioplus__/graphics/warehouse-shadow.png",
-            priority = "extra-high",
-			width = 384,
-			height = 384,
-			repeat_count = 8,
-            shift = util.by_pixel(16, -16),
-            scale = 0.5,
-			draw_as_shadow = true,
-        },
-      }
+		  layers =
+		  {
+			 {
+			  filename = "__factorioplus__/graphics/storage-logistics-warehouse-purple.png",
+			  priority = "extra-high",
+			  width = 320,
+			  height = 384,
+			  frame_count = 8,
+			  shift = util.by_pixel(0, -16),
+			  scale = 0.5,
+			},
+			{
+				filename = "__factorioplus__/graphics/warehouse-shadow.png",
+				priority = "extra-high",
+				width = 384,
+				height = 384,
+				repeat_count = 8,
+				shift = util.by_pixel(16, -16),
+				scale = 0.5,
+				draw_as_shadow = true,
+			},
+		  }
+		},
     },
-	landing_location_offset = {1.5, -0.5},
+   
+	
     circuit_connector = circuit_connector_definitions["warehouse"],
     circuit_wire_max_distance = default_circuit_wire_max_distance
   },
@@ -2914,35 +3033,41 @@ data.extend({
     logistic_mode = "buffer",
     open_sound = { filename = "__base__/sound/metallic-chest-open.ogg", volume=0.43 },
     close_sound = { filename = "__base__/sound/metallic-chest-close.ogg", volume = 0.43 },
-    animation_sound = sounds.logistics_chest_open,
     vehicle_impact_sound = sounds.generic_impact,
-    opened_duration = logistic_chest_opened_duration,
-    animation =
+	robot_door =
     {
-      layers =
-      {
-         {
-          filename = "__factorioplus__/graphics/storage-logistics-warehouse-green.png",
-          priority = "extra-high",
-          width = 320,
-          height = 384,
-		  frame_count = 8,
-          shift = util.by_pixel(0, -16),
-		  scale = 0.5,
-        },
+      animation_sound = sounds.logistics_chest_open,
+      opened_duration = logistic_chest_opened_duration,
+	  landing_location_offset = {1.5, -0.5},
+          
+		animation =
 		{
-            filename = "__factorioplus__/graphics/warehouse-shadow.png",
-            priority = "extra-high",
-			width = 384,
-			height = 384,
-			repeat_count = 8,
-            shift = util.by_pixel(16, -16),
-            scale = 0.5,
-			draw_as_shadow = true,
-        },
-      }
+		  layers =
+		  {
+			 {
+			  filename = "__factorioplus__/graphics/storage-logistics-warehouse-green.png",
+			  priority = "extra-high",
+			  width = 320,
+			  height = 384,
+			  frame_count = 8,
+			  shift = util.by_pixel(0, -16),
+			  scale = 0.5,
+			},
+			{
+				filename = "__factorioplus__/graphics/warehouse-shadow.png",
+				priority = "extra-high",
+				width = 384,
+				height = 384,
+				repeat_count = 8,
+				shift = util.by_pixel(16, -16),
+				scale = 0.5,
+				draw_as_shadow = true,
+			},
+		  }
+		},
     },
-	landing_location_offset = {1.5, -0.5},
+
+	
     circuit_connector = circuit_connector_definitions["warehouse"],
     circuit_wire_max_distance = default_circuit_wire_max_distance
   },
@@ -2977,35 +3102,42 @@ data.extend({
     logistic_mode = "requester",
     open_sound = { filename = "__base__/sound/metallic-chest-open.ogg", volume=0.43 },
     close_sound = { filename = "__base__/sound/metallic-chest-close.ogg", volume = 0.43 },
-    animation_sound = sounds.logistics_chest_open,
     vehicle_impact_sound = sounds.generic_impact,
-    opened_duration = logistic_chest_opened_duration,
-    animation =
+
+	robot_door =
     {
-      layers =
-      {
-         {
-          filename = "__factorioplus__/graphics/storage-logistics-warehouse-blue.png",
-          priority = "extra-high",
-          width = 320,
-          height = 384,
-		  frame_count = 8,
-          shift = util.by_pixel(0, -16),
-		  scale = 0.5,
-        },
+      animation_sound = sounds.logistics_chest_open,
+      opened_duration = logistic_chest_opened_duration,
+      landing_location_offset = {1.5, -0.5},
+	  
+		animation =
 		{
-            filename = "__factorioplus__/graphics/warehouse-shadow.png",
-            priority = "extra-high",
-			width = 384,
-			height = 384,
-			repeat_count = 8,
-            shift = util.by_pixel(16, -16),
-            scale = 0.5,
-			draw_as_shadow = true,
-        },
-      }
+		  layers =
+		  {
+			 {
+			  filename = "__factorioplus__/graphics/storage-logistics-warehouse-blue.png",
+			  priority = "extra-high",
+			  width = 320,
+			  height = 384,
+			  frame_count = 8,
+			  shift = util.by_pixel(0, -16),
+			  scale = 0.5,
+			},
+			{
+				filename = "__factorioplus__/graphics/warehouse-shadow.png",
+				priority = "extra-high",
+				width = 384,
+				height = 384,
+				repeat_count = 8,
+				shift = util.by_pixel(16, -16),
+				scale = 0.5,
+				draw_as_shadow = true,
+			},
+		  }
+		},
     },
-	landing_location_offset = {1.5, -0.5},
+    
+	
     circuit_connector = circuit_connector_definitions["warehouse"],
     circuit_wire_max_distance = default_circuit_wire_max_distance
   },
@@ -3214,6 +3346,116 @@ data.extend({
 
     circuit_connector = circuit_connector_definitions["lamp"],
     circuit_wire_max_distance = default_circuit_wire_max_distance
+  },
+   --------------------------------------------------- LED LIGHT  ------------------------------------------------------------
+
+   {
+    type = "lamp",
+    name = "led-lamp",
+    icon = "__factorioplus__/graphics/icons/led-light.png",
+    icon_size = 64, icon_mipmaps = 4,
+    flags = {"placeable-neutral", "player-creation", "not-flammable"},
+    minable = {mining_time = 0.25, result = "led-lamp"},
+	remove_decoratives = "true",
+    max_health = 250,
+	resistances =
+    {
+      {
+        type = "fire",
+        percent = 50
+      },
+	  {
+        type = "explosion",
+        percent = 80
+      },
+    },
+    corpse = "lamp-remnants",
+    dying_explosion = "lamp-explosion",
+    collision_box = {{-0.3, -0.3}, {0.3, 0.3}},
+    selection_box = {{-0.5, -0.5}, {0.5, 0.5}},
+    damaged_trigger_effect = hit_effects.entity(),
+    vehicle_impact_sound = sounds.generic_impact,
+	impact_category = "glass",
+    open_sound = {filename = "__base__/sound/open-close/electric-small-open.ogg", volume = 0.7},
+    close_sound = {filename = "__base__/sound/open-close/electric-small-close.ogg", volume = 0.7},
+    energy_source =
+    {
+      type = "electric",
+      usage_priority = "lamp"
+    },
+    energy_usage_per_tick = "1kW",
+    darkness_for_all_lamps_on = 0.5,
+    darkness_for_all_lamps_off = 0.3,
+    light = {intensity = 0.85, size = 8, color = {r=1.0, g=1.0, b=1.0}},
+    light_when_colored = {intensity = 0.25, size = 4, color = {r=1.0, g=1.0, b=1.0}},
+    glow_size = 2,
+    glow_color_intensity = 0.5,
+	glow_render_mode = "multiplicative",
+	
+    picture_off =
+    {
+		layers =
+		{
+		  {
+			  filename = "__factorioplus__/graphics/led-light-off.png",
+			  priority = "high",
+				width = 133,
+				height = 128,
+			  frame_count = 1,
+			  axially_symmetrical = false,
+			  direction_count = 1,
+			  shift = util.by_pixel(0,0),
+			  scale = 0.3,
+		  },
+		  {
+			  filename = "__factorioplus__/graphics/led-light-shadow.png",
+			  priority = "high",
+			    width = 156,
+				height = 128,
+			  frame_count = 1,
+			  axially_symmetrical = false,
+			  direction_count = 1,
+			  shift = util.by_pixel(4,0),
+			  draw_as_shadow = true,
+			  scale = 0.3,
+		  },
+		}        
+	},
+	
+    picture_on =
+    {
+          filename = "__factorioplus__/graphics/led-light-on.png",
+          priority = "high",
+		  width = 133,
+          height = 128,
+          frame_count = 1,
+          axially_symmetrical = false,
+          direction_count = 1,
+          shift = util.by_pixel(0,0),
+		  scale = 0.3,
+		  draw_as_glow = true,
+	},
+	
+    signal_to_color_mapping =
+    {
+      {type = "virtual", name = "signal-red",    color = {1, 0, 0}},
+      {type = "virtual", name = "signal-green",  color = {0, 1, 0}},
+      {type = "virtual", name = "signal-blue",   color = {0, 0, 1}},
+      {type = "virtual", name = "signal-yellow", color = {1, 1, 0}},
+      {type = "virtual", name = "signal-pink",   color = {1, 0, 1}},
+      {type = "virtual", name = "signal-cyan",   color = {0, 1, 1}},
+      {type = "virtual", name = "signal-white",  color = {1, 1, 1}},
+      {type = "virtual", name = "signal-grey",   color = {0.5, 0.5, 0.5}},
+      {type = "virtual", name = "signal-black",  color = {0, 0, 0}}
+    },
+    default_red_signal = { type = "virtual", name = "signal-red" },
+    default_green_signal = { type = "virtual", name = "signal-green" },
+    default_blue_signal = { type = "virtual", name = "signal-blue" },
+    default_rgb_signal = { type = "virtual", name = "signal-white" },
+
+    circuit_connector = circuit_connector_definitions["lamp"],
+    circuit_wire_max_distance = default_circuit_wire_max_distance,
+    water_reflection = chest_reflection()
   },
   
   ---------------------------------------------------  FLOODLIGHT  ------------------------------------------------------------
@@ -3645,7 +3887,7 @@ data.extend({
     selection_box = {{-0.9, -0.9}, {0.9, 0.9}},
     damaged_trigger_effect = hit_effects.entity({{-0.2, -2.2}, {0.2, 0.2}}),
     drawing_box = {{-0.75, -2.6}, {0.75, 0.75}},
-    maximum_wire_distance = 12,
+    maximum_wire_distance = 16,
     supply_area_distance = 5,
 	impact_category = "wood",
     --vehicle_impact_sound = sounds.car_wood_impact(0.5),
@@ -5472,6 +5714,10 @@ data.extend({
     }
   },
   
+   --------------------------------------------------- PASSIVE OFFSHORE PUMP ------------------------------------------------------------
+  
+	-- Unpowered basic offshore pump.
+  
    --------------------------------------------------- LARGE OFFSHORE PUMP ------------------------------------------------------------
    
   {
@@ -5483,19 +5729,15 @@ data.extend({
 	collision_mask = {layers={object=true, train=true, is_object=true, is_lower_object=true}}, -- collide just with object-layer and train-layer which don't collide with water, this allows us to build on 1 tile wide ground
     tile_buildability_rules =
     {
+	  -- Coastline area
       {area = {{-1.4, -0.4}, {1.4, 0.4}}, required_tiles = {layers={ground_tile=true}}, colliding_tiles = {layers={water_tile=true}}, remove_on_collision = true},
-      {area = {{-2, -3}, {2, -1}}, required_tiles = {layers={water_tile=true}}, colliding_tiles = {layers={}}},
+      -- Water area
+	  {area = {{-3, -12}, {3, -1}}, required_tiles = {layers={water_tile=true}}, colliding_tiles = {layers={}}},
     },
-	-- center_collision_mask = { "water-tile", "object-layer", "player-layer" }, -- to test that tile directly under the pump is ground
-    -- fluid_box_tile_collision_test = { "ground-tile" },
-    -- adjacent_tile_collision_test = { "water-tile" },
-    -- adjacent_tile_collision_mask = { "ground-tile" }, -- to prevent building on edge of map :(
-    -- adjacent_tile_collision_box = { { -2, -4 }, { 2, -1 } },
     minable = {mining_time = 0.5, result = "offshore-pump-large"},
-    max_health = 450,
+    max_health = 600,
     corpse = "offshore-pump-remnants",
     dying_explosion = "offshore-pump-explosion",
-    -- fluid = "water",
     resistances =
     {
       {
@@ -5513,11 +5755,10 @@ data.extend({
 	fluid_source_offset = {0, -1},
     fluid_box =
     {
-      volume = 500,
-	  pipe_picture = assembler2pipepictures(),
+      volume = 1000,
+	  pipe_picture = require("__base__.prototypes.entity.assembler-pictures").assembler2pipepictures,
       pipe_covers = pipecoverspictures(),
       production_type = "output",
-      -- filter = "water",
       pipe_connections =
       {
         {
@@ -5549,8 +5790,8 @@ data.extend({
       {
         {
           filename = "__base__/sound/offshore-pump.ogg",
-          volume = 0.7,
-		  speed = 0.7,
+          volume = 0.9,
+		  speed = 0.6,
         }
       },
       match_volume_to_activity = true,
@@ -7526,6 +7767,8 @@ if (mods["space-age"]) then
 else 
 	data.raw["container"]["factorio-logo-11tiles"].picture.filename = "__factorioplus__/graphics/icons/factorioplus-logo-11tiles.png"
 end 
+
+data.raw["container"]["factorio-logo-11tiles"].collision_box = nil 
   
 data.extend({
   {
@@ -7536,8 +7779,8 @@ data.extend({
     --hidden = true,
     minable = {mining_time = 0.1},
     max_health = 100,
-    collision_box = {{-3, -3}, {3, 3}},
-    selection_box = {{-3, -3}, {3, 3}},
+    --collision_box = {{-3, -3}, {3, 3}},
+    selection_box = {{-2, -2}, {2, 2}},
     inventory_size = 1,
     picture =
     {

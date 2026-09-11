@@ -727,7 +727,6 @@ data:extend
     type = "capsule",
     name = "distractor-capsule",
 	icons = util.insert_mini_corner_icon("__base__/graphics/icons/distractor.png","__factorioplus__/graphics/icons/laser.png"),
-   --icon =  util.insert_mini_corner_icon("__base__/graphics/icons/distractor.png","__factorioplus_/graphics/icons/laser.png"),
     icon_size = 64, icon_mipmaps = 4,
     capsule_action =
     {
@@ -1144,7 +1143,7 @@ local robots = {
     name = "defender",
     icon = "__base__/graphics/icons/defender.png",
     icon_size = 64, icon_mipmaps = 4,
-    flags = {"placeable-player", "player-creation", "placeable-off-grid", "not-on-map", "not-repairable"},
+    flags = {"placeable-player", "player-creation", "placeable-off-grid", "not-on-map"},
     resistances =
     {
       {
@@ -1161,7 +1160,7 @@ local robots = {
     subgroup="capsule",
     order="e-a-a",
     max_health = robot_defender_hp,
-	healing_per_tick = 0.1,
+	healing_per_tick = 0.01,
     alert_when_damaged = false,
     collision_box = {{0, 0}, {0, 0}},
     selection_box = {{-0.5, -1.5}, {0.5, -0.5}},
@@ -1262,7 +1261,7 @@ local robots = {
     name = "distractor",
     icon = "__base__/graphics/icons/distractor.png",
     icon_size = 64, icon_mipmaps = 4,
-    flags = {"placeable-player", "player-creation", "placeable-off-grid", "not-on-map", "not-repairable"},
+    flags = {"placeable-player", "player-creation", "placeable-off-grid", "not-on-map"},
     resistances =
     {
        {
@@ -1284,7 +1283,7 @@ local robots = {
     subgroup="capsule",
     order="e-a-b",
     max_health = robot_distractor_hp,
-	healing_per_tick = 0.2,
+	healing_per_tick = 0.01,
     alert_when_damaged = false,
     collision_box = {{0, 0}, {0, 0}},
     selection_box = {{-0.5, -1.5}, {0.5, -0.5}},
@@ -1369,7 +1368,6 @@ local robots = {
 	"player-creation", 
 	"placeable-off-grid", 
 	"not-on-map", 
-	"not-repairable"
 	},
     resistances =
     {
@@ -1393,7 +1391,7 @@ local robots = {
     subgroup="capsule",
     order="e-a-b",
     max_health = robot_distractor_hp,
-	healing_per_tick = 0.25,
+	healing_per_tick = 0.01,
     alert_when_damaged = false,
     collision_box = {{0, 0}, {0, 0}},
     selection_box = {{-0.5, -1.5}, {0.5, -0.5}},
@@ -1510,7 +1508,7 @@ local robots = {
     subgroup="capsule",
     order="e-a-b",
     max_health = robot_distractor_hp,
-	healing_per_tick = 0.25,
+	healing_per_tick = 0.01,
     alert_when_damaged = false,
     collision_box = {{0, 0}, {0, 0}},
     selection_box = {{-0.5, -1.5}, {0.5, -0.5}},
@@ -1631,7 +1629,7 @@ local robots = {
     subgroup="capsule",
     order="e-a-c",
     max_health = robot_destroyer_hp,
-	healing_per_tick = 0.3,
+	healing_per_tick = 0.01,
     alert_when_damaged = false,
     collision_box = {{0, 0}, {0, 0}},
     selection_box = {{-0.5, -1.5}, {0.5, -0.5}},

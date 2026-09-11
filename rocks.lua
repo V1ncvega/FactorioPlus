@@ -3,6 +3,12 @@ local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local decorative_trigger_effects = require("__base__.prototypes.decorative.decorative-trigger-effects")
 local util = require("util") 
 
+-- COLORS
+
+local colorMap_NauvisRockRegular = {r=144*0.9, g=119*0.9, b=87*0.9}
+local colorMap_NauvisRockSandy = {r=144*1.2, g=119*1.25, b=87*1.25}
+local colorMap_NauvisRockRed = {r=144*1.1, g=119*0.85, b=87*0.7}
+
 --- BAOBAO TREES BEEFYNESS
 
 data.raw["tree"]["tree-09"].minable.mining_time = 1.0
@@ -115,10 +121,10 @@ end
    
  data:extend
 ({
-water_grass,
-water_bush,
-water_rock,
-water_sand_rock
+	water_grass,
+	water_bush,
+	water_rock,
+	water_sand_rock
  })
 
 --- ROCKS PASS
@@ -149,7 +155,8 @@ local rock_results =
 	
 	]]--
 	
--- END ROCKS PASS
+
+-- ROCK AUTOPLACE UPDATE.
 
 local rock_region_box = "range_select_base(moisture, 0.15, 1, 0.2, -10, 0)"
 local autoplace_rock_massive =  
@@ -179,8 +186,6 @@ local autoplace_rock_huge =
 	control = "control:rocks:size"
   }
 }
-
-
 
 local autoplace_rock_big =
 {
@@ -251,9 +256,7 @@ local autoplace_rock_tiny =
         region_box = rock_region_box,
         control = "control:rocks:size"
       }
-    }
-	
-	
+    }	
 	
 local autoplace_rock_big_red =
     {
@@ -370,43 +373,45 @@ local autoplace_rocksandy_small =
         control = "control:rocks:size"
       }
     }
+	
+-- OVERRIDE BASE ROCKS
 
 data:extend
 ({
 {
     name = "rock-massive",
     type = "simple-entity",
-    flags = {"placeable-neutral", "placeable-off-grid", "not-on-map"},
+    flags = {"placeable-neutral", "placeable-off-grid"},
     icon = "__base__/graphics/icons/huge-rock.png",
     icon_size = 64, icon_mipmaps = 4,
     subgroup = "grass",
     order = "b[decorative]-l[rock]-9[massive]",
-    collision_box = {{-5.5, -4.0}, {5.5, 4.0}},
-    selection_box = {{-5.7, -4.2}, {5.7, 4.2}},
+    collision_box = {{-5.5 - 0.5, -4.0 - 0.5}, {5.5 - 0.5, 4.0 - 0.5}},
+    selection_box = {{-5.7 - 0.5, -4.2 - 0.5}, {5.7 - 0.5, 4.2 - 0.5}},
     damaged_trigger_effect = hit_effects.rock(),
     dying_trigger_effect = decorative_trigger_effects.huge_rock(),
-	-- corpse = "huge-rock",
-	--remains_when_mined = "huge-rock",
+	map_color = colorMap_NauvisRockRegular,
+
     minable =
     {
       mining_particle = "stone-particle",
-      mining_time = 18,
+      mining_time = 20,
       results = 
 	  {
-	  {type="item", name = "stone", amount_min = 198/3, amount_max = 340/2}, 
-	  {type="item", name = "coal", amount_min = 74/3, amount_max = 150/2}
+	  {type= "item", name = "stone", amount_min = 198, amount_max = 340}, 
+	  {type= "item", name = "coal", amount_min = 74, amount_max = 150}
 	  },
     },
     loot =
     {
-      {type="item", item = "stone", probability = 1, count_min = 65/2, count_max = 90/2},
-	  {type="item", item = "coal",  probability = 1, amount_min = 34/2, amount_max = 50/2}
+      {type= "item", name = "stone", independent_probability = 1, amount_min = 65/1.5, amount_max = 90/1.5},
+	  {type= "item", name = "coal",  independent_probability = 1, amount_min = 34/1.5, amount_max = 50/1.5}
     },
     count_as_rock_for_filtered_deconstruction = true,
     mined_sound = { filename = "__base__/sound/deconstruct-bricks.ogg" },
     vehicle_impact_sound = sounds.car_stone_impact,
     render_layer = "object",
-    max_health = 1500,
+    max_health = 2000,
     resistances =
     {
 	  {
@@ -450,7 +455,7 @@ data:extend
           filename = "__base__/graphics/decorative/huge-rock/huge-rock-17.png",
           width = 332,
           height = 228,
-          scale = 1.5,
+          scale = 1.35,
           shift = {0.226562, 0.046875}
 
       },
@@ -459,7 +464,7 @@ data:extend
           filename = "__base__/graphics/decorative/huge-rock/huge-rock-18.png",
           width = 290,
           height = 243,
-          scale = 1.5,
+          scale = 1.35,
           shift = {0.195312, 0.0390625}
 
       },
@@ -468,7 +473,7 @@ data:extend
           filename = "__base__/graphics/decorative/huge-rock/huge-rock-19.png",
           width = 349,
           height = 225,
-          scale = 1.5,
+          scale = 1.35,
           shift = {1.509375, 0.0234375}
 
       },
@@ -477,7 +482,7 @@ data:extend
           filename = "__base__/graphics/decorative/huge-rock/huge-rock-20.png",
           width = 287,
           height = 250,
-          scale = 1.5,
+          scale = 1.35,
           shift = {0.160625, 0.03125}
 
       }
@@ -486,7 +491,7 @@ data:extend
   {
     name = "huge-rock",
     type = "simple-entity",
-    flags = {"placeable-neutral", "placeable-off-grid", "not-on-map"},
+    flags = {"placeable-neutral", "placeable-off-grid"},
     icon = "__base__/graphics/icons/huge-rock.png",
     icon_size = 64, icon_mipmaps = 4,
     subgroup = "grass",
@@ -495,22 +500,22 @@ data:extend
     selection_box = {{-4.0/1.1, -3.1/1.1}, {4.0/1.1, 3.1/1.1}},
     damaged_trigger_effect = hit_effects.rock(),
     dying_trigger_effect = decorative_trigger_effects.huge_rock(),
-	-- corpse = "big-rock",
-	--remains_when_mined = "big-rock",
+	map_color = colorMap_NauvisRockRegular,
+
     minable =
     {
       mining_particle = "stone-particle",
       mining_time = 12,
       results = 
 	  {
-	  {type = "item", name = "stone", amount_min = 156/2, amount_max = 240/2}, 
-	  {type = "item",name = "coal", amount_min = 54/2, amount_max = 100/2}
+	  {type = "item", name = "stone", amount_min = 160/2, amount_max = 240/2}, 
+	  {type = "item", name = "coal", amount_min = 50/2, amount_max = 100/2}
 	  },
     },
     loot =
     {
-      {type = "item", item = "stone", probability = 1, count_min = 55/2, count_max = 80/2},
-	  {type = "item", item = "coal",  probability = 1, amount_min = 24/2, amount_max = 40/2}
+      {type = "item", name = "stone", independent_probability = 1, amount_min = 55/2, amount_max = 80/2},
+	  {type = "item", name = "coal",  independent_probability = 1, amount_min = 24/2, amount_max = 40/2}
     },
     count_as_rock_for_filtered_deconstruction = true,
     mined_sound = { filename = "__base__/sound/deconstruct-bricks.ogg" },
@@ -668,7 +673,7 @@ data:extend
   {
     name = "big-rock",
     type = "simple-entity",
-    flags = {"placeable-neutral", "placeable-off-grid", "not-on-map"},
+    flags = {"placeable-neutral", "placeable-off-grid"},
     icon = "__base__/graphics/icons/big-rock.png",
     icon_size = 64, icon_mipmaps = 4,
     subgroup = "grass",
@@ -677,6 +682,8 @@ data:extend
     selection_box = {{-2.2, -2.2}, {2.2, 2.2}},
     damaged_trigger_effect = hit_effects.rock(),
     dying_trigger_effect = decorative_trigger_effects.big_rock(),
+	map_color = colorMap_NauvisRockRegular,
+	
     minable =
     {
       mining_particle = "stone-particle",
@@ -689,7 +696,7 @@ data:extend
     },
     loot =
     {
-      {type = "item", item = "stone", probability = 1, count_min = 19, count_max = 30}
+      {type = "item", name = "stone", independent_probability = 1, amount_min = 19, amount_max = 30}
     },
     count_as_rock_for_filtered_deconstruction = true,
     mined_sound = { filename = "__base__/sound/deconstruct-bricks.ogg" },
@@ -919,7 +926,7 @@ data:extend
   {
     name = "medium-rock",
     type = "simple-entity",
-    flags = {"placeable-neutral", "placeable-off-grid", "not-on-map"},
+    flags = {"placeable-neutral", "placeable-off-grid"},
     icon = "__base__/graphics/icons/big-rock.png",
     icon_size = 64, icon_mipmaps = 4,
     subgroup = "grass",
@@ -929,6 +936,8 @@ data:extend
 	autoplace = autoplace_rock_bigmedium,
     damaged_trigger_effect = hit_effects.rock(),
     dying_trigger_effect = decorative_trigger_effects.big_rock(),
+	map_color = colorMap_NauvisRockRegular,
+	
     minable =
     {
       mining_particle = "stone-particle",
@@ -941,7 +950,7 @@ data:extend
     },
     loot =
     {
-      {type = "item", item = "stone", probability = 1, count_min = 4, count_max = 10}
+      {type = "item", name = "stone", independent_probability = 1, amount_min = 4, amount_max = 10}
     },
     count_as_rock_for_filtered_deconstruction = true,
     mined_sound = { filename = "__base__/sound/deconstruct-bricks.ogg" },
@@ -1601,7 +1610,7 @@ data:extend
   {
     name = "big-sand-rock",
     type = "simple-entity",
-    flags = {"placeable-neutral", "placeable-off-grid", "not-on-map"},
+    flags = {"placeable-neutral", "placeable-off-grid"},
     icon = "__base__/graphics/icons/big-sand-rock.png",
     icon_size = 64, icon_mipmaps = 4,
     subgroup = "grass",
@@ -1613,6 +1622,8 @@ data:extend
     max_health = 400,
     autoplace = autoplace_rocksandy_big,
     dying_trigger_effect = decorative_trigger_effects.big_rock(),
+	map_color = colorMap_NauvisRockSandy,
+	
     minable =
     {
       mining_particle = "stone-particle",
@@ -1625,8 +1636,8 @@ data:extend
     },
     loot =
     {
-      {type = "item", item = "stone", probability = 1, count_min = 5, count_max = 20},
-	  {type = "item", item = "sand-ore", probability = 1, count_min = 15, count_max = 35}
+      {type = "item", name = "stone", independent_probability = 1, amount_min = 5, amount_max = 20},
+	  {type = "item", name = "sand-ore", independent_probability = 1, amount_min = 15, amount_max = 35}
     },
     resistances =
     {
@@ -1805,7 +1816,7 @@ data:extend
   {
     name = "medium-sand-rock",
     type = "simple-entity",
-    flags = {"placeable-neutral", "placeable-off-grid", "not-on-map"},
+    flags = {"placeable-neutral", "placeable-off-grid"},
     icon = "__base__/graphics/icons/big-sand-rock.png",
     icon_size = 64, icon_mipmaps = 4,
     subgroup = "grass",
@@ -1817,6 +1828,8 @@ data:extend
     max_health = 200,
     autoplace = autoplace_rocksandy_bigmedium,
     dying_trigger_effect = decorative_trigger_effects.big_rock(),
+	map_color = colorMap_NauvisRockSandy,
+	
     minable =
     {
       mining_particle = "stone-particle",
@@ -1829,8 +1842,8 @@ data:extend
     },
     loot =
     {
-      {type = "item", item = "stone", probability = 1, count_min = 2, count_max = 8},
-	  {type = "item", item = "sand-ore", probability = 1, count_min = 5, count_max = 15}
+      {type = "item", name = "stone", independent_probability = 1, amount_min = 2, amount_max = 8},
+	  {type = "item", name = "sand-ore", independent_probability = 1, amount_min = 5, amount_max = 15}
     },
     resistances =
     {
@@ -2372,13 +2385,11 @@ data:extend
   },
 })
 
+-- ROCK TILE RESTRICTION
+
 data.raw["simple-entity"]["big-sand-rock"].autoplace["tile_restriction"] = {"sand-1","sand-2","sand-3","dirt-3","dirt-2","dirt-1"} 
 data.raw["optimized-decorative"]["medium-sand-rock"].autoplace["tile_restriction"] = {"sand-1","sand-2","sand-3","dirt-3","dirt-2","dirt-1"} 
 data.raw["optimized-decorative"]["small-sand-rock"].autoplace["tile_restriction"] = {"sand-1","sand-2","sand-3","dirt-3","dirt-2","dirt-1"} 
-
--- data.raw["simple-entity"]["big-sand-rock"].autoplace 
--- data.raw["optimized-decorative"]["medium-sand-rock"].autoplace["tile_restriction"] = {"sand-1","sand-2","sand-3","dirt-3","dirt-2","dirt-1"} 
--- data.raw["optimized-decorative"]["small-sand-rock"].autoplace["tile_restriction"] = {"sand-1","sand-2","sand-3","dirt-3","dirt-2","dirt-1"} 
 
 data.raw["optimized-decorative"]["tiny-rock"].autoplace["tile_restriction"] = {"grass-1","grass-2","grass-3","grass-4","dirt-5","dirt-6","dirt-7","dry-dirt"} 
 data.raw["optimized-decorative"]["small-rock"].autoplace["tile_restriction"] = {"grass-1","grass-2","grass-3","grass-4","dirt-5","dirt-6","dirt-7","dry-dirt"} 
@@ -2393,7 +2404,7 @@ data.extend({
 {
     name = "big-rock-red",
     type = "simple-entity",
-    flags = {"placeable-neutral", "placeable-off-grid", "not-on-map"},
+    flags = {"placeable-neutral", "placeable-off-grid"},
     icon = "__base__/graphics/icons/big-rock.png",
     icon_size = 64, icon_mipmaps = 4,
     subgroup = "grass",
@@ -2402,9 +2413,7 @@ data.extend({
     selection_box = {{-2.2, -2.2}, {2.2, 2.2}},
     damaged_trigger_effect = hit_effects.rock(),
     dying_trigger_effect = decorative_trigger_effects.big_rock(),
---	remains_when_mined = "medium-rock",
---	corpse = "medium-rock",
-
+	map_color = colorMap_NauvisRockRed,
 
     minable =
     {
@@ -2418,8 +2427,8 @@ data.extend({
     },
     loot =
     {
-	  {type = "item", item = "stone", probability = 1, count_min = 5, count_max = 10}, 
-	  {type = "item", item = "bauxite-ore", probability = 1, count_min = 5, count_max = 15}
+	  {type = "item", name = "stone", independent_probability = 1, amount_min = 5, amount_max = 10}, 
+	  {type = "item", name = "bauxite-ore", independent_probability = 1, amount_min = 5, amount_max = 15}
 	},
     count_as_rock_for_filtered_deconstruction = true,
     mined_sound = { filename = "__base__/sound/deconstruct-bricks.ogg" },
@@ -2667,7 +2676,7 @@ data.extend({
   },
  })
  
- data.raw["simple-entity"]["big-rock-red"].autoplace["tile_restriction"] = {"red-desert-3","red-desert-2","red-desert-1"} 
+data.raw["simple-entity"]["big-rock-red"].autoplace["tile_restriction"] = {"red-desert-3","red-desert-2","red-desert-1"} 
 
 local mediumredrock = util.copy(data.raw["optimized-decorative"]["medium-rock"])
 mediumredrock.name = "medium-red-rock"
@@ -2687,12 +2696,8 @@ smallredrock.autoplace = autoplace_rock_small_red
 smallredrock.autoplace["tile_restriction"] = {"red-desert-3","red-desert-2","red-desert-1"} 
 data:extend{smallredrock}
 
---we want to get to
--- data.raw["simple-entity"]["lithium-iceberg-huge"].collision_box
--- {{-1.0, -0.75}, {1.0, 0.75}}
 
-
-
+-- ROCK UTIL FUCTIONS
 
 function scalecollision(type, t, scale, boxname) 
 	for _,u in pairs(t) do
@@ -2735,8 +2740,16 @@ function scalemining(type, t, scale)
 	for k,u in pairs(t) do
 		local dir =  data.raw[type][u].minable	
 		dir.mining_time = math.ceil(dir.mining_time * (scale ^ 2 ))
-		scaleminingresults(dir.results, scale) 
+		if (dir.results ~= nil) then
+			scaleminingresults(dir.results, scale)
+		elseif (dir.result ~= nil) then
+			scaleminingresult(dir, scale)
+		end		 
 	end
+end
+
+function scaleminingresult(t, scale) 
+	t.count = math.ceil( (t.count * (scale ^ 2 )) + scale )
 end
 
 function scaleminingresults(t, scale) 
@@ -2760,7 +2773,10 @@ function scalerocks(type, t, scale)
 		scaleimages(type, t, scale)
 end
 
--- local icebergs_to_update = {"floating-iceberg-large", "floating-iceberg-small"}
+-- SPACE AGE ROCKS
+ 
+if (mods["space-age"]) then
+
 local gleba_rocks_to_update = { "iron-stromatolite", "copper-stromatolite" }
 local huge_rocks_to_update = { "lithium-iceberg-huge", "huge-volcanic-rock"}
 local big_rocks_to_update = { "lithium-iceberg-big", "big-volcanic-rock"}
@@ -2769,7 +2785,6 @@ local fulgorite_ruins_to_update = { "fulgoran-ruin-small", "fulgoran-ruin-medium
 local vulcanus_chimneys_to_update = {"vulcanus-chimney", "vulcanus-chimney-faded", "vulcanus-chimney-cold" , "vulcanus-chimney-short", "vulcanus-chimney-truncated"}
 local decoratives_to_update = { "lithium-iceberg-medium", "lithium-iceberg-small", "lithium-iceberg-tiny", "medium-volcanic-rock", "small-volcanic-rock", "tiny-volcanic-rock", "tiny-rock-cluster", "small-sulfur-rock", "tiny-sulfur-rock", "sulfur-rock-cluster", "small-fulgora-rock", "medium-fulgora-rock", "tiny-fulgora-rock" }
 
-if (mods["space-age"]) then
 	scalerocks("simple-entity", fulgorite_rocks_to_update, 1.8)
 	scalerocks("simple-entity", fulgorite_ruins_to_update, 1.5)
 	scalerocks("simple-entity", huge_rocks_to_update, 2)
@@ -2777,7 +2792,20 @@ if (mods["space-age"]) then
 	scalerocks("simple-entity", vulcanus_chimneys_to_update, 1.5)
 	scalerocks("simple-entity", gleba_rocks_to_update, 1.5)
 	scalerocks("optimized-decorative", decoratives_to_update, 0.75)
-	-- scalerocks("optimized-decorative", icebergs_to_update, 1.75)
+end
+
+-- ALIEN BIOMES SUPPORT
+  
+if (mods["alien-biomes"]) then
+local biomeRocks = { "huge-rock-volcanic", "big-rock-volcanic", "huge-rock-aubergine", "big-rock-aubergine",  "huge-rock-beige", "big-rock-beige", "huge-rock-brown", "big-rock-brown",  "huge-rock-cream", "big-rock-cream",  "huge-rock-dustyrose", "big-rock-dustyrose",  "huge-rock-violet", "big-rock-violet", "huge-rock-red", "big-rock-red", "huge-rock-tan", "big-rock-tan", "huge-rock-black", "big-rock-black", "huge-rock-grey", "big-rock-grey", "huge-rock-white", "big-rock-white", "huge-rock-purple", "big-rock-purple"  }
+local biomeRockDecoratives = {"medium-rock-volcanic", "small-rock-volcanic" , "tiny-rock-volcanic", "medium-rock-aubergine", "small-rock-aubergine" , "tiny-rock-aubergine", "medium-rock-beige", "small-rock-beige" , "tiny-rock-beige", "medium-rock-brown", "small-rock-brown" , "tiny-rock-brown", "medium-rock-cream", "small-rock-cream" , "tiny-rock-cream", "medium-rock-dustyrose", "small-rock-dustyrose" , "tiny-rock-dustyrose", "medium-rock-violet", "small-rock-violet" , "tiny-rock-violet", "medium-rock-red", "small-rock-red" , "tiny-rock-red", "medium-rock-purple", "small-rock-purple" , "tiny-rock-purple", "medium-rock-black", "small-rock-black" , "tiny-rock-black","medium-rock-tan", "small-rock-tan" , "tiny-rock-tan", "medium-rock-grey", "small-rock-grey" , "tiny-rock-grey", "medium-rock-white", "small-rock-white" , "tiny-rock-white" }
+local biomeSandRocks = {"sand-big-rock-tan","sand-big-rock-white","sand-big-rock-black", "sand-big-rock-purple", "sand-big-rock-red"} 
+local biomeSandDecoratives = {"sand-medium-rock-red", "sand-small-rock-red", "sand-medium-rock-purple", "sand-small-rock-purple", "sand-medium-rock-black", "sand-small-rock-black", "sand-medium-rock-white", "sand-small-rock-white", "sand-medium-rock-tan", "sand-small-rock-tan" }
+
+	scalerocks("simple-entity", biomeRocks , 1.6)
+	scalerocks("optimized-decorative", biomeRockDecoratives, 0.75)
+	scalerocks("simple-entity", biomeSandRocks , 1.5)
+	scalerocks("optimized-decorative", biomeSandDecoratives, 0.75)
 end
 
 

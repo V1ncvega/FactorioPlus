@@ -3,6 +3,7 @@ local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
 local soundsnew = require("sounds")
 local item_sounds = require("__base__.prototypes.item_sounds")
+require ("__factorioplus__.util-building-additions")
 
 -- turret stats
 require("stats")
@@ -15,35 +16,35 @@ local math3d = require "math3d"
 local mediumturretbase =
 {
 	{
-		filename = "__factorioplus__/graphics/medium-turret-base.png",
+		filename = "__factorioplus__/graphics/turret-bases/medium-turret-base.png",
 		priority = "high",
-		width = 282,
+		width = 256,
 		height = 256,
 		direction_count = 1,
 		frame_count = 1,
-		shift = util.by_pixel(-0.5, 2),
+		shift = util.by_pixel(1, 2),
 		scale = 0.35
 	},
 	{
-		filename = "__factorioplus__/graphics/medium-turret-base-tint.png",
+		filename = "__factorioplus__/graphics/turret-bases/medium-turret-base-mask.png",
 		line_length = 1,
-		width = 282,
+		width = 256,
 		height = 256,
 		apply_runtime_tint = true,
 		direction_count = 1,
 		frame_count = 1,
-		shift = util.by_pixel(-0.5, 2),
+		shift = util.by_pixel(1, 2),
 		scale = 0.35
 	},
 	{
-		filename = "__factorioplus__/graphics/medium-turret-base-shadow.png",
+		filename = "__factorioplus__/graphics/turret-bases/medium-turret-base-shadow.png",
 		line_length = 1,
-		width = 282,
+		width = 256,
 		height = 256,
 		draw_as_shadow = true,
 		direction_count = 1,
 		frame_count = 1,
-		shift = util.by_pixel(0, 3),
+		shift = util.by_pixel(1, 2),
 		scale = 0.35
 	}
 }
@@ -511,61 +512,69 @@ end
 
 local indicator_pictures =
 {
-  north =
+  north = util.draw_as_glow
   {
-
-      filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-led-indicator-north.png",
-      line_length = 2,
-      width = 10,
-      height = 18,
-      frame_count = 2,
-      axially_symmetrical = false,
-      direction_count = 1,
-      shift = util.by_pixel(7, 20),
-      scale = 0.5
-
+    filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-led-indicator-north.png",
+    width = 10,
+    height = 18,
+    shift = util.by_pixel(7, 20),
+    scale = 0.5
   },
-  east =
+  north_east = util.draw_as_glow
   {
-
-      filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-led-indicator-east.png",
-      line_length = 2,
-      width = 18,
-      height = 8,
-      frame_count = 2,
-      axially_symmetrical = false,
-      direction_count = 1,
-      shift = util.by_pixel(-33, -5),
-      scale = 0.5
-
+    filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-led-indicator-north-east.png",
+    width = 7,
+    height = 14,
+    shift = util.by_pixel(-14.5, 1.5),
+    scale = 0.5
   },
-  south =
+  east = util.draw_as_glow
   {
-  
-      filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-led-indicator-south.png",
-      line_length = 2,
-      width = 8,
-      height = 18,
-      frame_count = 2,
-      axially_symmetrical = false,
-      direction_count = 1,
-      shift = util.by_pixel(-8, -45),
-      scale = 0.5
-
+    filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-led-indicator-east.png",
+    width = 18,
+    height = 8,
+    shift = util.by_pixel(-33, -5),
+    scale = 0.5
   },
-  west =
+  south_east = util.draw_as_glow
   {
-
-      filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-led-indicator-west.png",
-      line_length = 2,
-      width = 20,
-      height = 10,
-      frame_count = 2,
-      axially_symmetrical = false,
-      direction_count = 1,
-      shift = util.by_pixel(32, -20),
-      scale = 0.5
-
+    filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-led-indicator-south-east.png",
+    width = 7,
+    height = 14,
+    shift = util.by_pixel(-26.0, -18.5),
+    scale = 0.5
+  },
+  south = util.draw_as_glow
+  {
+    filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-led-indicator-south.png",
+    width = 8,
+    height = 18,
+    shift = util.by_pixel(-8, -45),
+    scale = 0.5
+  },
+  south_west = util.draw_as_glow
+  {
+    filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-led-indicator-south-west.png",
+    width = 8,
+    height = 14,
+    shift = util.by_pixel( 13.0, -25.5),
+    scale = 0.5
+  },
+  west = util.draw_as_glow
+  {
+    filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-led-indicator-west.png",
+    width = 20,
+    height = 10,
+    shift = util.by_pixel(32, -20),
+    scale = 0.5
+  },
+  north_west = util.draw_as_glow
+  {
+    filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-led-indicator-north-west.png",
+    width = 8,
+    height = 14,
+    shift = util.by_pixel(26.5, -5.5),
+    scale = 0.5
   }
 }
 
@@ -627,6 +636,7 @@ data:extend({
 
     folding_animation = fireutil.flamethrower_turret_extension({ run_mode = "backward" }),
 
+	
     not_enough_fuel_indicator_picture = indicator_pictures,
     enough_fuel_indicator_picture = fireutil.foreach(util.table.deepcopy(indicator_pictures), function (tab) tab.x = tab.width end),
     out_of_ammo_alert_icon =
@@ -647,216 +657,298 @@ data:extend({
     {
       base_visualisation =
       {
+        render_layer = "object",
+        secondary_draw_order = 0,
         animation =
         {
-      north =
-      {
-        layers =
-        {
-          -- diffuse
+          north =
           {
-
-              filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-north.png",
-              line_length = 1,
-              width = 158,
-              height = 196,
-              frame_count = 1,
-              axially_symmetrical = false,
-              direction_count = 1,
-              shift = util.by_pixel(-1, 13),
-              scale = 0.5
+            layers =
+            {
+              -- diffuse
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-north.png",
+                line_length = 1,
+                width = 158,
+                height = 196,
+                shift = util.by_pixel(-1, 13),
+                scale = 0.5
+              },
+              -- mask
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-north-mask.png",
+                flags = { "mask" },
+                line_length = 1,
+                width = 74,
+                height = 70,
+                shift = util.by_pixel(-1, 33),
+                apply_runtime_tint = true,
+                scale = 0.5
+              },
+              -- shadow
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-north-shadow.png",
+                draw_as_shadow = true,
+                line_length = 1,
+                width = 134,
+                height = 152,
+                shift = util.by_pixel(3, 15),
+                scale = 0.5
+              }
+            }
+          },
+          north_east =
+          {
+            layers =
+            {
+              -- diffuse
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-north-east.png",
+                width = 220,
+                height = 190,
+                shift = util.by_pixel(7.0, 1.0),
+                scale = 0.5
+              },
+              -- mask
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-north-east-mask.png",
+                flags = { "mask" },
+                apply_runtime_tint = true,
+                line_length = 1,
+                width = 88,
+                height = 74,
+                shift = util.by_pixel( -21.5, 14.0),
+                scale = 0.5
+              },
+              -- shadow
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-north-east-shadow.png",
+                draw_as_shadow = true,
+                line_length = 1,
+                width = 206,
+                height = 164,
+                shift = util.by_pixel(3.5, 7.0),
+                scale = 0.5
+              }
+            }
+          },
+          east =
+          {
+            layers =
+            {
+              -- diffuse
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-east.png",
+                line_length = 1,
+                width = 216,
+                height = 169,
+                shift = util.by_pixel(-6, -2.75),
+                scale = 0.5
+              },
+              -- mask
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-east-mask.png",
+                flags = { "mask" },
+                apply_runtime_tint = true,
+                line_length = 1,
+                width = 66,
+                height = 82,
+                shift = util.by_pixel(-33, 1),
+                scale = 0.5
+              },
+              -- shadow
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-east-shadow.png",
+                draw_as_shadow = true,
+                line_length = 1,
+                width = 144,
+                height = 86,
+                shift = util.by_pixel(14, 9),
+                scale = 0.5
+              }
+            }
+          },
+          south_east =
+          {
+            layers =
+            {
+              -- diffuse
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-south-east.png",
+                line_length = 1,
+                width = 218,
+                height = 236,
+                shift = util.by_pixel( 6.5, 1.0),
+                scale = 0.5
+              },
+              -- mask
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-south-east-mask.png",
+                flags = { "mask" },
+                apply_runtime_tint = true,
+                line_length = 1,
+                width = 84,
+                height = 88,
+                shift = util.by_pixel(-19.0, -9.0),
+                scale = 0.5
+              },
+              -- shadow
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-south-east-shadow.png",
+                draw_as_shadow = true,
+                line_length = 1,
+                width = 206,
+                height = 192,
+                shift = util.by_pixel( 3.5, 0.0),
+                scale = 0.5
+              }
+            }
+          },
+          south =
+          {
+            layers =
+            {
+              -- diffuse
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-south.png",
+                line_length = 1,
+                width = 168,
+                height = 190,
+                shift = util.by_pixel(0.0, -2.0),
+                scale = 0.5
+              },
+              -- mask
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-south-mask.png",
+                flags = { "mask" },
+                apply_runtime_tint = true,
+                line_length = 1,
+                width = 72,
+                height = 72,
+                shift = util.by_pixel(0, -31),
+                scale = 0.5
+              },
+              -- shadow
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-south-shadow.png",
+                draw_as_shadow = true,
+                line_length = 1,
+                width = 134,
+                height = 98,
+                shift = util.by_pixel(3, 9),
+                scale = 0.5
+              }
+            }
 
           },
-          -- mask
+          south_west =
           {
-
-              filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-north-mask.png",
-              flags = { "mask" },
-              line_length = 1,
-              width = 74,
-              height = 70,
-              frame_count = 1,
-              axially_symmetrical = false,
-              direction_count = 1,
-              shift = util.by_pixel(-1, 33),
-              apply_runtime_tint = true,
-              scale = 0.5
-
+            layers =
+            {
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-south-west.png",
+                line_length = 1,
+                width = 218,
+                height = 236,
+                shift = util.by_pixel(-6.5, 1.0),
+                scale = 0.5
+              },
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-south-west-mask.png",
+                flags = { "mask" },
+                apply_runtime_tint = true,
+                line_length = 1,
+                width = 88,
+                height = 88,
+                shift = util.by_pixel(17.5, -8.5),
+                scale = 0.5
+              },
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-south-west-shadow.png",
+                draw_as_shadow = true,
+                line_length = 1,
+                width = 196,
+                height = 190,
+                shift = util.by_pixel( -0.5, -0.5),
+                scale = 0.5
+              }
+            }
           },
-          -- shadow
+          west =
           {
-
-              filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-north-shadow.png",
-              draw_as_shadow = true,
-              line_length = 1,
-              width = 134,
-              height = 152,
-              frame_count = 1,
-              axially_symmetrical = false,
-              direction_count = 1,
-              shift = util.by_pixel(3, 15),
-              scale = 0.5
-
-          }
-        }
-      },
-      east =
-      {
-        layers =
-        {
-          -- diffuse
-          {
-
-              filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-east.png",
-              line_length = 1,
-              width = 216,
-              height = 146,
-              frame_count = 1,
-              axially_symmetrical = false,
-              direction_count = 1,
-              shift = util.by_pixel(-6, 3),
-              scale = 0.5
-
+            layers =
+            {
+              -- diffuse
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-west.png",
+                line_length = 1,
+                width = 208,
+                height = 160,
+                shift = util.by_pixel(7, -5),
+                scale = 0.5
+              },
+              -- mask
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-west-mask.png",
+                flags = { "mask" },
+                apply_runtime_tint = true,
+                line_length = 1,
+                width = 64,
+                height = 74,
+                shift = util.by_pixel(32, -1),
+                scale = 0.5
+              },
+              -- shadow
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-west-shadow.png",
+                draw_as_shadow = true,
+                line_length = 1,
+                width = 206,
+                height = 88,
+                shift = util.by_pixel(15, 4),
+                scale = 0.5
+              }
+            }
           },
-          -- mask
+          north_west =
           {
-
-              filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-east-mask.png",
-              flags = { "mask" },
-              apply_runtime_tint = true,
-              line_length = 1,
-              width = 66,
-              height = 82,
-              frame_count = 1,
-              axially_symmetrical = false,
-              direction_count = 1,
-              shift = util.by_pixel(-33, 1),
-              scale = 0.5
-
-          },
-          -- shadow
-          {
-
-              filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-east-shadow.png",
-              draw_as_shadow = true,
-              line_length = 1,
-              width = 144,
-              height = 86,
-              frame_count = 1,
-              axially_symmetrical = false,
-              direction_count = 1,
-              shift = util.by_pixel(14, 9),
-              scale = 0.5
-
-          }
-        }
-      },
-      south =
-      {
-        layers =
-        {
-          -- diffuse
-          {
-
-              filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-south.png",
-              line_length = 1,
-              width = 128,
-              height = 166,
-              frame_count = 1,
-              axially_symmetrical = false,
-              direction_count = 1,
-              shift = util.by_pixel(0, -8),
-              scale = 0.5
-
-          },
-          -- mask
-          {
-
-              filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-south-mask.png",
-              flags = { "mask" },
-              apply_runtime_tint = true,
-              line_length = 1,
-              width = 72,
-              height = 72,
-              frame_count = 1,
-              axially_symmetrical = false,
-              direction_count = 1,
-              shift = util.by_pixel(0, -31),
-              scale = 0.5
-
-          },
-          -- shadow
-          {
-
-              filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-south-shadow.png",
-              draw_as_shadow = true,
-              line_length = 1,
-              width = 134,
-              height = 98,
-              frame_count = 1,
-              axially_symmetrical = false,
-              direction_count = 1,
-              shift = util.by_pixel(3, 9),
-              scale = 0.5
-
-          }
-        }
-
-      },
-      west =
-      {
-        layers =
-        {
-          -- diffuse
-          {
-
-              filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-west.png",
-              line_length = 1,
-              width = 208,
-              height = 144,
-              frame_count = 1,
-              axially_symmetrical = false,
-              direction_count = 1,
-              shift = util.by_pixel(7, -1),
-              scale = 0.5
-
-          },
-          -- mask
-          {
-
-              filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-west-mask.png",
-              flags = { "mask" },
-              apply_runtime_tint = true,
-              line_length = 1,
-              width = 64,
-              height = 74,
-              frame_count = 1,
-              axially_symmetrical = false,
-              direction_count = 1,
-              shift = util.by_pixel(32, -1),
-              scale = 0.5
-
-          },
-          -- shadow
-          {
-
-              filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-west-shadow.png",
-              draw_as_shadow = true,
-              line_length = 1,
-              width = 206,
-              height = 88,
-              frame_count = 1,
-              axially_symmetrical = false,
-              direction_count = 1,
-              shift = util.by_pixel(15, 4),
-              scale = 0.5
-
+            layers =
+            {
+              -- diffuse
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-north-west.png",
+                line_length = 1,
+                width = 220,
+                height = 192,
+                shift = util.by_pixel(-6.5, 0.0),
+                scale = 0.5
+              },
+              -- mask
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-north-west-mask.png",
+                flags = { "mask" },
+                line_length = 1,
+                width = 58,
+                height = 88,
+                shift = util.by_pixel(28.5, 10.5),
+                apply_runtime_tint = true,
+                scale = 0.5
+              },
+              -- shadow
+              {
+                filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-base-north-west-shadow.png",
+                draw_as_shadow = true,
+                line_length = 1,
+                width = 194,
+                height = 164,
+                shift = util.by_pixel( -0.5, 7.0),
+                scale = 0.5
+              }
+            }
           }
         }
       }
     },
-	 },
-	  },
 
     muzzle_animation = util.draw_as_glow
     {
@@ -985,110 +1077,99 @@ data:extend({
 
 --------------------------------- CANNON TURRET --------------------------------
 
-function cannon_turret_extension(inputs)
-return
-{
 
-    filename = "__base__/graphics/entity/tank/tank-turret.png",
-    priority = "medium",
-	width = 179,
-	height = 132,
-    direction_count = 8,
-    frame_count = 1,
-    line_length = 0,
-    run_mode = inputs.run_mode or "forward",
-    shift = util.by_pixel(2.25-2, -40.5 + tank_shift_y),
-    axially_symmetrical = false,
-    scale = 0.7
-
-}
-end
-
-function cannon_turret_extension_mask(inputs)
-return
-{
-
-    filename = "__base__/graphics/entity/tank/tank-turret-mask.png",
-    flags = { "mask" },
-    width = 72,
-    height = 66,
-    direction_count = 8,
-    frame_count = 1,
-    line_length = 0,
-    run_mode = inputs.run_mode or "forward",
-    shift = util.by_pixel(0, -36),
-    axially_symmetrical = false,
-    apply_runtime_tint = true,
-    scale =  0.7
-
-}
-end
-
-function cannon_turret_extension_shadow(inputs)
-return
-{
-
-    filename = "__base__/graphics/entity/tank/tank-turret-shadow.png",
-    width = 193,
-            height = 134,
-    direction_count = 8,
-    frame_count = 1,
-    line_length = 0,
-    run_mode = inputs.run_mode or "forward",
-    shift = util.by_pixel(19, 2.5),
-    axially_symmetrical = false,
-    draw_as_shadow = true,
-    scale =  0.7
-
-}
-end
+local cannon_turret_x = 256
+local cannon_turret_y = 256
+local cannon_turret_scale = 0.6
+local cannon_turret_xy = {0,-24}
+local cannon_turret_shadow_xy = {16,0}
 
 function cannon_turret_attack(inputs)
+	local _yaddshift = inputs.yshift or 0
+	local _xyshift = { cannon_turret_xy[1], cannon_turret_xy[2] + _yaddshift }
+	local _xyshiftshadow = { cannon_turret_shadow_xy[1] - _yaddshift, cannon_turret_shadow_xy[2] + _yaddshift }
 return
 {
   layers =
   {
    
 		{
-
-            filename = "__base__/graphics/entity/tank/tank-turret.png",
-            priority = "low",
-            line_length = 8,
-            width = 179,
-            height = 132,
-            frame_count = 1,
-            direction_count = 64,
-            shift = util.by_pixel(2.25-2, -40.5 + tank_shift_y),
-            animation_speed = 8,
-            scale = 0.7
+            stripes =
+		  {		
+			  {
+			  filename = "__factorioplus__/graphics/cannon-turret/tank-turret-1.png",
+			  width_in_frames = inputs.frame_count or 2,
+			  height_in_frames = 32
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/cannon-turret/tank-turret-2.png",
+			  width_in_frames = inputs.frame_count or 2,
+			  height_in_frames = 32
+			  },
+		  },
+            priority = "medium",
+            width = cannon_turret_x,
+            height = cannon_turret_y,
+			line_length = inputs.line_length or 2,
+            frame_count = inputs.frame_count or 2,
+            direction_count = inputs.direction_count or 64,
+			animation_speed = inputs.animation_speed or 1,
+            shift = util.by_pixel(table.unpack(_xyshift)),
+            scale = cannon_turret_scale
 
 		},
      {
-
-            filename = "__base__/graphics/entity/tank/tank-turret-mask.png",
-            priority = "low",
-            line_length = 8,
-            width = 72,
-            height = 66,
-            frame_count = 1,
-            apply_runtime_tint = true,
-            direction_count = 64,
-            shift = util.by_pixel(2-2, -36),
-            scale = 0.7
+            stripes =
+		  {		
+		     {
+			  filename = "__factorioplus__/graphics/cannon-turret/tank-turret-mask-1.png",
+			  width_in_frames = inputs.frame_count or 2,
+			  height_in_frames = 32
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/cannon-turret/tank-turret-mask-2.png",
+			  width_in_frames = inputs.frame_count or 2,
+			  height_in_frames = 32
+			  },
+			 
+		  },
+		    priority = "low",
+			flags = {"mask"},
+            width = cannon_turret_x,
+            height = cannon_turret_y,
+			line_length = inputs.line_length or 2,
+            frame_count = inputs.frame_count or 2,
+            direction_count = inputs.direction_count or 64,
+			animation_speed = inputs.animation_speed or 1,
+            shift = util.by_pixel(table.unpack(_xyshift)),
+            scale = cannon_turret_scale,
+			apply_runtime_tint = true,
 
         },
     {
-
-            filename = "__base__/graphics/entity/tank/tank-turret-shadow.png",
-            priority = "low",
-            line_length = 8,
-            width = 193,
-            height = 134,
-            frame_count = 1,
-            draw_as_shadow = true,
-            direction_count = 64,
-            shift = util.by_pixel(58.25-2, 0.5 + tank_shift_y),
-            scale = 0.7
+			stripes =
+		  {		
+			  {
+			  filename = "__factorioplus__/graphics/cannon-turret/tank-turret-shadow-1.png",
+			  width_in_frames = inputs.frame_count or 2,
+			  height_in_frames = 32
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/cannon-turret/tank-turret-shadow-2.png",
+			  width_in_frames = inputs.frame_count or 2,
+			  height_in_frames = 32
+			  },
+		  },
+		    priority = "low",
+            width = cannon_turret_x,
+            height = cannon_turret_y,
+			line_length = inputs.line_length or 2,
+            frame_count = inputs.frame_count or 2,
+            direction_count = inputs.direction_count or 64,
+			animation_speed = inputs.animation_speed or 1,
+            shift = util.by_pixel(table.unpack(_xyshiftshadow)),
+            scale = cannon_turret_scale * 1.1,
+			draw_as_shadow = true,
         }
   }
 }
@@ -1136,49 +1217,48 @@ data:extend({
     },
     corpse = "gun-turret-remnants",
     dying_explosion = "gun-turret-explosion",
-    collision_box = {{-1.9, -1.9 }, {1.9, 1.9}},
-    selection_box = {{-1.8, -1.8 }, {1.8, 1.8}},
-    damaged_trigger_effect = hit_effects.entity(),
-    rotation_speed = 0.02,
-    preparing_speed = 0.5,
+    collision_box = {{-1.8, -1.8 }, {1.8, 1.8}},
+    selection_box = {{-2.0, -2.0 }, {2.0, 2.0}},
+    damaged_trigger_effect = hit_effects.entity(),  
     preparing_sound = sounds.cannon_turret_activate,
     folding_sound = sounds.cannon_turret_deactivate,
-    folding_speed = 0.5,
+	rotation_speed = 0.002,
+    preparing_speed = 0.1,
+    folding_speed = 0.1,
+	ending_attack_speed = 0.2,
     inventory_size = 2,
     automated_ammo_count = 10,
-    attacking_speed = 50,
+    attacking_speed = 0.1,
     alert_when_attacking = true,
     open_sound = sounds.machine_open,
     close_sound = sounds.machine_close,
 	turret_base_has_direction = true,
+	allow_turning_when_starting_attack = true,
+    prepare_with_no_ammo = false,
+	can_retarget_while_starting_attack = true,
+    leave_attacking_if_shoot_fails = false,
 	graphics_set = {},
     folded_animation =
     {
       layers =
       {
-        cannon_turret_extension{frame_count=1, line_length = 1},
-        cannon_turret_extension_mask{frame_count=1, line_length = 1},
-        cannon_turret_extension_shadow{frame_count=1, line_length = 1}
+        cannon_turret_attack{frame_count=1, line_length = 1},
       }
     },
     preparing_animation =
     {
       layers =
       {
-        cannon_turret_extension{},
-        cannon_turret_extension_mask{},
-        cannon_turret_extension_shadow{}
+        cannon_turret_attack{frame_count=1, line_length = 1},
       }
     },
-    prepared_animation = cannon_turret_attack{frame_count=1},
-    attacking_animation = cannon_turret_attack{},
+    prepared_animation = cannon_turret_attack{frame_count=1, line_length = 1},
+	ending_attack_animation = cannon_turret_attack{},
     folding_animation =
     {
       layers =
       {
-        cannon_turret_extension{run_mode = "backward"},
-        cannon_turret_extension_mask{run_mode = "backward"},
-        cannon_turret_extension_shadow{run_mode = "backward"}
+        cannon_turret_attack{frame_count=1, line_length = 1},
       }
     },
   graphics_set =
@@ -1187,38 +1267,52 @@ data:extend({
       {
         animation =
         {
-      layers =
-      {
-        {
-            filename = "__base__/graphics/entity/gun-turret/gun-turret-base.png",
-            priority = "high",
-            width = 150,
-            height = 118,
-            axially_symmetrical = false,
-            direction_count = 1,
-            frame_count = 1,
-            shift = util.by_pixel(0.5, -1),
-            scale = 1
-        },
-        {
+			  layers =
+			  {
+				{
+					 filename = "__factorioplus__/graphics/turret-bases/turret-large-base.png",
+					priority = "high",
+					width = 256,
+					height = 256,
+					axially_symmetrical = false,
+					direction_count = 1,
+					frame_count = 1,
+					shift = util.by_pixel(0, 0),
+					scale = 0.5
+				},
+				{
 
-            filename = "__base__/graphics/entity/gun-turret/gun-turret-base-mask.png",
-            flags = { "mask", "low-object" },
-            line_length = 1,
-            width = 122,
-            height = 102,
-            axially_symmetrical = false,
-            direction_count = 1,
-            frame_count = 1,
-            shift = util.by_pixel(0, -8),
-            apply_runtime_tint = true,
-            scale = 1
+					 filename = "__factorioplus__/graphics/turret-bases/turret-large-base-mask.png",
+					flags = { "mask", },
+					line_length = 1,
+					width = 256,
+					height = 256,
+					axially_symmetrical = false,
+					direction_count = 1,
+					frame_count = 1,
+					shift =util.by_pixel(0, 0),
+					apply_runtime_tint = true,
+					scale = 0.5
 
-        }
+				},
+				  {
 
-      }
-    },
-	},
+					filename = "__factorioplus__/graphics/turret-bases/turret-large-base-shadow.png",
+					flags = { "low-object" },
+					line_length = 1,
+					width = 256,
+					height = 256,
+					direction_count = 1,
+					frame_count = 1,
+					shift = util.by_pixel(0, 0),
+					draw_as_shadow = true,
+					scale = 0.5
+
+				}
+
+				}
+			},
+		},
 	},
     vehicle_impact_sound = sounds.generic_impact,
 
@@ -1229,7 +1323,7 @@ data:extend({
       cooldown = firerate_turret_cannon,
 	  rotate_penalty = 2,  -- >0 will discourage turrets from targeting units that would take longer to turn to face.
 	  health_penalty = -2, -- >0 will discourage turrets from targeting units with higher health. <0 will encourage turrets to target units with higher health.  
-      projectile_creation_distance = 1.39375,
+      projectile_creation_distance = 2.49375,
       projectile_center = {0, -0.1375}, -- same as cannon_turret_attack shift
 	  turn_range = 0.25,
 	  damage_modifier = 1,
@@ -1241,7 +1335,7 @@ data:extend({
         speed = 0.1,
         speed_deviation = 0.03,
         center = {-0.0625, 0},
-        creation_distance = -1.925,
+        creation_distance = -1.0,
         starting_frame_speed = 0.2,
         starting_frame_speed_deviation = 0.1
       },
@@ -1300,6 +1394,11 @@ data:extend({
 ------------------------------------------------
 ---------------- PISTOL TURRET ---------------------
 ------------------------------------------------
+
+local pistol_turret_scale = 0.5
+local pistol_turret_xy = 1024/8
+local pistol_turret_shift_xy = {0, -10 }
+local pistol_turret_shift_shadow_xy = {6, -10 }
   
   
   function pistol_turret_extension(inputs)
@@ -1307,16 +1406,33 @@ return
 {
   filename = "__factorioplus__/graphics/pistol-turret/pistol-turret.png",
   priority = "medium",
-  width = 64,
-  height = 44,
-  direction_count = 16,
+  width = pistol_turret_xy,
+  height = pistol_turret_xy,
+  direction_count = 8,
   frame_count = 1,
-  line_length = 4,
+  line_length = 0,
   run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(0+2, -18),
+  shift = util.by_pixel(table.unpack(pistol_turret_shift_xy)),
   axially_symmetrical = false,
-  animation_speed = 8,
-  scale = 0.5,
+  scale = pistol_turret_scale,
+}
+end
+
+function pistol_turret_extension_mask(inputs)
+return
+{
+  filename = "__factorioplus__/graphics/pistol-turret/pistol-turret-mask.png",
+  flags = { "mask" },
+  width = pistol_turret_xy,
+  height = pistol_turret_xy,
+  direction_count = 8,
+  frame_count = 1,
+  line_length = 0,
+  run_mode = inputs.run_mode or "forward",
+  shift = util.by_pixel(table.unpack(pistol_turret_shift_xy) ),
+  axially_symmetrical = false,
+  apply_runtime_tint = true,
+  scale =  pistol_turret_scale,
 }
 end
 
@@ -1324,15 +1440,18 @@ end
 function pistol_turret_extension_shadow(inputs)
 return
 {
-   filename = "__factorioplus__/graphics/pistol-turret/pistol-turret.png",
-          priority = "low",
-          line_length = 4,
-          width = 1,
-          height = 1,
-          frame_count = 1,
-          draw_as_shadow = true,
-          direction_count = 64,
-          shift = {0.875, 0.359375}
+   filename = "__factorioplus__/graphics/pistol-turret/pistol-turret-shadow.png",
+	priority = "low",
+	line_length = 1,
+	width = pistol_turret_xy,
+	height = pistol_turret_xy,
+    direction_count = 8,
+	frame_count = 1,
+	line_length = 0,
+	draw_as_shadow = true,
+	direction_count = 64,
+	shift = util.by_pixel(table.unpack(pistol_turret_shift_shadow_xy)),
+	scale =  pistol_turret_scale * 1.058,
 }
 end
 
@@ -1344,27 +1463,41 @@ return
 	  {
 		 filename = "__factorioplus__/graphics/pistol-turret/pistol-turret.png",
 		  priority = "medium",
-		  width = 64,
-		  height = 44,
-		  direction_count = 16,
+		  width = pistol_turret_xy,
+		  height = pistol_turret_xy,
+		  direction_count = 64,
 		  frame_count = 1,
-		  line_length = 4,
+		  line_length = 8,
 		  run_mode = inputs.run_mode or "forward",
-		  shift = util.by_pixel(0+2, -18),
+		  shift = util.by_pixel(table.unpack(pistol_turret_shift_xy)),
 		  axially_symmetrical = false,
-		  animation_speed = 8,
-		  scale = 0.5,
+		  scale = pistol_turret_scale,
+	},
+	{
+		  filename ="__factorioplus__/graphics/pistol-turret/pistol-turret-mask.png",
+		  flags = { "mask" },
+			width = pistol_turret_xy,
+			height = pistol_turret_xy,
+		  direction_count = 64,
+		  frame_count = 1,
+		  line_length = 8,
+		  run_mode = inputs.run_mode or "forward",
+		  shift = util.by_pixel(table.unpack(pistol_turret_shift_xy)),
+		  axially_symmetrical = false,
+		  apply_runtime_tint = true,
+		  scale =  pistol_turret_scale,
 	},
     {
-         filename = "__base__/graphics/entity/car/car-turret-shadow.png",
+         filename = "__factorioplus__/graphics/pistol-turret/pistol-turret-shadow.png",
           priority = "low",
           line_length = 8,
-          width = 1,
-          height = 1,
+          width = pistol_turret_xy,
+          height = pistol_turret_xy,
           frame_count = 1,
           draw_as_shadow = true,
           direction_count = 64,
-          shift = {0.875, 0.359375}
+          shift = util.by_pixel(table.unpack(pistol_turret_shift_shadow_xy)),
+		  scale = pistol_turret_scale * 1.058,
     },
   },
 }
@@ -1420,7 +1553,7 @@ data:extend({
     folding_sound = sounds.gun_turret_deactivate,
     folding_speed = 0.3,
     inventory_size = 1,
-    automated_ammo_count = 2,
+    automated_ammo_count = 4,
     attacking_speed = 0.3,
     alert_when_attacking = true,
     open_sound = sounds.machine_open,
@@ -1431,6 +1564,7 @@ data:extend({
       layers =
       {
         pistol_turret_extension{frame_count=1, line_length = 1},
+		pistol_turret_extension_mask{frame_count=1, line_length = 1},
         pistol_turret_extension_shadow{frame_count=1, line_length = 1}
       }
     },
@@ -1439,6 +1573,7 @@ data:extend({
       layers =
       {
         pistol_turret_extension{},
+		pistol_turret_extension_mask{},
         pistol_turret_extension_shadow{}
       }
     },
@@ -1449,44 +1584,14 @@ data:extend({
       layers =
       {
         pistol_turret_extension{run_mode = "backward"},
+		pistol_turret_extension_mask{run_mode = "backward"},
         pistol_turret_extension_shadow{run_mode = "backward"}
       }
     },
 	
-	  graphics_set =
-    {
-      base_visualisation =
-      {
-        animation =
-		{
-      layers =
-      {
-        {
-          filename = "__factorioplus__/graphics/pistol-turret/pistolturret-base.png",
-          priority = "high",
-          width = 140,
-          height = 103,
-          direction_count = 1,
-          frame_count = 1,
-          shift = util.by_pixel(0, 2),
-		  scale = 0.5,
-        },
-        {
-          filename = "__factorioplus__/graphics/pistol-turret/pistolturret-base-shadow.png",
-          line_length = 1,
-          width = 140,
-          height = 103,
-          draw_as_shadow = true,
-          direction_count = 1,
-          frame_count = 1,
-          shift = util.by_pixel(0, 2),
-		  scale = 0.5,
-        }
-      }
-    },
-	},
-	},
     vehicle_impact_sound = sounds.generic_impact,
+	
+	graphics_set = {},
 
     attack_parameters =
     {
@@ -1497,7 +1602,8 @@ data:extend({
 	  health_penalty = 0.5, -- >0 will discourage turrets from targeting units with higher health. <0 will encourage turrets to target units with higher health.  
       projectile_creation_distance = 1,
       projectile_center = {0, -0.0875}, -- same as gun_turret_attack shift
-	  damage_modifier = 1.0,
+	  damage_modifier = damage_modifier_pistol,
+	  ammo_consumption_modifier = ammo_consumption_modifier_pistol,
       shell_particle =
       {
         name = "shell-particle",
@@ -1534,183 +1640,114 @@ data:extend({
  
 ---------------- GUN TURRET ---------------------
 
--- function gun_turret_extension(inputs)
--- return
--- {
-	 -- layers =
-	-- {
-			-- filename = "__factorioplus__/graphics/smg-turret/smg-turret.png",
-			-- priority = "low",
-			-- width = 912/8,
-			-- height = 832/8,
-			-- frame_count = 1,
-			-- line_length = 8,
-			-- axially_symmetrical = false,
-			-- direction_count = 8,
-			-- shift = util.by_pixel(0+2, -33.5+8.5),
-			-- scale = 0.5,
-	-- },
-	-- {
-			-- filename = "__factorioplus__/graphics/smg-turret/smg-turret-mask.png",
-			-- priority = "low",
-			-- width = 912/8,
-			-- height = 832/8,
-			-- frame_count = 1,
-			-- line_length = 8,
-			-- axially_symmetrical = false,
-			-- direction_count = 8,
-			-- apply_runtime_tint = true,
-			-- shift = util.by_pixel(0+2, -33.5+8.5),
-			-- scale = 0.5,
-	-- },
--- }
--- end
-
--- function gun_turret_extension_shadow(inputs)
--- return
--- {
-   -- filename = "__base__/graphics/entity/car/car-turret-shadow.png",
-          -- priority = "low",
-          -- line_length = 8,
-          -- width = 46,
-          -- height = 31,
-          -- frame_count = 1,
-          -- draw_as_shadow = true,
-          -- direction_count = 64,
-          -- shift = {0.875, 0.359375}
--- }
--- end
-
--- function gun_turret_attack(inputs)
--- return
--- {
-  -- layers =
-  -- {
-	  -- {
-
-			-- priority = "low",
-			-- width = 71,
-			-- height = 57,
-			-- frame_count = 1,
-			-- axially_symmetrical = false,
-			-- direction_count = 64,
-			-- shift = util.by_pixel(0+2, -33.5+8.5),
-			-- animation_speed = 8,
-			-- scale = 0.5,
-			-- stripes =
-			-- {
-				-- {
-				-- filename = "__factorioplus__/graphics/smg-turret/smg-turret.png",
-				-- width_in_frames = 8,
-				-- height_in_frames = 8
-			  -- },
-			-- }
-	-- },
-    -- {
-         -- filename = "__base__/graphics/entity/car/car-turret-shadow.png",
-          -- priority = "low",
-          -- line_length = 8,
-          -- width = 46,
-          -- height = 31,
-          -- frame_count = 1,
-          -- draw_as_shadow = true,
-          -- direction_count = 64,
-          -- shift = {0.875, 0.359375}
-    -- }
-  -- }
--- }
--- end
 
 local gun_turret_scale = 0.5
-local gun_turret_xy = {912/8, 832/8}
-local gun_turret_shift_xy = {0, -19 }
+local gun_turret_xy = {1024/8, 1024/8}
+local gun_turret_shift_xy = {0, -32 }
+local gun_turret_shift_shadow_xy = {16, -17 }
 
 function gun_turret_extension(inputs)
 return
 {
-  filename = "__factorioplus__/graphics/smg-turret/smg-turret.png",
-  priority = "medium",
-  width = gun_turret_xy[1],
-  height = gun_turret_xy[2],
-  direction_count = 8,
-  frame_count = 1,
-  line_length = 0,
-  run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(table.unpack(gun_turret_shift_xy) ),
-  axially_symmetrical = false,
-  scale =  gun_turret_scale,
+	filename = "__factorioplus__/graphics/smg-turret/smg-turret.png",
+	priority = "medium",
+	width = gun_turret_xy[1],
+	height = gun_turret_xy[2],
+	direction_count = 8,
+	frame_count = 1,
+	line_length = 0,
+	run_mode = inputs.run_mode or "forward",
+	shift = util.by_pixel(table.unpack(gun_turret_shift_xy) ),
+	axially_symmetrical = false,
+	scale =  gun_turret_scale,
 }
 end
 
 function gun_turret_extension_mask(inputs)
 return
 {
-  filename = "__factorioplus__/graphics/smg-turret/smg-turret-mask.png",
-  flags = { "mask" },
-  width = gun_turret_xy[1],
-  height = gun_turret_xy[2],
-  direction_count = 8,
-  frame_count = 1,
-  line_length = 0,
-  run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(table.unpack(gun_turret_shift_xy) ),
-  axially_symmetrical = false,
-  apply_runtime_tint = true,
-  scale =  gun_turret_scale,
+	filename = "__factorioplus__/graphics/smg-turret/smg-turret-mask.png",
+	flags = { "mask" },
+	width = gun_turret_xy[1],
+	height = gun_turret_xy[2],
+	direction_count = 8,
+	frame_count = 1,
+	line_length = 0,
+	run_mode = inputs.run_mode or "forward",
+	shift = util.by_pixel(table.unpack(gun_turret_shift_xy) ),
+	axially_symmetrical = false,
+	apply_runtime_tint = true,
+	scale =  gun_turret_scale,
 }
 end
 
 function gun_turret_extension_shadow(inputs)
 return
 {
-  filename = "__base__/graphics/entity/tank/tank-turret-shadow.png",
-  width = 1,
-  height = 1,
-  direction_count = 8,
-  frame_count = 1,
-  line_length = 0,
-  run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(19, 2),
-  axially_symmetrical = false,
-  draw_as_shadow = true,
-  scale =  gun_turret_scale,
+	filename = "__factorioplus__/graphics/smg-turret/smg-turret-shadow.png",
+	width = gun_turret_xy[1],
+	height = gun_turret_xy[2],
+	direction_count = 8,
+	frame_count = 1,
+	line_length = 0,
+	run_mode = inputs.run_mode or "forward",
+	shift = util.by_pixel(table.unpack(gun_turret_shift_shadow_xy)),
+	axially_symmetrical = false,
+	draw_as_shadow = true,
+	scale =  gun_turret_scale,
 }
 end
 
 function gun_turret_attack(inputs)
-return
-{
-  layers =
-  {
-   
-		{
-          filename = "__factorioplus__/graphics/smg-turret/smg-turret.png",
-          priority = "low",
-          line_length = 8,
-			width = gun_turret_xy[1],
-			height = gun_turret_xy[2],
-          frame_count = 1,
-          direction_count = 64,
-          shift = util.by_pixel(table.unpack(gun_turret_shift_xy) ),
-          animation_speed = 8,
-		  scale =  gun_turret_scale,
-		},
-		{
-		  filename ="__factorioplus__/graphics/smg-turret/smg-turret-mask.png",
-		  flags = { "mask" },
-			width = gun_turret_xy[1],
-			height = gun_turret_xy[2],
-		  direction_count = 64,
-		  frame_count = 1,
-		  line_length = 8,
-		  run_mode = inputs.run_mode or "forward",
-		  shift = util.by_pixel(table.unpack(gun_turret_shift_xy) ),
-		  axially_symmetrical = false,
-		  apply_runtime_tint = true,
-		  scale =  gun_turret_scale,
-		},
-  }
-}
+	local _yaddshift = inputs.yshift or 0
+	local _xyshift = { gun_turret_shift_xy[1], gun_turret_shift_xy[2] + _yaddshift }
+	local _xyshiftshadow = { gun_turret_shift_shadow_xy[1], gun_turret_shift_shadow_xy[2] + _yaddshift }
+	return
+	{
+	  layers =
+	  {
+	   
+			{
+			  filename = "__factorioplus__/graphics/smg-turret/smg-turret.png",
+			  priority = "low",
+			  line_length = 8,
+				width = gun_turret_xy[1],
+				height = gun_turret_xy[2],
+			  frame_count = 1,
+			  direction_count = 64,
+			  shift = util.by_pixel(table.unpack(_xyshift) ),
+			  animation_speed = 8,
+			  scale =  gun_turret_scale,
+			},
+			{
+			  filename ="__factorioplus__/graphics/smg-turret/smg-turret-mask.png",
+			  flags = { "mask" },
+				width = gun_turret_xy[1],
+				height = gun_turret_xy[2],
+			  direction_count = 64,
+			  frame_count = 1,
+			  line_length = 8,
+			  run_mode = inputs.run_mode or "forward",
+			  shift = util.by_pixel(table.unpack(_xyshift) ),
+			  axially_symmetrical = false,
+			  apply_runtime_tint = true,
+			  scale =  gun_turret_scale,
+			},
+			{
+			 filename = "__factorioplus__/graphics/smg-turret/smg-turret-shadow.png",
+			  width = gun_turret_xy[1],
+			  height = gun_turret_xy[2],
+			  direction_count = 64,
+			  frame_count = 1,
+			  line_length = 8,
+			  run_mode = inputs.run_mode or "forward",
+			  shift = util.by_pixel(table.unpack(_xyshiftshadow)),
+			  axially_symmetrical = false,
+			  draw_as_shadow = true,
+			  scale =  gun_turret_scale,
+			},
+	  }
+	}
 end
 
 data:extend({ 
@@ -1882,9 +1919,10 @@ data:extend({
 ---------------------------------------- HEAVY GUN TURRET ----------------------------------------
 
   
-local twingun_turret_scale = 0.6
-local twingun_turret_xy = {1216/8, 1112/8}
-local twingun_turret_shift_xy = {0, -32 }
+local twingun_turret_scale = 0.375
+local twingun_turret_xy = {1536/8, 1536/8}
+local twingun_turret_shift_xy = {0, -36 }
+local twingun_turret_shift_shadow_xy = {32, -16 }
 
 function heavygun_turret_extension(inputs)
 return
@@ -1924,14 +1962,14 @@ end
 function heavygun_turret_extension_shadow(inputs)
 return
 {
-  filename = "__base__/graphics/entity/tank/tank-turret-shadow.png",
-  width = 1,
-  height = 1,
+  filename = "__factorioplus__/graphics/smg-turret/smg-turret-heavy-shadow.png",
+  width = twingun_turret_xy[1],
+  height = twingun_turret_xy[2],
   direction_count = 8,
   frame_count = 1,
   line_length = 0,
   run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(19, 2),
+  shift = util.by_pixel(table.unpack(twingun_turret_shift_shadow_xy) ),
   axially_symmetrical = false,
   draw_as_shadow = true,
   scale =  twingun_turret_scale,
@@ -1939,39 +1977,55 @@ return
 end
 
 function heavygun_turret_attack(inputs)
-return
-{
-  layers =
-  {
-   
-		{
-          filename = "__factorioplus__/graphics/smg-turret/smg-turret-heavy.png",
-          priority = "low",
-          line_length = 8,
-			width = twingun_turret_xy[1],
-			height = twingun_turret_xy[2],
-          frame_count = 1,
-          direction_count = 64,
-          shift = util.by_pixel(table.unpack(twingun_turret_shift_xy) ),
-          animation_speed = 8,
-		  scale =  twingun_turret_scale,
+	local _yaddshift = inputs.yshift or 0
+	local _xyshift = { twingun_turret_shift_xy[1], twingun_turret_shift_xy[2] + _yaddshift }
+	local _xyshiftshadow = { twingun_turret_shift_shadow_xy[1], twingun_turret_shift_shadow_xy[2] + _yaddshift }
+	return
+	{
+	  layers =
+	  {
+	   
+			{
+			  filename = "__factorioplus__/graphics/smg-turret/smg-turret-heavy.png",
+			  priority = "low",
+			  line_length = 8,
+				width = twingun_turret_xy[1],
+				height = twingun_turret_xy[2],
+			  frame_count = 1,
+			  direction_count = 64,
+			  shift = util.by_pixel(table.unpack(_xyshift) ),
+			  animation_speed = 8,
+			  scale =  twingun_turret_scale,
+			},
+			{
+			  filename ="__factorioplus__/graphics/smg-turret/smg-turret-heavy-mask.png",
+			  flags = { "mask" },
+				width = twingun_turret_xy[1],
+				height = twingun_turret_xy[2],
+			  direction_count = 64,
+			  frame_count = 1,
+			  line_length = 8,
+			  run_mode = inputs.run_mode or "forward",
+			  shift = util.by_pixel(table.unpack(_xyshift) ),
+			  axially_symmetrical = false,
+			  apply_runtime_tint = true,
+			  scale =  twingun_turret_scale,
+			},
+			{
+			  filename = "__factorioplus__/graphics/smg-turret/smg-turret-heavy-shadow.png",
+			  width = twingun_turret_xy[1],
+			  height = twingun_turret_xy[2],
+			  direction_count = 64,
+			  frame_count = 1,
+			  line_length = 8,
+			  run_mode = inputs.run_mode or "forward",
+			  shift = util.by_pixel(table.unpack(_xyshiftshadow) ),
+			  axially_symmetrical = false,
+			  draw_as_shadow = true,
+			  scale =  twingun_turret_scale,
+			},
 		},
-		{
-		  filename ="__factorioplus__/graphics/smg-turret/smg-turret-heavy-mask.png",
-		  flags = { "mask" },
-			width = twingun_turret_xy[1],
-			height = twingun_turret_xy[2],
-		  direction_count = 64,
-		  frame_count = 1,
-		  line_length = 8,
-		  run_mode = inputs.run_mode or "forward",
-		  shift = util.by_pixel(table.unpack(twingun_turret_shift_xy) ),
-		  axially_symmetrical = false,
-		  apply_runtime_tint = true,
-		  scale =  twingun_turret_scale,
-		},
-  }
-}
+	}
 end
 
 data:extend({ 
@@ -1983,6 +2037,9 @@ data:extend({
     icon_size = 64, icon_mipmaps = 4,
     flags = {"placeable-player", "placeable-enemy", "player-creation"},
     minable = {mining_time = 0.75, result = "heavygun-turret"},
+	
+	circuit_connector = circuit_connector_definitions["medium-turret"],
+    circuit_wire_max_distance = default_circuit_wire_max_distance,
 	
     max_health = health_turret_heavysmg,
 	hide_resistances = false,
@@ -2078,7 +2135,7 @@ data:extend({
 	  rotate_penalty = 0.0,  -- >0 will discourage turrets from targeting units that would take longer to turn to face.
 	  health_penalty = 0.5, -- >0 will discourage turrets from targeting units with higher health. <0 will encourage turrets to target units with higher health.  
       projectile_creation_distance = 1.2,
-      projectile_center = {0, -0.1275}, -- same as gun_turret_attack shift
+      projectile_center = {0, -0.2}, -- same as gun_turret_attack shift
 	  projectile_creation_offsets = {{-0.25,0 },{0.25,0 }}, 
 	  damage_modifier = damagemodifier_turret_heavysmg,
       shell_particle =
@@ -2113,24 +2170,29 @@ data:extend({
       orientation_to_variation = false
     }
   },
+  
 
 })
 
 ---------------------------------------- SHOTGUN TURRET ----------------------------------------
-shotgun_turret_scale = 0.4
+local shotgun_turret_scale = 0.5
+local shotgun_turret_xy = 1024/8
+local shotgun_turret_shift_xy = {0, -26 }
+local shotgun_turret_shift_shadow_xy = {18, -6 }
+
 
 function shotgun_turret_extension(inputs)
 return
 {
   filename = "__factorioplus__/graphics/shotgun-turret/shotgun-turret.png",
   priority = "medium",
-  width = 1328/8,
-  height = 1208/8,
+  width = shotgun_turret_xy,
+  height = shotgun_turret_xy,
   direction_count = 8,
   frame_count = 1,
   line_length = 0,
   run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(2-2, -16 ),
+  shift = util.by_pixel(table.unpack(shotgun_turret_shift_xy)),
   axially_symmetrical = false,
   scale =  shotgun_turret_scale,
 }
@@ -2141,13 +2203,13 @@ return
 {
   filename = "__factorioplus__/graphics/shotgun-turret/shotgun-turret-mask.png",
   flags = { "mask" },
-  width = 1328/8,
-  height = 1208/8,
+  width = shotgun_turret_xy,
+  height = shotgun_turret_xy,
   direction_count = 8,
   frame_count = 1,
   line_length = 0,
   run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(2-2, -16 ),
+  shift = util.by_pixel(table.unpack(shotgun_turret_shift_xy)),
   axially_symmetrical = false,
   apply_runtime_tint = true,
   scale =  shotgun_turret_scale,
@@ -2158,13 +2220,13 @@ function shotgun_turret_extension_shadow(inputs)
 return
 {
   filename = "__factorioplus__/graphics/shotgun-turret/shotgun-turret-shadow.png",
-  width = 1328/8,
-  height = 1208/8,
+  width = shotgun_turret_xy,
+  height = shotgun_turret_xy,
   direction_count = 8,
   frame_count = 1,
   line_length = 0,
   run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(19, 2),
+  shift = util.by_pixel(table.unpack(shotgun_turret_shift_shadow_xy)),
   axially_symmetrical = false,
   draw_as_shadow = true,
   scale =  shotgun_turret_scale,
@@ -2172,51 +2234,54 @@ return
 end
 
 function shotgun_turret_attack(inputs)
-return
-{
-  layers =
-  {
-   
-		{
-          filename = "__factorioplus__/graphics/shotgun-turret/shotgun-turret.png",
-          priority = "low",
-          line_length = 8,
-		width = 1328/8,
-		height = 1208/8,
-          frame_count = 1,
-          direction_count = 64,
-          shift = util.by_pixel(2-2, -16 ),
-          animation_speed = 8,
-		  scale =  shotgun_turret_scale,
-		},
-		{
-		  filename = "__factorioplus__/graphics/shotgun-turret/shotgun-turret-mask.png",
-			flags = { "mask" },
-			width = 1328/8,
-			height = 1208/8,
-		  direction_count = 64,
-		  frame_count = 1,
-		  line_length = 8,
-		  run_mode = inputs.run_mode or "forward",
-		  shift = util.by_pixel(2-2, -16 ),
-		  axially_symmetrical = false,
-		  apply_runtime_tint = true,
-		  scale =  shotgun_turret_scale,
-		},
-		{
-		  filename = "__factorioplus__/graphics/shotgun-turret/shotgun-turret-shadow.png",
-		  width = 1328/8,
-		  height = 1208/8,
-		  direction_count = 64,
-		  frame_count = 1,
-		  line_length = 8,
-		  run_mode = inputs.run_mode or "forward",
-		  shift = util.by_pixel(19, 2),
-		  axially_symmetrical = false,
-		  draw_as_shadow = true,
-		  scale =  shotgun_turret_scale,
-		}
-  }
+	local _yaddshift = inputs.yshift or 0
+	local _xyshift = { shotgun_turret_shift_xy[1], shotgun_turret_shift_xy[2] + _yaddshift }
+	local _xyshiftshadow = { shotgun_turret_shift_shadow_xy[1] - _yaddshift, shotgun_turret_shift_shadow_xy[2] + _yaddshift }
+	return
+	{
+	  layers =
+	  {
+	   
+			{
+			  filename = "__factorioplus__/graphics/shotgun-turret/shotgun-turret.png",
+			  priority = "low",
+			  line_length = 8,
+			width = shotgun_turret_xy,
+			height =shotgun_turret_xy,
+			  frame_count = 1,
+			  direction_count = 64,
+			  shift = util.by_pixel(table.unpack(_xyshift)),
+			  animation_speed = 8,
+			  scale =  shotgun_turret_scale,
+			},
+			{
+			  filename = "__factorioplus__/graphics/shotgun-turret/shotgun-turret-mask.png",
+				flags = { "mask" },
+				width = shotgun_turret_xy,
+				height =shotgun_turret_xy,
+			  direction_count = 64,
+			  frame_count = 1,
+			  line_length = 8,
+			  run_mode = inputs.run_mode or "forward",
+			  shift = util.by_pixel(table.unpack(_xyshift)),
+			  axially_symmetrical = false,
+			  apply_runtime_tint = true,
+			  scale =  shotgun_turret_scale,
+			},
+			{
+			  filename = "__factorioplus__/graphics/shotgun-turret/shotgun-turret-shadow.png",
+			  width = shotgun_turret_xy,
+			  height = shotgun_turret_xy,
+			  direction_count = 64,
+			  frame_count = 1,
+			  line_length = 8,
+			  run_mode = inputs.run_mode or "forward",
+			  shift = util.by_pixel(table.unpack(_xyshiftshadow)),
+			  axially_symmetrical = false,
+			  draw_as_shadow = true,
+			  scale =  shotgun_turret_scale,
+			}
+	  }
 }
 end
 
@@ -2684,70 +2749,77 @@ data:extend({
 })
 
 ---------------------------------------- LARGE LASER TURRET ----------------------------------------
-local gauss_shift_y = -56
+local gauss_turret_scale = 0.6
+local gauss_turret_x = 2048/8
+local gauss_turret_y =  2048/8
+local gauss_turret_shift_xy = {0, -46 }
+local gauss_turret_shift_shadow_xy = {26, -26 }
 
 function large_laser_turret_extension(inputs)
   return
   {
-    filename = "__factorioplus__/graphics/mega-laser-turret.png",
+    filename = "__factorioplus__/graphics/gauss-turret/guass-turret.png",
     priority = "medium",
-    width = 4104/8,
-    height = 2904/8,
-	  direction_count = 8,
-	  frame_count = 1,
-	  line_length = 0,
-	  scale = 0.5,
+    width = gauss_turret_x,
+    height = gauss_turret_y,
+	direction_count = 8,
+	frame_count = 1,
+	line_length = 0,
+	scale = gauss_turret_scale,
     run_mode = inputs.run_mode and inputs.run_mode or "forward",
     axially_symmetrical = false,
-    shift = util.by_pixel(0, gauss_shift_y),
-  }
-end
-
-function large_laser_turret_extension_shadow(inputs)
-  return
-  {
-    filename = "__base__/graphics/entity/laser-turret/laser-turret-raising-shadow.png",
-    width = 1,
-    height = 1,
-frame_count = 1,
-  line_length = 0,
-    run_mode = inputs.run_mode and inputs.run_mode or "forward",
-    axially_symmetrical = false,
-    direction_count = 4,
-    draw_as_shadow = true,
-    shift = util.by_pixel(47, 3),
+    shift = util.by_pixel(table.unpack(gauss_turret_shift_xy)),
   }
 end
 
 function large_laser_turret_extension_mask(inputs)
   return
   {
-    filename = "__factorioplus__/graphics/mega-laser-turret-mask.png",
+    filename = "__factorioplus__/graphics/gauss-turret/guass-turret-mask.png",
     flags = { "mask" },
-     width = 4104/8,
-    height = 2904/8,
-	scale = 0.5,
+    width = gauss_turret_x,
+    height = gauss_turret_y,
+	scale = gauss_turret_scale,
+	direction_count = 8,
 	frame_count = 1,
 	line_length = 0,
     run_mode = inputs.run_mode and inputs.run_mode or "forward",
     axially_symmetrical = false,
     apply_runtime_tint = true,
-    direction_count = 4,
-    shift = util.by_pixel(0, gauss_shift_y),
+    shift = util.by_pixel(table.unpack(gauss_turret_shift_xy)),
   }
 end
+
+function large_laser_turret_extension_shadow(inputs)
+  return
+  {
+    filename = "__factorioplus__/graphics/gauss-turret/guass-turret-shadow.png",
+    width = gauss_turret_x,
+    height = gauss_turret_y,
+	direction_count = 8,
+	frame_count = 1,
+	line_length = 0,
+	scale = gauss_turret_scale,
+    run_mode = inputs.run_mode and inputs.run_mode or "forward",
+    axially_symmetrical = false,
+    draw_as_shadow = true,
+     shift = util.by_pixel(table.unpack(gauss_turret_shift_shadow_xy)),
+  }
+end
+
+
 
 function large_laser_turret_shooting()
   return
   {
-    filename = "__factorioplus__/graphics/mega-laser-turret.png",
+    filename = "__factorioplus__/graphics/gauss-turret/guass-turret.png",
     line_length = 8,
-    width = 4104/8,
-    height = 2904/8,
-	scale = 0.5,
+    width = gauss_turret_x,
+    height = gauss_turret_y,
+	scale = gauss_turret_scale,
     frame_count = 1,
     direction_count = 64,
-     shift = util.by_pixel(0, gauss_shift_y),
+    shift = util.by_pixel(table.unpack(gauss_turret_shift_xy)),
   }
 end
 
@@ -2761,37 +2833,38 @@ function large_laser_turret_shooting_glow()
     frame_count = 1,
     direction_count = 64,
     blend_mode = "additive",
-    shift = util.by_pixel(0, -35),
+    shift = util.by_pixel(table.unpack(gauss_turret_shift_xy)),
   }
 end
 
 function large_laser_turret_shooting_mask()
   return
   {
-    filename = "__factorioplus__/graphics/mega-laser-turret-mask.png",
+    filename = "__factorioplus__/graphics/gauss-turret/guass-turret-mask.png",
     flags = { "mask" },
     line_length = 8,
-   width = 4104/8,
-    height = 2904/8,
-	 scale = 0.5,
+    width = gauss_turret_x,
+    height = gauss_turret_y,
+	scale = gauss_turret_scale,
     frame_count = 1,
     apply_runtime_tint = true,
     direction_count = 64,
-     shift = util.by_pixel(0, gauss_shift_y),
+     shift = util.by_pixel(table.unpack(gauss_turret_shift_xy)),
   }
 end
 
 function large_laser_turret_shooting_shadow()
   return
   {
-    filename = "__base__/graphics/entity/laser-turret/laser-turret-shooting-shadow.png",
+    filename = "__factorioplus__/graphics/gauss-turret/guass-turret-shadow.png",
     line_length = 8,
-    width = 1,
-    height = 1,
+    width = gauss_turret_x,
+    height = gauss_turret_y,
+	scale = gauss_turret_scale,
     frame_count = 1,
     direction_count = 64,
     draw_as_shadow = true,
-    shift = util.by_pixel(51, 2),
+	shift = util.by_pixel(table.unpack(gauss_turret_shift_shadow_xy)),
   }
 end
 
@@ -2835,8 +2908,8 @@ data:extend({
       }
     },
 	hide_resistances = false,
-    collision_box = {{ -2.4, -2.4}, {2.4, 2.4}},
-    selection_box = {{ -2.5, -2.5}, {2.5, 2.5}},
+     collision_box = {{-1.8, -1.8 }, {1.8, 1.8}},
+    selection_box = {{-2.0, -2.0 }, {2.0, 2.0}},
     damaged_trigger_effect = hit_effects.entity(),
     rotation_speed = 0.001,
     preparing_speed = 0.05,
@@ -2850,7 +2923,7 @@ data:extend({
       type = "electric",
       buffer_capacity = "30000kJ",
       input_flow_limit = "7500kW",
-      drain = "500kW",
+      drain = "600kW",
       usage_priority = "primary-input"
     },
 
@@ -2902,31 +2975,43 @@ data:extend({
       layers =
       {
         {
-
-            filename = "__base__/graphics/entity/gun-turret/gun-turret-base.png",
+             filename = "__factorioplus__/graphics/turret-bases/turret-large-base.png",
             priority = "high",
-            width = 150,
-            height = 118,
+            width = 256,
+            height = 256,
             axially_symmetrical = false,
             direction_count = 1,
             frame_count = 1,
-            shift = util.by_pixel(0.5, -1),
-            scale = 1.25
-
+            shift = util.by_pixel(0, 0),
+            scale = 0.5
         },
         {
 
-            filename = "__base__/graphics/entity/gun-turret/gun-turret-base-mask.png",
-            flags = { "mask", "low-object" },
+             filename = "__factorioplus__/graphics/turret-bases/turret-large-base-mask.png",
+            flags = { "mask", },
             line_length = 1,
-            width = 122,
-            height = 102,
+            width = 256,
+            height = 256,
             axially_symmetrical = false,
             direction_count = 1,
             frame_count = 1,
-            shift = util.by_pixel(0, -4.5),
+            shift =util.by_pixel(0, 0),
             apply_runtime_tint = true,
-            scale = 1.25
+            scale = 0.5
+
+        },
+		  {
+
+            filename = "__factorioplus__/graphics/turret-bases/turret-large-base-shadow.png",
+            flags = { "low-object" },
+            line_length = 1,
+            width = 256,
+            height = 256,
+            direction_count = 1,
+            frame_count = 1,
+            shift = util.by_pixel(0, 0),
+			draw_as_shadow = true,
+            scale = 0.5
 
         }
 
@@ -2989,8 +3074,8 @@ data:extend({
 						{
 						
 						  filename = "__factorioplus__/sounds/megalaser-1.ogg",
-						  volume = 0.4,
-						  speed = 0.9,
+						  volume = 0.6,
+						  speed = 0.75,
 							
 						},				
 					},
@@ -3003,8 +3088,8 @@ data:extend({
 					{
 						
 						  filename = "__factorioplus__/sounds/megalaser-1.ogg",
-						  volume = 1,
-						  speed = 0.6,
+						  volume = 0.6,
+						  speed = 0.7,
 						
 					},				
 					},
@@ -3430,14 +3515,17 @@ data:extend({
  
   --------------------------------------------------- SMALL ROCKET TURRET ------------------------------------------------------------
 
+local rocket_turret_scale = 0.45
+local rocket_turret_x = 1536/8
+local rocket_turret_y = 1536/8
+local rocket_turret_shift_xy = {0, -32 }
+local rocket_turret_shift_shadow_xy = {22, -5 }
 
-local rocket_turret_x = 1824/8
-local rocket_turret_y = 1720/8
 
 function rocket_turret_extension(inputs)
 return
 {
-  filename = "__factorioplus__/graphics/rocket-turret/hr-rocket-turret.png",
+  filename = "__factorioplus__/graphics/rocket-turret/rocket-turret.png",
   priority = "medium",
   width = rocket_turret_x,
   height = rocket_turret_y,
@@ -3445,16 +3533,16 @@ return
   frame_count = 1,
   line_length = 0,
   run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(2-2, -38 ),
+  shift = util.by_pixel(table.unpack(rocket_turret_shift_xy)),
   axially_symmetrical = false,
-  scale =  0.4,
+  scale =  rocket_turret_scale,
 }
 end
 
 function rocket_turret_extension_mask(inputs)
 return
 {
-  filename = "__factorioplus__/graphics/rocket-turret/hr-rocket-turret-mask.png",
+  filename = "__factorioplus__/graphics/rocket-turret/rocket-turret-mask.png",
   flags = { "mask" },
   width = rocket_turret_x,
   height = rocket_turret_y,
@@ -3462,66 +3550,80 @@ return
   frame_count = 1,
   line_length = 0,
   run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(2-2, -38 ),
+  shift = util.by_pixel(table.unpack(rocket_turret_shift_xy)),
   axially_symmetrical = false,
   apply_runtime_tint = true,
-	scale =  0.4,
+	scale =  rocket_turret_scale,
 }
 end
 
 function rocket_turret_extension_shadow(inputs)
 return
 {
-
-    filename = "__base__/graphics/entity/tank/tank-turret-shadow.png",
-    width = 193,
-    height = 134,
-    direction_count = 4,
+    filename = "__factorioplus__/graphics/rocket-turret/rocket-turret-shadow.png",
+    width = rocket_turret_x,
+	height = rocket_turret_y,
+    direction_count = 8,
     frame_count = 1,
     line_length = 0,
     run_mode = inputs.run_mode or "forward",
-    shift = util.by_pixel(19, 2.5),
+    shift = util.by_pixel(table.unpack(rocket_turret_shift_shadow_xy)),
     axially_symmetrical = false,
     draw_as_shadow = true,
-    scale =  0.4
-
+    scale =  rocket_turret_scale,
 }
 end
 
 function rocket_turret_attack(inputs)
-return
-{
-  layers =
-  {
-   
+	local _yaddshift = inputs.yshift or 0
+	local _xyshift = { rocket_turret_shift_xy[1], rocket_turret_shift_xy[2] + _yaddshift }
+	local _xyshiftshadow = { rocket_turret_shift_shadow_xy[1] - _yaddshift, rocket_turret_shift_shadow_xy[2] + _yaddshift }
+	return
 	{
-	  filename = "__factorioplus__/graphics/rocket-turret/hr-rocket-turret.png",
-	  priority = "low",
-	  line_length = 8,
-	  width = rocket_turret_x,
+	  layers =
+	  {
+	   
+		{
+		  filename = "__factorioplus__/graphics/rocket-turret/rocket-turret.png",
+		  priority = "low",
+		  line_length = 8,
+		  width = rocket_turret_x,
+			height = rocket_turret_y,
+		  frame_count = 1,
+		  direction_count = 64,
+		  shift = util.by_pixel(table.unpack(_xyshift)),
+		  animation_speed = 8,
+		  scale =  rocket_turret_scale,
+		},
+		{
+		  filename = "__factorioplus__/graphics/rocket-turret/rocket-turret-mask.png",
+		  flags = { "mask" },
+		  width = rocket_turret_x,
+			height = rocket_turret_y,
+		  direction_count = 64,
+		  frame_count = 1,
+		  line_length = 8,
+		  run_mode = inputs.run_mode or "forward",
+		  shift = util.by_pixel(table.unpack(_xyshift)),
+		  axially_symmetrical = false,
+		  apply_runtime_tint = true,
+		 scale =  rocket_turret_scale,
+		},
+		{
+		filename = "__factorioplus__/graphics/rocket-turret/rocket-turret-shadow.png",
+		width = rocket_turret_x,
 		height = rocket_turret_y,
-	  frame_count = 1,
-	  direction_count = 64,
-	  shift = util.by_pixel(2-2, -38 ),
-	  animation_speed = 8,
-	  scale =  0.4,
-	},
-	{
-	  filename = "__factorioplus__/graphics/rocket-turret/hr-rocket-turret-mask.png",
-	  flags = { "mask" },
-	  width = rocket_turret_x,
-		height = rocket_turret_y,
-	  direction_count = 64,
-	  frame_count = 1,
-	  line_length = 8,
-	  run_mode = inputs.run_mode or "forward",
-	  shift = util.by_pixel(2-2, -38 ),
-	  axially_symmetrical = false,
-	  apply_runtime_tint = true,
-	 scale =  0.4,
-	},
-  }
-}
+		direction_count = 64,
+		frame_count = 1,
+		line_length = 8,
+		run_mode = inputs.run_mode or "forward",
+		shift = util.by_pixel(table.unpack(_xyshiftshadow)),
+		axially_symmetrical = false,
+		draw_as_shadow = true,
+		scale =  rocket_turret_scale,
+		},
+	  }
+	}
 end
 
 data:extend({ 
@@ -3535,6 +3637,9 @@ data:extend({
     minable = {mining_time = 1, result = "rocket-turret"},
     max_health = health_turret_rocket,
 	hide_resistances = false,
+	
+	circuit_connector = circuit_connector_definitions["medium-turret"],
+    circuit_wire_max_distance = default_circuit_wire_max_distance,
 	
 	resistances =
     {
@@ -3575,7 +3680,7 @@ data:extend({
     folding_sound = sounds.gun_turret_deactivate,
     folding_speed = 0.1,
     inventory_size = 2,
-    automated_ammo_count = 25,
+    automated_ammo_count = 10,
     attacking_speed = 0.5,
     alert_when_attacking = true,
     open_sound = sounds.machine_open,
@@ -3630,7 +3735,7 @@ data:extend({
 	  rotate_penalty = 0.75,  -- >0 will discourage turrets from targeting units that would take longer to turn to face.
 	  health_penalty = -1, -- >0 will discourage turrets from targeting units with higher health. <0 will encourage turrets to target units with higher health.  
 	  damage_modifier = 1.0,
-      projectile_creation_distance = 0.6,
+      projectile_creation_distance = 0.75,
       range = range_turret_rocket,
 	  min_range = rangemin_turret_rocket,
       projectile_center = {-0, 0},
@@ -3665,38 +3770,44 @@ data:extend({
 	
 --------------------------------- MORTAR(GRENADE) TURRET --------------------------------
 
+local mortar_turret_scale = 0.45
+local mortar_turret_xy = 1024/8
+local mortar_turret_shift_xy = {0, -26 }
+local mortar_turret_shift_shadow_xy = {18, -6 }
+
+
 function mortar_turret_extension(inputs)
 return
 {
-  filename = "__factorioplus__/graphics/mortar.png",
+  filename = "__factorioplus__/graphics/mortar-turret/mortar-turret.png",
   priority = "medium",
-  width = 150,
-  height = 106,
+  width = mortar_turret_xy,
+  height = mortar_turret_xy,
   direction_count = 8,
   frame_count = 1,
   line_length = 0,
   run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(2-2, -26.5 ),
+  shift = util.by_pixel(table.unpack(mortar_turret_shift_xy)),
   axially_symmetrical = false,
-  scale =  0.6,
+  scale = mortar_turret_scale,
 }
 end
 
 function mortar_turret_extension_mask(inputs)
 return
 {
-  filename = "__factorioplus__/graphics/mortar-mask.png",
+  filename = "__factorioplus__/graphics/mortar-turret/mortar-turret-mask.png",
   flags = { "mask" },
-  width = 150,
-  height = 106,
+  width = mortar_turret_xy,
+  height = mortar_turret_xy,
   direction_count = 8,
   frame_count = 1,
   line_length = 0,
   run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(2-2, -26.5 ),
+  shift = util.by_pixel(table.unpack(mortar_turret_shift_xy)),
   axially_symmetrical = false,
   apply_runtime_tint = true,
-  scale = 0.6,
+  scale = mortar_turret_scale,
 }
 end
 
@@ -3704,17 +3815,17 @@ function mortar_turret_extension_shadow(inputs)
 return
 {
 
-    filename = "__base__/graphics/entity/tank/tank-turret-shadow.png",
-    width = 193,
-    height = 134,
-    direction_count = 4,
+    filename = "__factorioplus__/graphics/mortar-turret/mortar-turret-shadow.png",
+    width = mortar_turret_xy,
+    height = mortar_turret_xy,
+    direction_count = 8,
     frame_count = 1,
     line_length = 0,
     run_mode = inputs.run_mode or "forward",
-    shift = util.by_pixel(19, 2.5),
+    shift = util.by_pixel(table.unpack(mortar_turret_shift_shadow_xy)),
     axially_symmetrical = false,
     draw_as_shadow = true,
-    scale =  0.7
+    scale =  mortar_turret_scale
 
 }
 end
@@ -3726,31 +3837,44 @@ return
   {
    
 		{
-          filename = "__factorioplus__/graphics/mortar.png",
+          filename = "__factorioplus__/graphics/mortar-turret/mortar-turret.png",
           priority = "low",
           line_length = 8,
-			width = 150,
-			height = 106,
+			width = mortar_turret_xy,
+			height = mortar_turret_xy,
           frame_count = 1,
           direction_count = 64,
-          shift = util.by_pixel(2-2, -26.5),
+          shift = util.by_pixel(table.unpack(mortar_turret_shift_xy)),
           animation_speed = 8,
-		  scale = 0.6,
+		  scale = mortar_turret_scale,
 		},
 		{
-		  filename = "__factorioplus__/graphics/mortar-mask.png",
+		  filename = "__factorioplus__/graphics/mortar-turret/mortar-turret-mask.png",
 		  flags = { "mask" },
-		  width = 150,
-		  height = 106,
+		  width = mortar_turret_xy,
+		  height =mortar_turret_xy,
 		  direction_count = 64,
 		  frame_count = 1,
 		  line_length = 8,
 		  run_mode = inputs.run_mode or "forward",
-		  shift = util.by_pixel(2-2, -26.5),
+		  shift = util.by_pixel(table.unpack(mortar_turret_shift_xy)),
 		  axially_symmetrical = false,
 		  apply_runtime_tint = true,
-		  scale =  0.6,
+		  scale =  mortar_turret_scale,
 		},
+		{
+			filename = "__factorioplus__/graphics/mortar-turret/mortar-turret-shadow.png",
+			width = mortar_turret_xy,
+			height = mortar_turret_xy,
+			direction_count = 64,
+			frame_count = 1,
+			line_length = 8,
+			run_mode = inputs.run_mode or "forward",
+			shift = util.by_pixel(table.unpack(mortar_turret_shift_shadow_xy)),
+			axially_symmetrical = false,
+			draw_as_shadow = true,
+			scale =  mortar_turret_scale
+		}
   }
 }
 end
@@ -3765,6 +3889,9 @@ data:extend({
     flags = {"placeable-player", "player-creation", "building-direction-8-way"},
     minable = {mining_time = 0.5, result = "mortar-turret"},
     max_health = health_turret_mortar,
+	
+	circuit_connector = circuit_connector_definitions["medium-turret-rotatable"],
+    circuit_wire_max_distance = default_circuit_wire_max_distance,
 	
 	turret_base_has_direction = true,
 	  resistances =
@@ -3868,15 +3995,8 @@ data:extend({
       range = range_turret_mortar,
       min_range = rangemin_turret_mortar,
 	  lead_target_for_projectile_speed = 0.375 * projectile_mortar_turret_speed_modifier,
+	  warmup = 10,
 	  
-	  sound =
-      {
-        {
-          filename = "__base__/sound/fight/artillery-shoots-1.ogg",
-          volume = 0.6,
-		  speed = 2.0,
-        }
-      },
 	  cyclic_sound =
       {
         begin_sound =
@@ -3885,18 +4005,12 @@ data:extend({
           filename = "__base__/sound/fight/artillery-shoots-1.ogg",
           volume = 0.6,
 		  speed = 2.0,
+		  aggregation = {max_count = 5, remove = true },
           }
         },
-		-- middle_sound =
-        -- {
-          -- {
-            -- filename = "__base__/sound/fight/artillery-shoots-1.ogg",
-          -- volume = 0.6,
-		  -- speed = 1.75,
-          -- }
-        -- },
 	 }
     },
+	
     call_for_help_radius = 40,
     water_reflection =
     {
@@ -4199,6 +4313,7 @@ data:extend({
       range = range_turret_mortar,
       min_range = rangemin_turret_mortar,
 	  lead_target_for_projectile_speed = 0.35,
+	  warmup = 10,
 	  ammo_type =
       {
         source_type = "default",
@@ -4257,62 +4372,11 @@ data:extend({
 })
  
 --------------------------------- SNIPER TURRET --------------------------------
-local sniper_turret_x = 2944/8
-local sniper_turret_y = 2568/8
-local sniper_turret_scale = 0.4
+local sniper_turret_x = 4096/16
+local sniper_turret_y = 4096/16
+local sniper_turret_scale = 0.6
 local sniper_turret_xy = {-2,-44}
-
-function sniper_turret_extension(inputs)
-return
-{
-  filename = "__factorioplus__/graphics/sniper-turret.png",
-  priority = "medium",
-  width = sniper_turret_x,
-  height = sniper_turret_y,
-  direction_count = 8,
-  frame_count = 1,
-  line_length = 0,
-  run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(sniper_turret_xy[1],sniper_turret_xy[2]),
-  axially_symmetrical = false,
-  scale =  sniper_turret_scale,
-}
-end
-
-function sniper_turret_extension_mask(inputs)
-return
-{
-  filename = "__factorioplus__/graphics/sniper-turret-mask.png",
-  flags = { "mask" },
-  width = sniper_turret_x,
-  height = sniper_turret_y,
-  direction_count = 4,
-  frame_count = 1,
-  line_length = 0,
-  run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(sniper_turret_xy[1],sniper_turret_xy[2]),
-  axially_symmetrical = false,
-  apply_runtime_tint = true,
-  scale =  sniper_turret_scale,
-}
-end
-
-function sniper_turret_extension_shadow(inputs)
-return
-{
-  filename = "__base__/graphics/entity/tank/tank-turret-shadow.png",
-  width = 1,
-  height = 1,
-  direction_count = 4,
-  frame_count = 1,
-  line_length = 0,
-  run_mode = inputs.run_mode or "forward",
-  shift = util.by_pixel(19, -16),
-  axially_symmetrical = false,
-  draw_as_shadow = true,
-  scale =  1,
-}
-end
+local sniper_turret_shadow_xy = {52,-0}
 
 function sniper_turret_attack(inputs)
 return
@@ -4320,30 +4384,150 @@ return
   layers =
   {
 		{
-          filename = "__factorioplus__/graphics/sniper-turret.png",
-          priority = "low",
-          line_length = 8,
+          stripes =
+		  {
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-shoot-1.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-shoot-2.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-shoot-3.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-shoot-4.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  }
+		  },
+          priority = "medium",
+		  direction_count = inputs.direction_count or 64,
+          line_length = inputs.frame_count or 4,
           width = sniper_turret_x,
 		  height = sniper_turret_y,
-          frame_count = 1,
-          direction_count = 64,
+          frame_count = inputs.frame_count or 4,
+		  run_mode = inputs.run_mode or "forward",
           shift = util.by_pixel(sniper_turret_xy[1],sniper_turret_xy[2]),
-          animation_speed = 8,
+          animation_speed = 1,
+		  scale = sniper_turret_scale,
+		},		  
+	    {
+		  stripes =
+		  {		
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-light-1.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-light-2.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-light-3.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-light-4.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  }
+		  },
+          priority = "low",
+		  direction_count = inputs.direction_count or 64,
+          line_length = inputs.frame_count or 4,
+          width = sniper_turret_x,
+		  height = sniper_turret_y,
+          frame_count = inputs.frame_count or 4,
+		  run_mode = inputs.run_mode or "forward",
+          shift = util.by_pixel(sniper_turret_xy[1],sniper_turret_xy[2]),
+          animation_speed = 1,
+		  scale = sniper_turret_scale,
+		  draw_as_glow = true,
+		  blend_mode = "additive",
+		},
+		{
+          stripes =
+		  {
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-mask-1.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-mask-2.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-mask-3.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-mask-4.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  }
+		  },
+		  flags = {"mask"},
+          priority = "low",
+		  direction_count = inputs.direction_count or 64,
+          line_length = inputs.frame_count or 4,
+          width = sniper_turret_x,
+		  height = sniper_turret_y,
+          frame_count = inputs.frame_count or 4,
+		  run_mode = inputs.run_mode or "forward",
+          shift = util.by_pixel(sniper_turret_xy[1],sniper_turret_xy[2]),
+          animation_speed = 1,
+		  apply_runtime_tint = true,
 		  scale = sniper_turret_scale,
 		},
 		{
-			filename = "__factorioplus__/graphics/sniper-turret-mask.png",
-			flags = { "mask" },
-			width = sniper_turret_x,
-			height = sniper_turret_y,
-			direction_count = 64,
-			frame_count = 1,
-			line_length = 8,
-			shift = util.by_pixel(sniper_turret_xy[1],sniper_turret_xy[2]),
-			axially_symmetrical = false,
-			apply_runtime_tint = true,
-			scale =  sniper_turret_scale,
-		}
+          stripes =
+		  {
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-shadow-1.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-shadow-2.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-shadow-3.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  },
+			  {
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-shadow-4.png",
+			  width_in_frames = inputs.frame_count or 4,
+			  height_in_frames = 16
+			  }
+		  },
+          priority = "low",
+		  direction_count = inputs.direction_count or 64,
+          line_length = inputs.frame_count or 4,
+          width = sniper_turret_x,
+		  height = sniper_turret_y,
+          frame_count = inputs.frame_count or 4,
+		  run_mode = inputs.run_mode or "forward",
+          shift = util.by_pixel(sniper_turret_shadow_xy[1],sniper_turret_shadow_xy[2]),
+          animation_speed = 1,
+		  draw_as_shadow = true,
+		  scale = sniper_turret_scale,
+		},
   }
 }
 end
@@ -4374,16 +4558,18 @@ local get_sniper_shell_particle_shadow_pictures = function()
   return
   {
     {
-      filename = "__base__/graphics/particle/shell-particle/shell-particle-shadow-1.png",
+      filename = "__base__/graphics/particle/shell-particle/shell-particle-1.png",
       priority = "extra-high",
+	  tint = {r = 0, g = 0, b = 0},
 	  scale = 2,
       width = 9,
       height = 7,
       frame_count = 5
     },
     {
-      filename = "__base__/graphics/particle/shell-particle/shell-particle-shadow-2.png",
+      filename = "__base__/graphics/particle/shell-particle/shell-particle-2.png",
       priority = "extra-high",
+	  tint = {r = 0, g = 0, b = 0},
 	  scale = 2,
       width = 7,
       height = 8,
@@ -4481,9 +4667,12 @@ data:extend({
     icon_size = 64, icon_mipmaps = 4,
     flags = {"placeable-player", "player-creation","building-direction-8-way"},
     minable = {mining_time = 0.7, result = "sniper-turret"},
-    max_health = health_turret_sniper,
-	
+    max_health = health_turret_sniper,	
 	turret_base_has_direction = true,
+	allow_turning_when_starting_attack = true,
+    prepare_with_no_ammo = false,
+	can_retarget_while_starting_attack = true,
+    leave_attacking_if_shoot_fails = false,
 	resistances =
     {
       {
@@ -4517,13 +4706,17 @@ data:extend({
     selection_box = {{-1.5, -1.5 }, {1.5, 1.5}},
     damaged_trigger_effect = hit_effects.entity(),
     rotation_speed = 0.001,
-    preparing_speed = 0.5,
+    preparing_speed = 0.1,
     preparing_sound = sounds.gun_turret_activate,
     folding_sound = sounds.gun_turret_deactivate,
-    folding_speed = 0.5,
+    folding_speed = 0.1,
     inventory_size = 2,
     automated_ammo_count = 5,
-    attacking_speed = 50,
+	
+	starting_attack_speed = 0.08,
+    attacking_speed = 1,
+	ending_attack_speed = 0.025,
+	
     alert_when_attacking = true,
     open_sound = sounds.machine_open,
     close_sound = sounds.machine_close,
@@ -4532,30 +4725,26 @@ data:extend({
     {
       layers =
       {
-        sniper_turret_extension{frame_count=1, line_length = 1},
-		sniper_turret_extension_mask{frame_count=1, line_length = 1},
-        sniper_turret_extension_shadow{frame_count=1, line_length = 1},
+          sniper_turret_attack{frame_count=1, line_length = 1},
       }
     },
     preparing_animation =
     {
       layers =
       {
-        sniper_turret_extension{},
-		sniper_turret_extension_mask{},
-        sniper_turret_extension_shadow{},
-		
+        sniper_turret_attack{frame_count=1, line_length = 1},	
       }
     },
-    prepared_animation = sniper_turret_attack{frame_count=1},
-    attacking_animation = sniper_turret_attack{},
+	prepared_animation =  sniper_turret_attack{frame_count=1, line_length = 1},
+    attacking_animation = sniper_turret_attack{frame_count=1, line_length = 1},
+	--starting_attack_animation = sniper_turret_attack{},
+    attacking_animation = sniper_turret_attack{frame_count=1, line_length = 1},
+	ending_attack_animation = sniper_turret_attack{run_mode = "forward-then-backward"},
     folding_animation =
     {
       layers =
       {
-        sniper_turret_extension{run_mode = "backward"},
-        sniper_turret_extension_shadow{run_mode = "backward"},
-		sniper_turret_extension_mask{run_mode = "backward"},
+         sniper_turret_attack{frame_count=1, line_length = 1},
       }
     },
 	  graphics_set =
@@ -4567,7 +4756,7 @@ data:extend({
 		  layers =
 		  {
 			{
-			  filename = "__factorioplus__/graphics/sniper-turret-base.png",
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-base.png",
 			  priority = "high",
 			  width = 298,
 			  height = 288,
@@ -4577,7 +4766,7 @@ data:extend({
 			  scale = 0.35,
 			},
 			{
-			  filename = "__factorioplus__/graphics/sniper-turret-base-shadow.png",
+			  filename = "__factorioplus__/graphics/sniper-turret/sniper-turret-base-shadow.png",
 			  priority = "high",
 			  width = 396,
 			  height = 288,
@@ -4599,10 +4788,11 @@ data:extend({
       type = "projectile",
       ammo_category = "sniper-shell",
       cooldown = firerate_turret_sniper,
+	  warmup = 1,
 	  rotate_penalty = 5,  -- >0 will discourage turrets from targeting units that would take longer to turn to face.
 	  health_penalty = -3, -- >0 will discourage turrets from targeting units with higher health. <0 will encourage turrets to target units with higher health.  
-      projectile_creation_distance = 2.8,
-      projectile_center = {0, -1.0875}, -- same as chaingun_turret_attack shift
+      projectile_creation_distance = 2.0,
+      projectile_center = util.by_pixel(1, -10), -- same as chaingun_turret_attack shift
 	  turn_range = 1/8, -- Allows for 8 directions with full coverage without gaps between rotations.
 	  damage_modifier = 1,
 	  lead_target_for_projectile_speed = 1.75,
@@ -4612,11 +4802,13 @@ data:extend({
         direction_deviation = 0.05,
 		vertical_speed = 0.2,
         speed = 0.1,
-        speed_deviation = 0.08,
-        center = {-0.0625, 0},
-        creation_distance = -1.925,
+        speed_deviation = 0.2,
+        center = util.by_pixel(0, 0),
+        creation_distance = -3,
         starting_frame_speed = 0.2,
-        starting_frame_speed_deviation = 0.1
+        starting_frame_speed_deviation = 0.1,
+		 --use_source_position = true,
+		height = 1,
       },
       range = range_turret_sniper,
 	  min_range = rangemin_turret_sniper,
@@ -4741,7 +4933,7 @@ function createTurretVeterancys(turrettype, turret, level)
   result.name = result.name .. "-veterancy-" .. level
   result.hidden = true 
   result.max_health = result.max_health * (1 + turretValueIncreaseAmount[level]  )
-  result.healing_per_tick = (result.max_health / 10000 ) * (turretValueIncreaseAmount[level] * 2 )
+  result.healing_per_tick = (result.max_health / 10000 ) * (turretValueIncreaseAmount[level] * 5 )
   result.attack_parameters.cooldown = result.attack_parameters.cooldown / (1 + turretValueIncreaseAmount[level]  ) 
   result.attack_parameters.range = math.ceil(  result.attack_parameters.range * (1 + turretValueIncreaseAmount[level]  ) )
   result.attack_parameters.damage_modifier = result.attack_parameters.damage_modifier * (1 + turretValueIncreaseAmount[level] ) 
@@ -4750,14 +4942,3 @@ function createTurretVeterancys(turrettype, turret, level)
 end
 
 data:extend( createAllTurrets() )
-
--- function makeAbandonmentTurrets()
-	-- local turret = table.deepcopy(data.raw["ammo-turret"]["gun-turret"])
-
-	-- turret.name = "abandonment".."-"..turret.name
-	-- turret.subgroup = "enemies"
-	-- turret.minable = nil
-	-- turret.autoplace = abandonment_turret_autoplace(1.2)	
--- end
-
--- data:extend{makeAbandonmentTurrets()}

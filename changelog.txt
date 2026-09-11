@@ -1,8 +1,163 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.9.6
+Date: 2026.09.11
+  Balance:
+    - Combat robots can now be repaired.
+    - Combat robots have a small self-repair regen.
+    - Updated a few more abandonment loot warehouses to use shared_probability.
+  Graphics:
+    - Added new Heavy turret base graphics, used for Gauss turrets and Cannon turrets.
+    - Pistol turret graphics more detailed and have a player color mask.
+    - Gun turret graphics to be centered, bulkier.
+    - Heavy Gun turret graphics to be bulkier.
+    - Sniper turret has shot animation, laser light during the night and more detail.
+    - Tank turret is more detailed and represents the correct weapon count.
+    - Rocket turret, Mortar turret and Shotgun turret have a little more detail.
+    - Updated Most turrets to have correct shadows.
+  Fixes:
+    - Polyps now have a more reasonable regeneration value.
+---------------------------------------------------------------------------------------------------
+Version: 2.9.5
+Date: 2026.08.28
+  Balance:
+    - Increased Medium wooden electric pole range from 12 -> 16 so it is exactly half of a Large Electric pole range.
+    - Nimble movement speed changed from 2x to 1.75x.
+    - Nimble mining speed changed from 1x to 0.75x.
+  Graphics:
+    - Brand new graphics for Nimble character!
+  Fixes:
+    - Kobold and Nimble characters now moved to their own seperate mods, which are now required dependencies for Factorio+.
+    - Kobold collision should now be 0.8x (was 1x).
+  Localization:
+    - Updated stats info for Kobold and Nimble characters.
+---------------------------------------------------------------------------------------------------
+Version: 2.9.4
+Date: 2026.08.14
+  Balance:
+    - Large and Advanced solar panels now require glass in their recipes.
+  Fixes:
+    - Turret ghosts now properly preserve their wiring and conditions when destoyed or copied.
+    - Medium turrets can now use circuit connections (Mortar, Heavy gun, Rocket)
+  Localization:
+    - Added description for Incenerator to hint at their main use. 
+    - Added description for abandonment solar panels, accumulators and poles to give a hint at what to do with them. 
+---------------------------------------------------------------------------------------------------
+Version: 2.9.3
+Date: 2026.08.01
+  Graphics:
+    - Added destroyed abandoned solar panels.
+    - Added destroyed abandoned power poles.
+  Balance:
+    - Continued reworking abandonment loot warehouses shared_probability.
+    - Spitter spawners are more likely to spawn spitter-worms beside them.
+    - Batteries and Advanced batteries require more materials in their recipes.
+    - Increased HE grenade damage from 350 -> 450 base damage.
+    - Increased grenade damage from 80 -> 90 base damage.
+  Fixes:
+    - Mortars now play a sound with every shot and have a maximum sound limit.
+    - Loot warehouses should migrate properly if they haven't already migrated.
+---------------------------------------------------------------------------------------------------
+Version: 2.9.2
+Date: 2026.07.26
+  Graphics:
+    - Fixed Worm mask graphics missing when it attacks.
+  Balance:
+    - Continued reworking abandonment loot warehouses shared_probability.
+    - Science pack difficulty set to Extreme/Insane will create a sand-ore starting patch (on map generation).
+  Fixes:
+    - Fixed missing localizations on explosive warehouse and new signal emotes.
+---------------------------------------------------------------------------------------------------
+Version: 2.9.1
+Date: 2026.07.24
+  Graphics:
+    - 3 New signal emotes.
+    - Signal emotes now have a black outline to match base game.
+    - Generated tiles for abandonments, geothermal and deadwood are now more randomized.
+    - Updated some abandonment warehouses to have new corpse graphics.
+  Balance:
+    - Firearm and shotgun magazines only require 1 coal (was 2).
+    - Rocketry moved earlier in tech as it doesn't require explosives for ammo.
+    - Reduced massive and huge rock sizes down and adjusted their mining drop to more appropriate amounts.
+    - Updated sand, water and wood resources to be a little more dense.
+    - Abandonment loot warehouses shared_probability updated for all small arms (includes migrations).
+  Fixes:
+    - Removed duplicate piercing shotgun research effect from 2.1 base game.
+  Space Age:
+    - Fixed crash to do with units spawning on Gleba and planets.
+    - Carbonic asteroids additionally return coal.
+    - Advanced metallic processing additionally returns bauxite ore. 
+---------------------------------------------------------------------------------------------------
+Version: 2.9.0
+Date: 2026.07.17
+  Additions:
+    - Added LED lamps, an efficient lamp well suited for indicating circuit conditions. 
+  Balance:
+    - Added basic explosives to be used in many small explosive recipes (e.g. explosive firearm rounds, rockets, cannon shells etc.)
+    - Reordered some earlier technology and reduced some of their costs.
+    - Firearm magazines, shotgun shells and sniper shells now require coal in their recipes.
+    - Concrete recipe uses iron sticks instead of iron ore.
+  Fixes:
+    - Pasted ghost turrets now use player undo queues and can now be undone by the player who placed them pressing their undo command.
+    - Added some missing prequisites to technologies that were missing them.
+  Settings:
+    - Added a progressive science cost setting, which will increase the cost of technology after every successful research finished.
+---------------------------------------------------------------------------------------------------
+Version: 2.8.5
+Date: 2026.07.11
+  Other Mods:
+    - Fixed Moshine issue with source images.
+---------------------------------------------------------------------------------------------------
+Version: 2.8.4
+Date: 2026.07.10
+  Balance:
+    - Basic explosives can now be thrown as a grenade, with a small explosive radius and light damage.
+    - 10% chance of spawned enemies to be randomly speed buffed by +30%.
+  Settings:
+    - Turret veterancy can be disabled/enabled through settings.
+  Other Mods:
+    - Fixed categorization issue with Moshine quartz glass.
+---------------------------------------------------------------------------------------------------
+Version: 2.8.3
+Date: 2026.07.08
+  Balance:
+    - Started to update abandonment warehouses to use shared_probability pools to create more varied loot.
+    - All enemy types on Nauvis spawn a little closer together, and have larger max units.
+    - Fish now return 1 to 2 fish (was 1).
+    - Crash site now creates more assembling machines when the setting is changed.
+    - Most bio-science upgrades require military science packs.
+  Other Mods:
+    - Alien biomes is now supported better with enemies and rock scaling.
+---------------------------------------------------------------------------------------------------
+Version: 2.8.2
+Date: 2026.07.05
+  Balance:
+    - Loaders require electricity by default.
+    - Lowered Turret veterancy to increase by +5% per level (was +10%)
+  Fixes:
+    - Fixed alien polyps always creating the max amount on  spawner death.
+    - Fixed spawner corpse shadow graphics layer issue including the decay animation.
+    - Pistol turret damage and ammo consumption modifiers now match the pistol stats.
+---------------------------------------------------------------------------------------------------
+Version: 2.8.1
+Date: 2026.06.29
+  Space Age:
+    - Fixed belt recipes being categorized wrong.
+  Fixes:
+    - Fixed multiple recipe categorization issues.
+    - Fixed crash relating to science recipe difficulty.
+---------------------------------------------------------------------------------------------------
+Version: 2.8.0
+Date: 2026.06.28
+  Fixes:
+    - Initial updates to work on 2.1. (Please report any bugs)
+    - Glass processing can now be triggered by mining sandy rocks.
+  Localization:
+    - Updated Russian (RU) localization (JoyRax)
+---------------------------------------------------------------------------------------------------
 Version: 2.7.7
 Date: 2026.02.06
   Balance:
-    - Increased enemy base frequency in Authors pick map preset from 200% -> 300%
+    - Increased enemy base frequency in Authors pick map preset from 100% -> 150%
     - Decreased Goblin ore patch size and increased their richness in the Goblin mode map preset.
   Fixes:
     - Changed High powered machine press recipes that were mistakenly set to 1s craft time are now the 0.5s default

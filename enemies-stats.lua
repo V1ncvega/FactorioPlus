@@ -140,42 +140,60 @@ spitter_spawner_scale 	= 0.8
 tanker_spawner_scale 	= 1.2
 stinger_spawner_scale 	= 1.0	
 blaster_spawner_scale 	= 1.1
-flamer_spawner_scale 	= 1.25
+flamer_spawner_scale 	= 1.2
 webber_spawner_scale 	= 0.9
-hatcher_spawner_scale = 1.4
+hatcher_spawner_scale 	= 1.4
 	
 	-- Spacing
 
 -- [1] is the distance from starting area ~ in chunks
 -- [2] Is the bounding box space between others
-autoplace_spacing_biter    	= {0.25, 6.0}
-autoplace_spacing_spitter  	= {0.3, 5.0}
-autoplace_spacing_swarmer	= {0.35, 4.70}
-autoplace_spacing_blaster 	= {0.7, 9}
-autoplace_spacing_tanker  	= {0.65, 7.5}
-autoplace_spacing_webber 	= {0.55, 7.5}
-autoplace_spacing_flamer 	= {0.5, 6.2}
-autoplace_spacing_stinger 	= {0.4, 5}
-autoplace_spacing_hatcher = {0.68, 6.5}
+autoplace_spacing_biter    	= {0.2, 6.4 -0.2}
+autoplace_spacing_spitter  	= {0.25, 5.0-0.2}
+autoplace_spacing_swarmer	= {0.35, 4.70-0.2}
+autoplace_spacing_blaster 	= {0.45, 8-0.2}
+autoplace_spacing_tanker  	= {0.42, 7.5-0.2}
+autoplace_spacing_webber 	= {0.45, 7.2-0.2}
+autoplace_spacing_flamer 	= {0.5, 6.2-0.2}
+autoplace_spacing_stinger 	= {0.4, 5-0.2}
+autoplace_spacing_hatcher 	= {0.55, 6.5-0.2}
 
 	-- Tile Restrictions
-	
-spawner_tilerestrictions_swarmer = {"sand-1","sand-2","sand-3","red-desert-0","red-desert-1","red-desert-2","red-desert-3"}
-spawner_tilerestrictions_spitter = {"grass-1","grass-2","grass-3","grass-4" }
-spawner_tilerestrictions_hatcher = {"dry-dirt","dirt-5", "dirt-6" }
-spawner_tilerestrictions_stinger = {"grass-1","grass-2","grass-3","grass-4" }
-spawner_tilerestrictions_flamer = {"red-desert-0","red-desert-1","red-desert-2","red-desert-3"} 
 
+
+
+if (mods["alien-biomes"]) then
+	spawner_tilerestrictions_swarmer = {"mineral-cream-sand-1", "mineral-cream-sand-2",  "mineral-cream-sand-3", "mineral-tan-sand-1", "mineral-tan-sand-2", "mineral-tan-sand-3", "mineral-tan-dirt-1", "mineral-tan-dirt-2", "mineral-tan-dirt-3", "mineral-tan-dirt-4", "mineral-tan-dirt-5", "mineral-tan-dirt-6"}
+	spawner_tilerestrictions_spitter = {"vegetation-olive-grass-1", "vegetation-olive-grass-2", "vegetation-green-grass-1", "vegetation-green-grass-2", "vegetation-green-grass-3", "vegetation-green-grass-4"}
+	spawner_tilerestrictions_hatcher = {"mineral-cream-dirt-1","mineral-cream-dirt-2", "mineral-cream-dirt-3", "mineral-cream-dirt-4", "mineral-cream-dirt-5", "mineral-cream-dirt-6" }
+	spawner_tilerestrictions_stinger = {"vegetation-yellow-grass-1", "vegetation-yellow-grass-2", "mineral-aubergine-dirt-1","mineral-aubergine-dirt-2","mineral-aubergine-dirt-3","mineral-aubergine-dirt-4","mineral-aubergine-dirt-5" ,"mineral-aubergine-dirt-6"}
+	spawner_tilerestrictions_flamer = {"mineral-red-sand-1","mineral-red-sand-2","mineral-red-sand-3","volcanic-orange-heat-1","volcanic-orange-heat-2","volcanic-orange-heat-3","volcanic-orange-heat-4" }
+	spawner_tilerestrictions_biter = nil
+	spawner_tilerestrictions_tanker = nil
+	spawner_tilerestrictions_blaster = {"vegetation-red-grass-1", "vegetation-red-grass-2", "volcanic-orange-heat-1","volcanic-orange-heat-2","volcanic-orange-heat-3","volcanic-orange-heat-4" }
+	spawner_tilerestrictions_webber = nil
+
+else
+	spawner_tilerestrictions_swarmer = {"sand-1","sand-2","sand-3","red-desert-0","red-desert-1","red-desert-2","red-desert-3"}
+	spawner_tilerestrictions_spitter = {"grass-1","grass-2","grass-3","grass-4" }
+	spawner_tilerestrictions_hatcher = {"dry-dirt","dirt-5", "dirt-6" }
+	spawner_tilerestrictions_stinger = {"grass-1","grass-2","grass-3","grass-4" }
+	spawner_tilerestrictions_flamer = {"red-desert-0","red-desert-1","red-desert-2","red-desert-3"} 
+	spawner_tilerestrictions_biter = nil
+	spawner_tilerestrictions_tanker = nil
+	spawner_tilerestrictions_blaster = nil
+	spawner_tilerestrictions_webber = nil
+end	
 	-- Total spawn amounts
 
-spawning_amount_biter = 4
-spawning_amount_spitter = 4
-spawning_amount_swarmer = 8
+spawning_amount_biter = 5
+spawning_amount_spitter = 6
+spawning_amount_swarmer = 10
 spawning_amount_blaster = 4
 spawning_amount_tanker = 3
-spawning_amount_flamer = 3
-spawning_amount_stinger = 6
-spawning_amount_webber = 4
+spawning_amount_flamer = 4
+spawning_amount_stinger = 7
+spawning_amount_webber = 5
 spawning_amount_hatcher = 3
 
 	-- Spawn Times
@@ -185,14 +203,14 @@ spawning_time_fastest = 100
 
 spawning_base_pollution_cost = 4
 
-spawning_time_small = 4
+spawning_time_small = 3
 spawning_time_medium = 8
 spawning_time_big = 16
-spawning_time_behemoth = 40
-spawning_time_boss = 100
+spawning_time_behemoth = 30
+spawning_time_boss = 80
 
 spawning_time_scalar_spitter = 1.3
-spawning_time_scalar_swarmer = 0.75
+spawning_time_scalar_swarmer = 0.8
 spawning_time_scalar_biter = 1.3
 spawning_time_scalar_blaster = 2.1
 spawning_time_scalar_tanker = 1.8
@@ -209,7 +227,7 @@ spawning_time_scalar_hatcher = 2.0
 	-- Health
 	
 health_small_biter    = 50
-health_medium_biter   = 150
+health_medium_biter   = 220
 health_big_biter      = 600
 health_behemoth_biter = 1800
 health_boss_biter     = 6000
@@ -276,9 +294,9 @@ damage_modifier_biter_boss     = 260
 	-- Health
 	
 health_small_spitter    = 20
-health_medium_spitter   = 60
-health_big_spitter      = 250
-health_behemoth_spitter = 450
+health_medium_spitter   = 80
+health_big_spitter      = 320
+health_behemoth_spitter = 650
 health_boss_spitter     = 1900
 
 	-- Resistances
@@ -362,11 +380,11 @@ range_spitter_boss 	   = 40
 
 	-- Health
 	
-health_small_swarmer    = 8
-health_medium_swarmer  	= 16
-health_big_swarmer		= 48
-health_behemoth_swarmer = 112
-health_boss_swarmer     = 260
+health_small_swarmer    = 10
+health_medium_swarmer  	= 20
+health_big_swarmer		= 55
+health_behemoth_swarmer = 150
+health_boss_swarmer     = 280
 
 	-- Resistances
 function swarmerresistances(v)
@@ -393,7 +411,7 @@ boss_swarmer_scale    = 0.55
 	-- Movement
 	
 movement_speed_swarmer_base		=  0.15
-movement_speed_swarmer 			=  0.05
+movement_speed_swarmer 			=  0.03
 
 	-- Attacks
 
@@ -402,8 +420,8 @@ attack_speed_swarmer_base = 15
 damage_modifier_swarmer_small    = 5
 damage_modifier_swarmer_medium   = 10
 damage_modifier_swarmer_big      = 15
-damage_modifier_swarmer_behemoth = 25
-damage_modifier_swarmer_boss     = 35
+damage_modifier_swarmer_behemoth = 20
+damage_modifier_swarmer_boss     = 30
 
 ------------------
 
@@ -834,14 +852,14 @@ function createmeatyloot(scale, tier)
 			then
 			return
 			{ 
-				{item = "chunky-meat", probability = 1 * (settings.startup["settings-chunks-probability"].value/100), count_min =  math.floor(nttier/2) , count_max = math.ceil( big_chunks + (nttier/1.5) ) },
-				{item = "meaty-chunks", probability = 1 * (settings.startup["settings-chunks-probability"].value/100), count_min =  1, count_max = math.ceil(calc/2) }, 
+				{type = "item", name = "chunky-meat", independent_probability = 1 * (settings.startup["settings-chunks-probability"].value/100), amount_min =  math.floor(nttier/2) , amount_max = math.ceil( big_chunks + (nttier/1.5) ) },
+				{type = "item", name = "meaty-chunks", independent_probability = 1 * (settings.startup["settings-chunks-probability"].value/100), amount_min =  1, amount_max = math.ceil(calc/2) }, 
 			}			
 			else
 			return 
 			{ 
-				{item = "meaty-chunks", probability = 1 * (settings.startup["settings-chunks-probability"].value/100), count_min = math.floor( scale + (nttier) ), count_max = math.ceil( calc ) },
-				{item = "meaty-chunks", probability = 0.5 * (settings.startup["settings-chunks-probability"].value/100), count_min =  math.floor( (scale + (nttier)) /2 ) , count_max = math.ceil(calc/2) }, 
+				{type = "item", name = "meaty-chunks", independent_probability = 1 * (settings.startup["settings-chunks-probability"].value/100), amount_min = math.floor( scale + (nttier) ), amount_max = math.ceil( calc ) },
+				{type = "item", name = "meaty-chunks", independent_probability = 0.5 * (settings.startup["settings-chunks-probability"].value/100), amount_min =  math.floor( (scale + (nttier)) /2 ) , amount_max = math.ceil(calc/2) }, 
 			}
 			end
 		end
@@ -853,10 +871,10 @@ if (settings.startup["settings-chunks-probability"].value ~= 0) then
 	big_loot = createmeatyloot(1.5, 3)
 	behemoth_loot = createmeatyloot(1.75, 4)
 	boss_loot = createmeatyloot(2.0, 5) 
-	spawner_small_loot = { {item = "meaty-chunks", probability = (settings.startup["settings-chunks-probability"].value/100), count_min = 2, count_max = 6 * settings.startup["settings-chunks-multiplier"].value} }
-	spawner_medium_loot = { {item = "meaty-chunks", probability =  (settings.startup["settings-chunks-probability"].value/100), count_min = 4, count_max = 10 * settings.startup["settings-chunks-multiplier"].value} }
-	spawner_big_loot = { {item = "meaty-chunks", probability = (settings.startup["settings-chunks-probability"].value/100), count_min = 6, count_max = 14 * settings.startup["settings-chunks-multiplier"].value} }
-	spawner_behemoth_loot = { {item = "meaty-chunks", probability =  (settings.startup["settings-chunks-probability"].value/100), count_min = 8, count_max = 18 * settings.startup["settings-chunks-multiplier"].value} }
+	spawner_small_loot = { {type = "item", name = "meaty-chunks", independent_probability = (settings.startup["settings-chunks-probability"].value/100), amount_min = 2, amount_max = 6 * settings.startup["settings-chunks-multiplier"].value} }
+	spawner_medium_loot = { {type = "item", name = "meaty-chunks", independent_probability =  (settings.startup["settings-chunks-probability"].value/100), amount_min = 4, amount_max = 10 * settings.startup["settings-chunks-multiplier"].value} }
+	spawner_big_loot = { {type = "item", name = "meaty-chunks", independent_probability = (settings.startup["settings-chunks-probability"].value/100), amount_min = 6, amount_max = 14 * settings.startup["settings-chunks-multiplier"].value} }
+	spawner_behemoth_loot = { {type = "item", name = "meaty-chunks", independent_probability =  (settings.startup["settings-chunks-probability"].value/100), amount_min = 8, amount_max = 18 * settings.startup["settings-chunks-multiplier"].value} }
 else
 	small_loot = nil
 	medium_loot = nil

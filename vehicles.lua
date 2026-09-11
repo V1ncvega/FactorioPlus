@@ -5,8 +5,9 @@ local movement_triggers = require("__factorioplus__.movement_triggers")
 local tank_shift_y = 6
 local flametank_shift_y = 6
 
-require ("__factorioplus__.util-attack-helpers")
+require("__factorioplus__.util-attack-helpers")
 require("stats")
+require("__factorioplus__.turrets")
 
 data.raw["spider-vehicle"]["spidertron"].chain_shooting_cooldown_modifier  = 0.25
 
@@ -114,14 +115,15 @@ data:extend({
     dying_explosion = "car-explosion",
     alert_icon_shift = util.by_pixel(0, -13),
     energy_per_hit_point = speeder_ephp,
-    crash_trigger = crash_trigger(),
+    impact_category = "metal",	
+    impact_speed_to_volume_ratio = 4.0,
 	has_belt_immunity = true,
     resistances = speeder_resistances,
     collision_box = {{-0.5, -0.8}, {0.5, 0.8}},
     selection_box = {{-0.5, -0.8}, {0.5, 0.8}},
     damaged_trigger_effect = hit_effects.entity(),
     effectivity = speeder_effectivity,
-    braking_power = speeder_braking,
+    braking_force = speeder_braking,
 	rotation_snap_angle = rsa,
 
     energy_source =
@@ -143,7 +145,7 @@ data:extend({
       }
     },
     consumption = speeder_consumption,
-    friction = speeder_friction,
+    friction_force = speeder_friction,
     light =
     {
       {
@@ -340,14 +342,15 @@ local scale_transporter = 0.5
     dying_explosion = "car-explosion",
     alert_icon_shift = util.by_pixel(0, -13),
     energy_per_hit_point = truck_ephp,
-    crash_trigger = crash_trigger(),
+	impact_category = "metal",	
+    impact_speed_to_volume_ratio = 4.0,
 	has_belt_immunity = true,
     resistances = truck_resistances,
     collision_box = {{-1.2, -2.0}, {1.2, 2.0}},
     selection_box = {{-1.2, -2.0}, {1.2, 2.0}},
     damaged_trigger_effect = hit_effects.entity(),
     effectivity = truck_effectivity,
-    braking_power = truck_braking,
+    braking_force = truck_braking,
 	rotation_snap_angle = rsa,
 	trash_inventory_size = 40,
 
@@ -370,7 +373,7 @@ local scale_transporter = 0.5
       }
     },
     consumption = truck_consumption,
-    friction = truck_friction,
+    friction_force = truck_friction,
     light =
     {
 	
@@ -649,7 +652,7 @@ local scale_transporter = 0.5
     damaged_trigger_effect = hit_effects.entity(),
     drawing_box = {{-1.8, -1.8}, {1.8, 1.5}},
     effectivity = 0.7,
-    braking_power = "2100kW",
+    braking_force = tank_braking,
 	rotation_snap_angle = rsa,
 	
     energy_source =
@@ -672,7 +675,7 @@ local scale_transporter = 0.5
     },
     consumption = "1800kW",
     terrain_friction_modifier = 0.25,
-    friction = 0.007,
+    friction_force = 0.007,
     light =
     {
       {
@@ -857,7 +860,7 @@ local scale_transporter = 0.5
     damaged_trigger_effect = hit_effects.entity(),
     drawing_box = {{-1.8, -1.8}, {1.8, 1.5}},
     effectivity = flametank_effectivity,
-    braking_power = flametank_braking,
+    braking_force = flametank_braking,
 	rotation_snap_angle = rsa,
 	
     energy_source =
@@ -880,7 +883,7 @@ local scale_transporter = 0.5
     },
     consumption = flametank_consumption,
     terrain_friction_modifier = flametank_friction_terrain_modifier,
-    friction = flametank_friction,
+    friction_force = flametank_friction,
     light =
     {
       {
@@ -1299,14 +1302,15 @@ data:extend({
     dying_explosion = "car-explosion",
     alert_icon_shift = util.by_pixel(0, -13),
     energy_per_hit_point = car_ephp,
-    crash_trigger = crash_trigger(),
+	impact_category = "metal",	
+    impact_speed_to_volume_ratio = 4.0,
 	has_belt_immunity = true,
     resistances = car_resistances,
     collision_box = {{-0.7, -1}, {0.7, 1}},
     selection_box = {{-0.7, -1}, {0.7, 1}},
     damaged_trigger_effect = hit_effects.entity(),
     effectivity = car_effectivity,
-    braking_power = car_braking,
+    braking_force = car_braking,
 	rotation_snap_angle = rsa,
 
     energy_source =
@@ -1328,7 +1332,7 @@ data:extend({
       }
     },
     consumption = car_consumption,
-    friction = car_friction,
+    friction_force = car_friction,
     light =
     {
       {
@@ -1434,14 +1438,15 @@ data:extend({
     dying_explosion = "car-explosion",
     alert_icon_shift = util.by_pixel(0, -13),
     energy_per_hit_point = car_ephp,
-    crash_trigger = crash_trigger(),
+	impact_category = "metal",	
+    impact_speed_to_volume_ratio = 4.0,
 	has_belt_immunity = true,
     resistances = car_resistances,
     collision_box = {{-0.7, -1}, {0.7, 1}},
     selection_box = {{-0.7, -1}, {0.7, 1}},
     damaged_trigger_effect = hit_effects.entity(),
     effectivity = car_effectivity,
-    braking_power = car_braking,
+    braking_force = car_braking,
 	rotation_snap_angle = rsa,
 
    energy_source =
@@ -1463,7 +1468,7 @@ data:extend({
       }
     },
     consumption = car_consumption,
-    friction = car_friction,
+    friction_force = car_friction,
     light =
     {
       {
@@ -1506,49 +1511,7 @@ data:extend({
 	
 	turret_rotation_speed = 0.75 / 60,
 	guns = { "vehicle-machine-gun" },
-    turret_animation =
-    {
-      layers =
-      {
-		{
-          filename = "__factorioplus__/graphics/smg-turret/smg-turret.png",
-          priority = "low",
-          line_length = 8,
-			width = gun_turret_xy[1],
-			height = gun_turret_xy[2],
-          frame_count = 1,
-          direction_count = 64,
-          shift = util.by_pixel(table.unpack(gun_turret_shift_xy) ),
-          animation_speed = 8,
-		  scale = gun_turret_scale,
-		},
-		{
-		  filename ="__factorioplus__/graphics/smg-turret/smg-turret-mask.png",
-		  flags = { "mask" },
-			width = gun_turret_xy[1],
-			height = gun_turret_xy[2],
-		  direction_count = 64,
-		  frame_count = 1,
-		  line_length = 8,
-		  run_mode =  "forward",
-		  shift = util.by_pixel(table.unpack(gun_turret_shift_xy) ),
-		  axially_symmetrical = false,
-		  apply_runtime_tint = true,
-		  scale =  gun_turret_scale,
-		},
-        {
-          filename = "__base__/graphics/entity/car/car-turret-shadow.png",
-          priority = "low",
-          line_length = 8,
-          width = 46,
-          height = 31,
-          frame_count = 1,
-          draw_as_shadow = true,
-          direction_count = 64,
-          shift = {0.875, 0.359375}
-        }
-      }
-    },
+    turret_animation = gun_turret_attack{yshift = -5},
 
     sound_no_fuel =
     {
@@ -1617,14 +1580,15 @@ data:extend({
     dying_explosion = "car-explosion",
     alert_icon_shift = util.by_pixel(0, -13),
     energy_per_hit_point = car_ephp,
-    crash_trigger = crash_trigger(),
+	impact_category = "metal",	
+    impact_speed_to_volume_ratio = 4.0,
 	has_belt_immunity = true,
     resistances = car_resistances,
     collision_box = {{-0.7, -1}, {0.7, 1}},
     selection_box = {{-0.7, -1}, {0.7, 1}},
     damaged_trigger_effect = hit_effects.entity(),
     effectivity = car_effectivity,
-    braking_power = car_braking,
+    braking_force = car_braking,
 	rotation_snap_angle = rsa,
 
    energy_source =
@@ -1646,7 +1610,7 @@ data:extend({
       }
     },
     consumption = car_consumption,
-    friction = car_friction,
+    friction_force = car_friction,
     light =
     {
       {
@@ -1686,49 +1650,7 @@ data:extend({
     },
     render_layer = "object",
     animation = car_animations,
-    turret_animation =
-    {
-      layers =
-      {
-		{
-			filename = "__factorioplus__/graphics/shotgun-turret/shotgun-turret.png",
-			priority = "medium",
-			width = 1328/8,
-			height = 1208/8,
-			direction_count = 64,
-			frame_count = 1,
-			line_length = 8,
-			shift = util.by_pixel(0, -24 ),
-			axially_symmetrical = false,
-			scale =  0.4,
-		},
-        {
-			filename = "__factorioplus__/graphics/shotgun-turret/shotgun-turret-mask.png",
-			flags = { "mask" },
-			width = 1328/8,
-			height = 1208/8,
-			direction_count = 64,
-			frame_count = 1,
-			line_length = 8,
-			shift = util.by_pixel(0, -24 ),
-			axially_symmetrical = false,
-			apply_runtime_tint = true,
-			scale =  0.4,
-		},		
-        {
-			filename = "__factorioplus__/graphics/shotgun-turret/shotgun-turret-shadow.png",
-			priority = "low",
-			line_length = 8,
-			width = 1328/8,
-			height = 1208/8,
-			frame_count = 1,
-			draw_as_shadow = true,
-			direction_count = 64,
-			scale =  0.4,
-			shift = {0.875, 0.359375}
-        }
-      }
-    },
+    turret_animation = shotgun_turret_attack{yshift=-4},
     turret_rotation_speed = 1 / 60,
     sound_no_fuel =
     {
@@ -1799,14 +1721,15 @@ data:extend({
     dying_explosion = "car-explosion",
     alert_icon_shift = util.by_pixel(0, -13),
     energy_per_hit_point = atv_ephp,
-    crash_trigger = crash_trigger(),
+	impact_category = "metal",	
+    impact_speed_to_volume_ratio = 4.0,
 	has_belt_immunity = true,
     collision_box = {{-0.6, -0.75}, {0.6, 0.75}},
     selection_box = {{-0.8, -1.0}, {0.8, 1.0}},
 	--collision_mask = {"consider-tile-transitions","object-layer"},
     damaged_trigger_effect = hit_effects.entity(),
     effectivity = atv_effectivity,
-    braking_power = atv_braking,
+    braking_force = atv_braking,
 	rotation_snap_angle = rsa,
 
     energy_source =
@@ -1828,7 +1751,7 @@ data:extend({
       }
     },
     consumption = atv_consumption,
-    friction = atv_friction,
+    friction_force = atv_friction,
     light =
     {
 	
@@ -2024,7 +1947,8 @@ data:extend({
     dying_explosion = "car-explosion",
     alert_icon_shift = util.by_pixel(0, -13),
     energy_per_hit_point = atv_ephp,
-    crash_trigger = crash_trigger(),
+	impact_category = "metal",	
+    impact_speed_to_volume_ratio = 4.0,
 	has_belt_immunity = true,
     collision_box = {{-0.6, -0.75}, {0.6, 0.75}},
     selection_box = {{-0.8, -1.0}, {0.8, 1.0}},
@@ -2037,7 +1961,7 @@ data:extend({
 	
     damaged_trigger_effect = hit_effects.entity(),
     effectivity = atv_effectivity,
-    braking_power = atv_braking,
+    braking_force = atv_braking,
 	rotation_snap_angle = rsa,
 
     energy_source =
@@ -2059,7 +1983,7 @@ data:extend({
       }
     },
     consumption = atv_consumption,
-    friction = atv_friction,
+    friction_force = atv_friction,
     light =
     {
 	
@@ -2192,15 +2116,16 @@ data:extend({
 		  scale =  gun_turret_scale,
 		},
         {
-          filename = "__base__/graphics/entity/car/car-turret-shadow.png",
+          filename = "__factorioplus__/graphics/smg-turret/smg-turret-shadow.png",
           priority = "low",
           line_length = 8,
-          width = 46,
-          height = 31,
+          width = gun_turret_xy[1],
+		  height = gun_turret_xy[2],
           frame_count = 1,
           draw_as_shadow = true,
           direction_count = 64,
-          shift = {0.875, 0.359375}
+          shift = util.by_pixel(table.unpack(gun_turret_drone_shift_xy) ),
+		  scale = gun_turret_scale,
         }
       }
     },
@@ -2336,14 +2261,15 @@ data:extend({
 	
     alert_icon_shift = util.by_pixel(0, -13),
     energy_per_hit_point = atv_ephp,
-    crash_trigger = crash_trigger(),
+	impact_category = "metal",	
+    impact_speed_to_volume_ratio = 4.0,
 	has_belt_immunity = true,
     collision_box = {{-0.6, -0.75}, {0.6, 0.75}},
     selection_box = {{-0.8, -1.0}, {0.8, 1.0}},
 	--collision_mask = {"consider-tile-transitions","object-layer"},
     damaged_trigger_effect = hit_effects.entity(),
     effectivity = atv_effectivity,
-    braking_power = atv_braking,
+    braking_force = atv_braking,
 	rotation_snap_angle = rsa,
 
     energy_source =
@@ -2365,7 +2291,7 @@ data:extend({
       }
     },
     consumption = atv_consumption,
-    friction = atv_friction,
+    friction_force = atv_friction,
     light =
     {
 	
@@ -2654,7 +2580,8 @@ data:extend({
     dying_explosion = "car-explosion",
     alert_icon_shift = util.by_pixel(0, -13),
     energy_per_hit_point = apc_ephp,
-    crash_trigger = crash_trigger(),
+	impact_category = "metal",	
+    impact_speed_to_volume_ratio = 4.0,
 	has_belt_immunity = true,
 	guns = nil,
     resistances = apc_resistances,
@@ -2662,7 +2589,7 @@ data:extend({
     selection_box = {{-1.2, -2.75}, {1.2, 1.0}},
     damaged_trigger_effect = hit_effects.entity(),
     effectivity = apc_effectivity,
-    braking_power = apc_braking,
+    braking_force = apc_braking,
 	equipment_grid = "small-equipment-grid",
 	trash_inventory_size = 10,
 	allow_passengers = true,
@@ -2688,7 +2615,7 @@ data:extend({
       }
     },
     consumption = apc_consumption,
-    friction = apc_friction,
+    friction_force = apc_friction,
     light = apc_lights,
     render_layer = "object",
     animation =
@@ -2827,14 +2754,15 @@ data:extend({
     dying_explosion = "car-explosion",
     alert_icon_shift = util.by_pixel(0, -13),
     energy_per_hit_point = apc_ephp,
-    crash_trigger = crash_trigger(),
+	impact_category = "metal",	
+    impact_speed_to_volume_ratio = 4.0,
 	has_belt_immunity = true,
     resistances = apc_resistances,
     collision_box = {{-1.0, -2.3}, {1.0, 0.8}},
     selection_box = {{-1.2, -2.55}, {1.2, 1.0}},
     damaged_trigger_effect = hit_effects.entity(),
     effectivity = apc_effectivity,
-    braking_power = apc_braking,
+    braking_force = apc_braking,
 	allow_passengers = true,
 	equipment_grid = "small-equipment-grid",
 	trash_inventory_size = 10,
@@ -2861,7 +2789,7 @@ data:extend({
       }
     },
     consumption = apc_consumption,
-    friction = apc_friction,
+    friction_force = apc_friction,
     light = apc_lights,
     render_layer = "object",
     animation =
@@ -2922,38 +2850,8 @@ data:extend({
         },
       }
 	  
-    },
-	turret_animation =
-    {
-      layers =
-      {
-        {
-			filename = "__factorioplus__/graphics/rocket-turret/hr-rocket-turret.png",
-			priority = "medium",
-			width = 1824/8,
-			height = 1720/8,
-			direction_count = 64,
-			frame_count = 1,
-			line_length = 8,
-			shift = util.by_pixel(0, -50),
-			axially_symmetrical = false,
-			scale =  0.4,
-		},
-        {
-			  filename = "__factorioplus__/graphics/rocket-turret/hr-rocket-turret-mask.png",
-			  flags = { "mask" },
-			  width = 1824/8,
-			height = 1720/8,
-			  direction_count = 64,
-			  frame_count = 1,
-			  line_length = 8,
-			  shift = util.by_pixel(0, -50),
-			  axially_symmetrical = false,
-			  apply_runtime_tint = true,
-			scale =  0.4,
-		},
-      }
-    },
+    }, 
+	turret_animation = rocket_turret_attack{yshift = -22},
     turret_rotation_speed = 0.35 / 60,
     turret_return_timeout = 300,
    
@@ -3043,14 +2941,15 @@ local twingun_turret_shift_xy = {0, -40 }
     dying_explosion = "car-explosion",
     alert_icon_shift = util.by_pixel(0, -13),
     energy_per_hit_point = apc_ephp,
-    crash_trigger = crash_trigger(),
+	impact_category = "metal",	
+    impact_speed_to_volume_ratio = 4.0,
 	has_belt_immunity = true,
     resistances = apc_resistances,
     collision_box = {{-1.0, -2.3}, {1.0, 0.8}},
     selection_box = {{-1.2, -2.55}, {1.2, 1.0}},
     damaged_trigger_effect = hit_effects.entity(),
     effectivity = apc_effectivity,
-    braking_power = apc_braking,
+    braking_force = apc_braking,
 	allow_passengers = true,
 	equipment_grid = "small-equipment-grid",
 	trash_inventory_size = 10,
@@ -3077,7 +2976,7 @@ local twingun_turret_shift_xy = {0, -40 }
       }
     },
     consumption = apc_consumption,
-    friction = apc_friction,
+    friction_force = apc_friction,
     light = apc_lights,
     render_layer = "object",
     animation =
@@ -3138,39 +3037,8 @@ local twingun_turret_shift_xy = {0, -40 }
       }
 	  
     },
-	turret_animation =
-    {
-      layers =
-      {
-		{
-		filename = "__factorioplus__/graphics/smg-turret/smg-turret-heavy.png",
-		priority = "medium",
-		width = twingun_turret_xy[1],
-		height = twingun_turret_xy[2],
-		direction_count = 64,
-		frame_count = 1,
-		line_length = 8,
-		run_mode =  "forward",
-		shift = util.by_pixel(table.unpack(twingun_turret_shift_xy) ),
-		axially_symmetrical = false,
-		scale =  twingun_turret_scale,
-		},
-		{
-		filename = "__factorioplus__/graphics/smg-turret/smg-turret-heavy-mask.png",
-		flags = { "mask" },
-		width = twingun_turret_xy[1],
-		height = twingun_turret_xy[2],
-		direction_count = 64,
-		frame_count = 1,
-		line_length = 8,
-		run_mode =  "forward",
-		shift = util.by_pixel(table.unpack(twingun_turret_shift_xy) ),
-		axially_symmetrical = false,
-		apply_runtime_tint = true,
-		scale =  twingun_turret_scale,
-		}
-      }
-    },
+	turret_animation = heavygun_turret_attack{yshift = -20},
+	
     turret_rotation_speed = 0.45 / 60,
     turret_return_timeout = 300,
    
@@ -3253,18 +3121,19 @@ local twingun_turret_shift_xy = {0, -40 }
     dying_explosion = "car-explosion",
     alert_icon_shift = util.by_pixel(0, -13),
     energy_per_hit_point = apc_ephp,
-    crash_trigger = crash_trigger(),
+	impact_category = "metal",	
+    impact_speed_to_volume_ratio = 4.0,
 	has_belt_immunity = true,
     resistances = apc_resistances,
-    collision_box = {{-1.0, -2.3}, {1.0, 0.8}},
+    collision_sbox = {{-1.0, -2.3}, {1.0, 0.8}},
     selection_box = {{-1.2, -2.55}, {1.2, 1.0}},
     damaged_trigger_effect = hit_effects.entity(),
     effectivity = apc_effectivity,
-    braking_power = apc_braking,
+    braking_force = apc_braking,
 	allow_passengers = true,
 	equipment_grid = "small-equipment-grid",
-		trash_inventory_size = 10,
-		allow_remote_driving = true,
+	trash_inventory_size = 10,
+	allow_remote_driving = true,
 	terrain_friction_modifier = apc_friction_terrain_modifier,
 	rotation_snap_angle = rsa,
 
@@ -3287,7 +3156,7 @@ local twingun_turret_shift_xy = {0, -40 }
       }
     },
     consumption = apc_consumption,
-    friction = apc_friction,
+    friction_force = apc_friction,
     light = apc_lights,
     render_layer = "object",
     animation =
@@ -3467,7 +3336,7 @@ local twingun_turret_shift_xy = {0, -40 }
     damaged_trigger_effect = hit_effects.entity(),
     drawing_box = {{-2.8, -2.8}, {2.8, 2.5}},
     effectivity = tank_effectivity,
-    braking_power = tank_braking,
+    braking_force = tank_braking,
 	rotation_snap_angle = rsa,
 	
 	equipment_grid = "medium-equipment-grid",
@@ -3494,7 +3363,7 @@ local twingun_turret_shift_xy = {0, -40 }
     },
     consumption = tank_consumption,
     terrain_friction_modifier = tank_friction_terrain_modifier,
-    friction = tank_friction,
+    friction_force = tank_friction,
     light =
     {
       {
@@ -3645,48 +3514,7 @@ local twingun_turret_shift_xy = {0, -40 }
     {
       layers =
       {
-        {
-
-            filename = "__base__/graphics/entity/tank/tank-turret.png",
-            priority = "low",
-            line_length = 8,
-            width = 179,
-            height = 132,
-            frame_count = 1,
-            direction_count = 64,
-            shift = util.by_pixel(2.25-2, -50.5 + tank_shift_y),
-            animation_speed = 8,
-            scale = 0.75
-
-        },
-        {
-
-            filename = "__base__/graphics/entity/tank/tank-turret-mask.png",
-            priority = "low",
-            line_length = 8,
-            width = 72,
-            height = 66,
-            frame_count = 1,
-            apply_runtime_tint = true,
-            direction_count = 64,
-            shift = util.by_pixel(2-2, -51.5 + tank_shift_y),
-            scale = 0.75
-          
-        },
-        {
-
-            filename = "__base__/graphics/entity/tank/tank-turret-shadow.png",
-            priority = "low",
-            line_length = 8,
-            width = 193,
-            height = 134,
-            frame_count = 1,
-            draw_as_shadow = true,
-            direction_count = 64,
-            shift = util.by_pixel(58.25-2, 0.5 + tank_shift_y),
-            scale = 0.75
-          
-        }
+		cannon_turret_attack{frame_count=1, line_length = 1, yshift = -20},
       }
     },
     turret_rotation_speed = 0.35 / 60,
@@ -4127,7 +3955,8 @@ local twingun_turret_shift_xy = {0, -40 }
     drive_over_tie_trigger_minimal_speed = 0.5,
     tie_distance = 50,
     working_sound = sounds.train_wagon_wheels,
-    crash_trigger = crash_trigger(),
+	impact_category = "metal",	
+    impact_speed_to_volume_ratio = 4.0,
     open_sound = sounds.cargo_wagon_open,
     close_sound = sounds.cargo_wagon_close,
     impact_category = "metal-large",
@@ -4183,14 +4012,15 @@ local twingun_turret_shift_xy = {0, -40 }
     dying_explosion = "car-explosion",
     alert_icon_shift = util.by_pixel(0, -13),
     energy_per_hit_point = speeder_ephp,
-    crash_trigger = crash_trigger(),
+	impact_category = "metal",	
+    impact_speed_to_volume_ratio = 4.0,
 	has_belt_immunity = true,
     resistances = speeder_resistances,
     collision_box = {{-1.2, -2.0}, {1.2, 2.0}},
     selection_box = {{-1.2, -2.0}, {1.2, 2.0}},
     damaged_trigger_effect = hit_effects.entity(),
     effectivity = speeder_effectivity/2,
-    braking_power = speeder_braking,
+    braking_force = speeder_braking,
 	tank_driving = true,
 	trash_inventory_size = 20,
 
@@ -4214,7 +4044,7 @@ local twingun_turret_shift_xy = {0, -40 }
     },
     consumption = speeder_consumption,
 
-    friction =  0.0003,
+    friction_force =  0.0003,
 	rotation_speed = 0.004,
 	
     light =

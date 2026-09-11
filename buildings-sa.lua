@@ -73,32 +73,9 @@ data.raw["lab"]["lab-large"].heating_energy = "200kW"
 
 --
 
-data.raw["assembling-machine"]["mini-assembling-machine-1"].crafting_categories = {"crafting", "basic-crafting", "advanced-crafting", "electronics", "pressing"}
-data.raw["assembling-machine"]["factory-large"].crafting_categories = {"crafting", "basic-crafting", "advanced-crafting", "electronics", "pressing"}
+data.raw["assembling-machine"]["mini-assembling-machine-1"].crafting_categories = {"crafting", "advanced-crafting", "electromagnetics", "metallurgy"}
+data.raw["assembling-machine"]["factory-large"].crafting_categories = {"crafting", "advanced-crafting", "electromagnetics", "metallurgy"}
 
-data.raw.recipe["basic-transport-belt"].category = "pressing"
-data.raw.recipe["basic-underground-belt"].category = "pressing"
-data.raw.recipe["basic-splitter"].category = "pressing"
-
-data.raw.recipe["transport-belt"].category = "pressing"
-data.raw.recipe["underground-belt"].category = "pressing"
-data.raw.recipe["splitter"].category = "pressing"
-
-data.raw.recipe["fast-transport-belt"].category = "pressing"
-data.raw.recipe["fast-underground-belt"].category = "pressing"
-data.raw.recipe["fast-splitter"].category = "pressing"
-
-data.raw.recipe["express-transport-belt"].category = "crafting-with-fluid-or-metallurgy"
-data.raw.recipe["express-underground-belt"].category = "crafting-with-fluid-or-metallurgy"
-data.raw.recipe["express-splitter"].category = "crafting-with-fluid-or-metallurgy"
-
-data.raw.recipe["turbo-transport-belt"].category = "crafting-with-fluid-or-metallurgy"
-data.raw.recipe["turbo-underground-belt"].category = "crafting-with-fluid-or-metallurgy"
-data.raw.recipe["turbo-splitter"].category = "crafting-with-fluid-or-metallurgy"
-
-data.raw.recipe["supersonic-transport-belt"].category = "crafting-with-fluid-or-metallurgy"
-data.raw.recipe["supersonic-underground-belt"].category = "crafting-with-fluid-or-metallurgy"
-data.raw.recipe["supersonic-splitter"].category = "crafting-with-fluid-or-metallurgy"
 
 data.extend({
 {
@@ -106,7 +83,7 @@ data.extend({
     name = "captive-biter-spawner-1",
     icon = "__space-age__/graphics/icons/captive-biter-spawner.png",
     subgroup = "agriculture",
-    flags = {"placeable-neutral", "placeable-player", "player-creation", "not-repairable", "not-deconstructable"},
+    flags = {"placeable-neutral", "placeable-player", "player-creation", "not-repairable", "not-deconstructable", "no-logistic-connection"},
     collision_box = {{-2.2, -2.2}, {2.2, 2.2}},
     selection_box = {{-2.5, -2.5}, {2.5, 2.5}},
     create_ghost_on_death = false,
@@ -225,6 +202,5 @@ data.extend({
     energy_usage = "100kW",
     module_slots = 0,
     allowed_effects = {},
-    enable_logistic_control_behavior = false
   },
  })

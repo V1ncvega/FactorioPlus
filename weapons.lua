@@ -396,7 +396,7 @@ data:extend({
         starting_frame_speed_deviation = 0.1
       },
 	  projectile_creation_distance = 1.2,
-      projectile_center = {0, -0.1275}, -- same as gun_turret_attack shift
+      projectile_center = {0, -0.2}, -- same as gun_turret_attack shift
 	  projectile_creation_offsets = {{-0.25,0 },{0.25,0 }}, 
       range = math.ceil(range_turret_heavysmg * range_modifier_vehicle_bonus) ,
       sound = soundsnew.gun_turret_gunshot_heavy,
@@ -911,6 +911,131 @@ data:extend({
     },
   },hidden = true,
   
+   -----------------------------  SIMPLE EXPLOSIVE  -----------------------------
+  
+   {
+    type = "recipe",
+    name = "basic-explosive",
+	enabled = false,
+    categories = {"crafting"},
+    energy_required = 1,
+    ingredients =  
+	{
+	  {type="item", name="coal", amount=8},
+      {type="item", name="iron-plate", amount=1},
+    },
+    results = {{type="item", name="basic-explosive", amount=2}},
+	allow_productivity = true,
+  },
+  
+  {
+    type = "capsule",
+    name = "basic-explosive",
+    icon = "__factorioplus__/graphics/icons/basic-explosive.png",
+    icon_size = 64, icon_mipmaps = 4,
+    capsule_action =
+    {
+      type = "throw",
+      attack_parameters =
+      {
+        type = "projectile",
+        ammo_category = "grenade",
+        cooldown = firerate_simple_explosives,
+        projectile_creation_distance = 0.6,
+        range = range_grenade,
+		min_range = range_grenade_min,
+        ammo_type =
+        {
+          category = "grenade",
+          target_type = "position",
+		  clamp_position = true,
+          action =
+          {
+            {
+              type = "direct",
+              action_delivery =
+              {
+                type = "projectile",
+                projectile = "basic-explosive",
+                starting_speed = 0.5
+              }
+            },
+            {
+              type = "direct",
+              action_delivery =
+              {
+                type = "instant",
+                target_effects =
+                {
+                  {
+                    type = "play-sound",
+                    sound = sounds.throw_projectile,
+                  },
+                }
+              }
+            } 
+          }
+        }
+      }
+    },
+    -- radius_color = { r = 0.25, g = 0.05, b = 0.25, a = 0.25 },
+    subgroup = "capsule",
+    order = "a[grenade]-9[normal]",
+    stack_size = 100,
+	weight = 0.5*kg
+  },
+
+  {
+    type = "projectile",
+    name = "basic-explosive",
+    flags = {"not-on-map"},
+    acceleration = -0.00,
+    action =
+    {
+      {
+        type = "direct",
+        action_delivery =
+        {
+          type = "instant",
+          target_effects =
+          {
+			table.unpack(make_explosion_trigger(simple_explosives_damage, simple_explosives_radius, simple_explosives_falloff))
+          },
+		  
+        }
+      },
+    },
+
+    light = {intensity = 0.2, size = 2},
+    animation =
+    {
+      filename = "__factorioplus__/graphics/basic_explosives_thrown.png",
+      frame_count = 16,
+      line_length = 8,
+      animation_speed = 0.5,
+       width = 64,
+        height = 64,
+		scale = 0.5,
+      shift = util.by_pixel(1, 1),
+      priority = "high",
+	  scale = 0.5,
+
+    },
+    shadow =
+    {
+      filename = "__factorioplus__/graphics/basic_explosives_thrown.png",
+      frame_count = 16,
+      line_length = 8,
+      animation_speed = 0.5,
+	  width = 64,
+	  height = 64,
+	  scale = 0.5,
+      shift = util.by_pixel(2, 6),
+      priority = "high",
+      draw_as_shadow = true,
+    },
+  },
+ 
     -----------------------------  GRENADE  -----------------------------
   
   {
@@ -964,7 +1089,6 @@ data:extend({
         }
       }
     },
-    -- radius_color = { r = 0.25, g = 0.05, b = 0.25, a = 0.25 },
     subgroup = "capsule",
     order = "a[grenade]-a[normal]",
     stack_size = grenade_stack
@@ -1825,7 +1949,7 @@ data:extend({
     {
     type = "recipe",
     name = "slowdown-capsule",
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
     enabled = false,
     energy_required = 20,
     ingredients =
@@ -2180,7 +2304,7 @@ data.extend({
     name = "poison-capsule",
     enabled = false,
     energy_required = 20,
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
     ingredients =
     {
 	  {type="item", name="grenade", amount=1},
@@ -2510,7 +2634,7 @@ data.extend({
      {
     type = "recipe",
     name = "healing-capsule",
-	category = "crafting-with-fluid",
+	categories = {"crafting-with-fluid"},
     enabled = false,
     energy_required = 20,
     ingredients =
@@ -2910,8 +3034,8 @@ data:extend({
       cooldown = firerate_cannon / attack_speed_vehicle_bonus,
 	  damage_modifier = damage_modifier_vehicle_bonus ,
       movement_slow_down_factor = 0,
-      projectile_creation_distance = 1.6,
-      projectile_center = {-0.15625, -0.07812},
+      projectile_creation_distance = 2.65,
+      projectile_center = {0, -0.55},
       range = cannon_shell_range * range_modifier_vehicle_bonus,
       sound = sounds.tank_gunshot,
     },

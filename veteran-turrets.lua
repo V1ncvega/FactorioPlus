@@ -11,7 +11,7 @@ else
 	--do nothing (default)
 end
 
-turretValueIncreaseAmount = {0.1 * tVIAF ,0.2 * tVIAF,0.3 * tVIAF,0.5 * tVIAF}
+turretValueIncreaseAmount = {0.05 * tVIAF ,0.1 * tVIAF,0.15 * tVIAF,0.25 * tVIAF}
 
 
 
