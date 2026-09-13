@@ -3377,7 +3377,7 @@ local function generate_storage_hut_with_packages(data)
 			_selection_box = {{-3.85, -2.5}, {3.85, 2.5}}
 			
 		elseif string.find(_warehousename,"grenade") or string.find(_warehousename,"explosive") then
-			table.merge( _localised_name , {" ", "(", {"entity-name." .. "abandonment-warehouse-type-explosive"} ,")" } )
+			table.merge( _localised_name , {" ", "(", {"entity-name." .. "abandonment-warehouse-type-explosives"} ,")" } )
 			_picture = building_explosivecache_picture
 			_collision_box = {{-1.75, -2.25}, {1.75, 2.25}}
 			_selection_box = {{-1.85, -2.5}, {1.85, 2.5}}
