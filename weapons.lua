@@ -56,7 +56,7 @@ function createnewrareweapon(weapon, rarity)
 	local dm = nw.attack_parameters.damage_modifier or 1.0
 	local acm = nw.attack_parameters.ammo_consumption_modifier or 1.0
 	local range_reduction = 1/4
-	nw.localised_name = { "" , string.capitalize(r.name) , " " , {"item-name." .. nw.name} }
+	nw.localised_name = { {"item-name." .. nw.name} , " (" , {"factorioplus-rarities." .. rarity} , ")" }
 	nw.name = nw.name .. "-" .. r.name
 	nw.icons = util.item_icon_rarity_border(nw.icon , r.color)
 	nw.icon = nil
